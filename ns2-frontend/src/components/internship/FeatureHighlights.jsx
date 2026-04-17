@@ -90,7 +90,7 @@ export default function FeatureHighlights({ initialData }) {
               {primary_button_text && primary_button_url && (
                 <a
                   href={primary_button_url}
-                  className="px-4 py-2 sm:px-6 sm:py-3 bg-[#155dfc] hover:bg-[#0f4ae0] focus:bg-[#0f4ae0] text-white rounded-[8px] font-semibold text-sm sm:text-base transition w-full sm:w-auto"
+                  className="px-4 py-2 sm:px-6 sm:py-3 bg-[#C2481F] hover:bg-[#A63D1A] focus:bg-[#A63D1A] text-white rounded-[8px] font-semibold text-sm sm:text-base transition w-full sm:w-auto"
                 >
                   {primary_button_text}
                 </a>

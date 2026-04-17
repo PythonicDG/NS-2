@@ -63,7 +63,7 @@ export default function TrainingOfferingsClient({ data }) {
       className="bg-white text-gray-600 py-16 px-6 md:px-12"
     >
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#155dfc]">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#C2481F]">
           {data.heading}
         </h2>
         <p className="mt-4 text-gray-600">{data.subheading}</p>

@@ -13,7 +13,7 @@ export default function Testimonial({ data }) {
         )}
         <h3
           className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           {data.heading}
         </h3>

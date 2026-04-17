@@ -54,7 +54,7 @@ export default function ServicesHero({ data }) {
                   href={bannerData.primary_button_url} // The ID of the target section
                 >
                   <button
-                    className="px-6 py-3 bg-[#155dfc] text-white font-semibold shadow-lg hover:bg-[#134cbf] transition-all duration-300"
+                    className="px-6 py-3 bg-[#C2481F] text-white font-semibold shadow-lg hover:bg-[#A63D1A] transition-all duration-300"
                     style={{ borderRadius: '8px' }}
                   >
                     {bannerData.primary_button_text}

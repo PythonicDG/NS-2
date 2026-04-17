@@ -145,12 +145,12 @@ export default function ContactUs({ data }) {
     <section id="contact" className="w-full py-16 bg-white text-black">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center mb-12">
-          <p className="text-sm font-semibold text-[#155dfc] animate-pulse drop-shadow-[0_0_8px_rgba(21,93,252,0.8)]">
+          <p className="text-sm font-semibold text-[#C2481F] animate-pulse drop-shadow-[0_0_8px_rgba(21,93,252,0.8)]">
             + Get In Touch
           </p>
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2"
-            style={{ color: "#155dfc" }}
+            style={{ color: "#C2481F" }}
           >
             {data.super_heading}
           </h2>
@@ -167,7 +167,7 @@ export default function ContactUs({ data }) {
           <div>
             <h3
               className="text-2xl sm:text-3xl font-bold mb-4"
-              style={{ color: "#155dfc" }}
+              style={{ color: "#C2481F" }}
             >
               {data.subheading}
             </h3>
@@ -204,7 +204,7 @@ export default function ContactUs({ data }) {
                         <p className="text-black text-sm">{item.title}</p>
                       )}
                       {item.description && (
-                        <p className="text-[#155dfc] font-medium mt-1">
+                        <p className="text-[#C2481F] font-medium mt-1">
                           {item.description}
                         </p>
                       )}
@@ -232,7 +232,7 @@ export default function ContactUs({ data }) {
           <div className="p-8 rounded-2xl shadow-lg bg-white border border-gray-200">
             <h3
               className="text-xl sm:text-2xl font-bold mb-2"
-              style={{ color: "#155dfc" }}
+              style={{ color: "#C2481F" }}
             >
               Send us a Message
             </h3>
@@ -270,7 +270,7 @@ export default function ContactUs({ data }) {
                       value={formData.fullName}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#155dfc] focus:border-[#155dfc] text-black transition-colors"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                     />
                     {errors.fullName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -286,7 +286,7 @@ export default function ContactUs({ data }) {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#155dfc] focus:border-[#155dfc] text-black transition-colors"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                     />
                     {errors.email && (
                       <p className="text-red-500 text-sm mt-1">
@@ -304,7 +304,7 @@ export default function ContactUs({ data }) {
                     placeholder="Enter 10-digit phone number *"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#155dfc] focus:border-[#155dfc] text-black transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                   />
                   {errors.phone && (
                     <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
@@ -313,7 +313,7 @@ export default function ContactUs({ data }) {
 
                 <div className="relative" ref={dropdownRef}>
                   <div
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.subject ? "border-red-500" : "border-gray-300"} focus:ring-2 focus:ring-[#155dfc] focus:border-[#155dfc] text-black bg-white flex items-center justify-between cursor-pointer transition-colors ${isDropdownOpen ? "ring-2 ring-[#155dfc] border-[#155dfc]" : ""}`}
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.subject ? "border-red-500" : "border-gray-300"} focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black bg-white flex items-center justify-between cursor-pointer transition-colors ${isDropdownOpen ? "ring-2 ring-[#C2481F] border-[#C2481F]" : ""}`}
                     onClick={toggleDropdown}
                   >
                     <span
@@ -343,7 +343,7 @@ export default function ContactUs({ data }) {
                       {subjects.map((subject, idx) => (
                         <div
                           key={idx}
-                          className={`px-4 py-3 cursor-pointer transition-colors ${formData.subject === subject.value ? "bg-[#eaf0ff] text-[#155dfc]" : "hover:bg-gray-50"}`}
+                          className={`px-4 py-3 cursor-pointer transition-colors ${formData.subject === subject.value ? "bg-[#eaf0ff] text-[#C2481F]" : "hover:bg-gray-50"}`}
                           onClick={() => selectSubject(subject.value)}
                         >
                           {subject.label}
@@ -367,7 +367,7 @@ export default function ContactUs({ data }) {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#155dfc] focus:border-[#155dfc] text-black transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                   />
                   {errors.message && (
                     <p className="text-red-500 text-sm mt-1">
@@ -380,7 +380,7 @@ export default function ContactUs({ data }) {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-3 bg-[#155dfc] text-white rounded-lg font-semibold hover:bg-blue-700 hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="px-6 py-3 bg-[#C2481F] text-white rounded-lg font-semibold hover:bg-blue-700 hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                   >
                     {loading ? (
                       <>

@@ -10,7 +10,7 @@ export default function TrainingProcessClient({ data }) {
   return (
     <section className="bg-[#F8F9FA] py-16 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#155dfc]">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#C2481F]">
           {data?.heading}
         </h2>
         {data?.subheading && (
@@ -37,7 +37,7 @@ export default function TrainingProcessClient({ data }) {
               viewport={{ once: true }}
               className="flex flex-col items-center text-center max-w-sm mx-auto"
             >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#155dfc] text-white font-semibold text-lg shadow-md">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#C2481F] text-white font-semibold text-lg shadow-md">
                 {index + 1}
               </div>
 

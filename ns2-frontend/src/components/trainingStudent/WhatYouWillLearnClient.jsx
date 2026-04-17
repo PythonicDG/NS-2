@@ -5,8 +5,8 @@ import { Clock, Star } from "lucide-react";
 import { useState } from "react";
 
 const activeColor = {
-  bg: "bg-[#155dfc]",
-  text: "text-[#155dfc]",
+  bg: "bg-[#C2481F]",
+  text: "text-[#C2481F]",
   lightBg: "bg-[#e3ebff]",
 };
 

@@ -101,7 +101,7 @@ export default function ProgramStructure({ initialData }) {
                       {step.title}
                     </h3>
                     {step.label && (
-                      <span className="text-xs sm:text-sm md:text-base font-medium text-[#155dfc] bg-sky-100 px-2 sm:px-3 py-1 rounded-[8px]">
+                      <span className="text-xs sm:text-sm md:text-base font-medium text-[#C2481F] bg-sky-100 px-2 sm:px-3 py-1 rounded-[8px]">
                         {step.label}
                       </span>
                     )}

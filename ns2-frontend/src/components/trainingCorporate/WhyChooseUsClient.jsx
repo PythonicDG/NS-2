@@ -14,7 +14,7 @@ export default function WhyChooseUsClient({ data }) {
     <section className="py-16 bg-[#F8F9FA] dark:bg-[#F8F9FA]">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="mt-0 text-3xl md:text-4xl font-bold font-[Poppins] text-[#155dfc]">
+          <h2 className="mt-0 text-3xl md:text-4xl font-bold font-[Poppins] text-[#C2481F]">
             {data?.heading}
           </h2>
           {data?.subheading && (

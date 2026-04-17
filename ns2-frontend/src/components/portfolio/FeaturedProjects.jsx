@@ -7,7 +7,7 @@ const SectionHeader = ({ superHeading, heading, subheading }) => (
   <div className="text-center max-w-3xl mx-auto px-4 mb-12">
     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 font-poppins">
       {superHeading}{' '}
-      <span style={{ color: '#155dfc' }}>{heading}</span>
+      <span style={{ color: '#C2481F' }}>{heading}</span>
     </h2>
     {subheading && (
       <p className="mt-4 text-lg text-gray-500 font-opensans">
@@ -78,7 +78,7 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
                   <span
                     key={i}
                     className="text-white px-3 py-1 rounded-full text-sm font-medium"
-                    style={{ backgroundColor: '#155dfc' }}
+                    style={{ backgroundColor: '#C2481F' }}
                   >
                     {tag.trim()}
                   </span>
@@ -88,7 +88,7 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
               {/* Placeholder client info and buttons */}
               <p className="text-sm text-gray-500 mb-4">
                 Client:{' '}
-                <span className="font-semibold" style={{ color: '#155dfc' }}>
+                <span className="font-semibold" style={{ color: '#C2481F' }}>
                   RetailCorp
                 </span>
               </p>
@@ -97,19 +97,19 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
                 <button
                   className="text-white px-6 py-2 rounded-md font-semibold transition"
                   style={{
-                    backgroundColor: '#155dfc',
+                    backgroundColor: '#C2481F',
                     transition: 'background-color 0.3s',
                   }}
-                  onMouseOver={(e) => (e.target.style.backgroundColor = '#1047c1')}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = '#155dfc')}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = '#A63D1A')}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = '#C2481F')}
                 >
                   View Live
                 </button>
                 <button
                   className="px-6 py-2 rounded-md font-semibold border transition"
                   style={{
-                    color: '#155dfc',
-                    borderColor: '#155dfc',
+                    color: '#C2481F',
+                    borderColor: '#C2481F',
                     transition: 'background-color 0.3s',
                   }}
                   onMouseOver={(e) => (e.target.style.backgroundColor = '#eaf0ff')}
@@ -123,7 +123,7 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
             {/* Right: Image or Placeholder */}
             <div
               className="w-full md:w-1/2 flex items-center justify-center relative min-h-[280px] md:min-h-[350px]"
-              style={{ backgroundColor: '#155dfc' }}
+              style={{ backgroundColor: '#C2481F' }}
             >
               {contentItems[current].icon ? (
                 <img
@@ -145,9 +145,9 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
               onClick={prevSlide}
               className="w-10 h-10 rounded-full text-white shadow transition"
               aria-label="Previous Slide"
-              style={{ backgroundColor: '#155dfc' }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = '#1047c1')}
-              onMouseOut={(e) => (e.target.style.backgroundColor = '#155dfc')}
+              style={{ backgroundColor: '#C2481F' }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#A63D1A')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#C2481F')}
             >
               ←
             </button>
@@ -155,9 +155,9 @@ export const FeaturedProjectsSection = ({ data = {} }) => {
               onClick={nextSlide}
               className="w-10 h-10 rounded-full text-white shadow transition"
               aria-label="Next Slide"
-              style={{ backgroundColor: '#155dfc' }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = '#1047c1')}
-              onMouseOut={(e) => (e.target.style.backgroundColor = '#155dfc')}
+              style={{ backgroundColor: '#C2481F' }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#A63D1A')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#C2481F')}
             >
               →
             </button>

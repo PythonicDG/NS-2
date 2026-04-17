@@ -56,7 +56,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
       <button
         id="hamburger-button"
         onClick={toggleMenu}
-        className="p-2 rounded-md text-[#6C757D] hover:text-[#155dfc] hover:bg-[#e9ecef] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#155dfc] focus:ring-opacity-50"
+        className="p-2 rounded-md text-[#6C757D] hover:text-[#C2481F] hover:bg-[#e9ecef] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#C2481F] focus:ring-opacity-50"
         aria-label="Toggle mobile menu"
         aria-expanded={isMenuOpen}
       >
@@ -127,7 +127,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
 
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full text-[#6C757D] hover:text-[#155dfc] hover:bg-[#F8F9FA] transition-colors duration-200"
+                className="p-2 rounded-full text-[#6C757D] hover:text-[#C2481F] hover:bg-[#F8F9FA] transition-colors duration-200"
                 aria-label="Close menu"
               >
                 <svg
@@ -157,7 +157,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
                       <>
                         <button
                           onClick={() => toggleSubmenu(index)}
-                          className="flex justify-between items-center w-full py-4 text-left text-[#6C757D] hover:text-[#155dfc] transition-colors duration-200 font-medium"
+                          className="flex justify-between items-center w-full py-4 text-left text-[#6C757D] hover:text-[#C2481F] transition-colors duration-200 font-medium"
                         >
                           <span>{item.text}</span>
                           <svg
@@ -214,7 +214,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
                   <NavLinkClient
                     key={index}
                     href={buttonItem.url}
-                    className="block w-full bg-[#155dfc] text-white text-center px-6 py-3 rounded-md hover:bg-blue-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
+                    className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-blue-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {buttonItem.text}

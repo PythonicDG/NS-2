@@ -33,7 +33,7 @@ export default function Hero({ data }) {
         <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
           <h2
             className="font-extrabold text-2xl sm:text-3xl lg:text-4xl font-heading"
-            style={{ color: "#155dfc" }}
+            style={{ color: "#C2481F" }}
           >
             {data.super_heading}
           </h2>
@@ -49,7 +49,7 @@ export default function Hero({ data }) {
           {data.primary_button_text && (
             <Link
               href={data.primary_button_url || "#"}
-              className="inline-block bg-[#155dfc] hover:bg-blue-700 text-white hover:text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors font-body"
+              className="inline-block bg-[#C2481F] hover:bg-blue-700 text-white hover:text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors font-body"
             >
               {data.primary_button_text}
             </Link>
