@@ -69,6 +69,7 @@ export default function AboutCorporateClient({ data }) {
               src={`${apiBase}${data.primary_image}`}
               alt="Corporate Training"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover relative z-10"
               style={{
                 borderRadius: "8px",

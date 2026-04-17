@@ -13,7 +13,7 @@ const WhyChooseUs = ({ data }) => {
         background: "linear-gradient(to bottom right, #F8F9FA, #E9ECEF)",
       }}
     >
-      <div className="absolute inset-0 opacity-10 bg-[url('/noise.png')] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'repeating-conic-gradient(#000 0% 25%, transparent 0% 50%)', backgroundSize: '4px 4px' }} />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch relative z-10">
         <div className="space-y-8 text-center lg:text-left flex flex-col justify-center animate-fade-in-up">

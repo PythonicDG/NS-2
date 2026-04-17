@@ -32,6 +32,7 @@ export default function HeroSectionClient({ data }) {
                 src={bgUrl}
                 alt={heading || "Hero background"}
                 fill
+                sizes="100vw"
                 className="object-cover"
                 priority
               />

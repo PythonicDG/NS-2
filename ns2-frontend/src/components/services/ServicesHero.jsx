@@ -101,6 +101,7 @@ export default function ServicesHero({ data }) {
                 alt="Banner"
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover rounded-2xl"
               />
             </div>

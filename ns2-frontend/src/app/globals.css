@@ -1,4 +1,7 @@
+/* Google Fonts - must be first to satisfy CSS @import ordering rules */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap");
+
+/* Tailwind and other imports */
 @import "tailwindcss";
 @import "./../styles/base.css";
 @import "./../styles/variables.css";
@@ -6,6 +9,18 @@
 @import "./../styles/utilities.css";
 @import "./../styles/animations.css";
 @import "./../styles/overrides.css";
+
+/* CSS Variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-body: "Open Sans", sans-serif;
+  --font-heading: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -27,23 +42,11 @@
   --color-blue-950: #42180a;
 }
 
-/* CSS Variables */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-body: "Open Sans", sans-serif;
-  --font-heading: "Poppins", sans-serif;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 /* Apply fonts globally */
