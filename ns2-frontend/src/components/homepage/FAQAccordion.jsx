@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 export default function FAQAccordion({ items }) {
   const [openIndex, setOpenIndex] = useState(null);
@@ -11,7 +11,7 @@ export default function FAQAccordion({ items }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div id="faq" className="space-y-4">
       {items.map((item, index) => (
         <div
           key={index}

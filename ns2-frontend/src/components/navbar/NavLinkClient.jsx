@@ -13,8 +13,8 @@ export default function NavLinkClient({
   const isActive = pathname === href;
 
   const baseClasses = isActive
-    ? "text-[#155dfc] font-semibold"
-    : "text-[#6C757D] hover:text-[#155dfc]";
+    ? "text-[#C2481F] font-semibold"
+    : "text-[#6C757D] hover:text-[#C2481F]";
 
   return (
     <Link

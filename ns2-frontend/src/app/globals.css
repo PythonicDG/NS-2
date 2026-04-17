@@ -27,6 +27,19 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
+
+  /* Brand Color Replacement (Blue -> C2481F) */
+  --color-blue-50: #fff5f2;
+  --color-blue-100: #ffebd9;
+  --color-blue-200: #ffd1b3;
+  --color-blue-300: #ffb08c;
+  --color-blue-400: #ff855e;
+  --color-blue-500: #ff5722;
+  --color-blue-600: #C2481F;
+  --color-blue-700: #A63D1A;
+  --color-blue-800: #8a3215;
+  --color-blue-900: #712911;
+  --color-blue-950: #42180a;
 }
 
 @media (prefers-color-scheme: dark) {

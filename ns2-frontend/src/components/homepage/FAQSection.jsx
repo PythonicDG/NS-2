@@ -8,7 +8,7 @@ export default function FAQSection({ data }) {
       <div className="max-w-4xl mx-auto text-center">
         <h2
           className="text-3xl sm:text-4xl lg:text-5xl font-bold"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           {data.heading}
         </h2>

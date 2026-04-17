@@ -16,8 +16,8 @@ export default function HeroSection({ data }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white pt-0 md:pt-0 pb-16 md:pb-20 min-h-screen">
       {/* Decorative background circles */}
-      <div className="absolute -left-32 -top-20 w-[36rem] h-[36rem] rounded-full bg-gradient-to-br from-[#155dfc]/30 to-transparent opacity-30 blur-3xl" />
-      <div className="absolute -right-32 -bottom-28 w-[28rem] h-[28rem] rounded-full bg-gradient-to-br from-[#155dfc]/20 to-transparent opacity-30 blur-2xl" />
+      <div className="absolute -left-32 -top-20 w-[36rem] h-[36rem] rounded-full bg-gradient-to-br from-[#C2481F]/30 to-transparent opacity-30 blur-3xl" />
+      <div className="absolute -right-32 -bottom-28 w-[28rem] h-[28rem] rounded-full bg-gradient-to-br from-[#C2481F]/20 to-transparent opacity-30 blur-2xl" />
 
       {/* Waves */}
       <div className="absolute bottom-0 left-0 right-0">
@@ -39,8 +39,8 @@ export default function HeroSection({ data }) {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="#155dfc" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#155dfc" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#C2481F" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#C2481F" stopOpacity="0.2" />
             </linearGradient>
           </defs>
         </svg>
@@ -63,8 +63,8 @@ export default function HeroSection({ data }) {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="#155dfc" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#155dfc" stopOpacity="0.3" />
+              <stop offset="0%" stopColor="#C2481F" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#C2481F" stopOpacity="0.3" />
             </linearGradient>
           </defs>
         </svg>
@@ -98,7 +98,7 @@ export default function HeroSection({ data }) {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-slate-900">
                 {heading}{" "}
                 {highlighted && (
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#155dfc] to-[#0056b3]">
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#C2481F] to-[#0056b3]">
                     {highlighted}
                   </span>
                 )}
@@ -116,7 +116,7 @@ export default function HeroSection({ data }) {
                 {primaryBtn && (
                   <a
                     href={data?.primary_button_url ?? "#"}
-                    className="px-6 py-3 rounded-[8px] bg-[#155dfc] text-white font-semibold shadow-lg hover:shadow-xl hover:bg-[#0056b3] transition"
+                    className="px-6 py-3 rounded-[8px] bg-[#C2481F] text-white font-semibold shadow-lg hover:shadow-xl hover:bg-[#0056b3] transition"
                   >
                     {primaryBtn}
                   </a>
@@ -124,7 +124,7 @@ export default function HeroSection({ data }) {
                 {secondaryBtn && (
                   <a
                     href={data?.secondary_button_url ?? "#"}
-                    className="px-5 py-3 rounded-[8px] bg-blue-50 text-[#155dfc] font-medium hover:bg-blue-100 shadow-sm border border-blue-200"
+                    className="px-5 py-3 rounded-[8px] bg-blue-50 text-[#C2481F] font-medium hover:bg-blue-100 shadow-sm border border-blue-200"
                   >
                     {secondaryBtn}
                   </a>

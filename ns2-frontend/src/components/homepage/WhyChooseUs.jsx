@@ -20,7 +20,7 @@ const WhyChooseUs = ({ data }) => {
           {data.super_heading && (
             <h2
               className="font-semibold text-xs sm:text-sm uppercase tracking-widest relative inline-block after:absolute after:-bottom-1 after:left-0 after:w-1/2 after:h-0.5 after:transition-all after:duration-500 hover:after:w-full"
-              style={{ color: "#155dfc" }}
+              style={{ color: "#C2481F" }}
             >
               {data.super_heading}
             </h2>
@@ -28,7 +28,7 @@ const WhyChooseUs = ({ data }) => {
 
           <h3
             className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight"
-            style={{ color: "#155dfc" }}
+            style={{ color: "#C2481F" }}
           >
             {data.heading.split(" ").map((word, i) => (
               <span
@@ -70,7 +70,7 @@ const WhyChooseUs = ({ data }) => {
                     >
                       <IconComponent
                         className="w-6 h-6 flex-shrink-0"
-                        style={{ color: "#155dfc" }}
+                        style={{ color: "#C2481F" }}
                       />
                     </div>
                     <h4

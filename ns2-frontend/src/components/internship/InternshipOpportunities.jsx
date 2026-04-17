@@ -50,7 +50,7 @@ export default function InternshipOpportunities({ initialData }) {
               {item.primary_button_text && (
                 <a
                   href={item.primary_button_url || "#"}
-                  className="mt-auto text-sm font-medium text-[#155dfc] hover:underline flex items-center gap-1"
+                  className="mt-auto text-sm font-medium text-[#C2481F] hover:underline flex items-center gap-1"
                 >
                   {item.primary_button_text} <Download size={16} />
                 </a>

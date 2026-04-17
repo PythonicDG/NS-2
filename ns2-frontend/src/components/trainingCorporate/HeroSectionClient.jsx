@@ -61,7 +61,7 @@ export default function HeroSectionClient({ data }) {
       <div className="relative max-w-6xl mx-auto text-center">
         <h1 className="text-3xl md:text-5xl font-bold text-gray-900">
           {heading}{" "}
-          <span className="text-[#155dfc]">{highlighted_heading}</span>
+          <span className="text-[#C2481F]">{highlighted_heading}</span>
         </h1>
 
         <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -72,7 +72,7 @@ export default function HeroSectionClient({ data }) {
           {primary_button_text && (
             <Link href={primary_button_url || "#"}>
               <button
-                className="relative px-6 py-3 rounded bg-[#155dfc] text-white font-semibold shadow-md overflow-hidden group"
+                className="relative px-6 py-3 rounded bg-[#C2481F] text-white font-semibold shadow-md overflow-hidden group"
                 type="button"
               >
                 <span className="relative z-10">{primary_button_text}</span>
@@ -84,11 +84,11 @@ export default function HeroSectionClient({ data }) {
           {secondary_button_text && (
             <Link href={secondary_button_url || "#"}>
               <button
-                className="relative px-6 py-3 rounded border border-[#155dfc] text-[#155dfc] font-semibold overflow-hidden group"
+                className="relative px-6 py-3 rounded border border-[#C2481F] text-[#C2481F] font-semibold overflow-hidden group"
                 type="button"
               >
                 <span className="relative z-10">{secondary_button_text}</span>
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#155dfc]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#C2481F]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
               </button>
             </Link>
           )}
@@ -199,7 +199,7 @@ function StatCounter({ stat }) {
 
   return (
     <div ref={ref} className="text-center">
-      <h3 className="text-2xl md:text-3xl font-bold text-[#155dfc]">
+      <h3 className="text-2xl md:text-3xl font-bold text-[#C2481F]">
         {start ? <CountUp end={number} duration={3} separator="," /> : number}
         {suffix}
       </h3>

@@ -20,12 +20,12 @@ export default function WhyChooseUs({ initialData }) {
 
   return (
     <section className="relative py-20 bg-gradient-to-b from-[#F8F9FA] to-[#E0F2FF] overflow-hidden">
-      <div className="absolute -top-32 -left-20 w-[36rem] h-[36rem] rounded-[8px] bg-gradient-to-br from-[#155dfc] to-transparent opacity-20 blur-3xl" />
-      <div className="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-[8px] bg-gradient-to-br from-[#155dfc]/30 to-transparent opacity-20 blur-2xl" />
+      <div className="absolute -top-32 -left-20 w-[36rem] h-[36rem] rounded-[8px] bg-gradient-to-br from-[#C2481F] to-transparent opacity-20 blur-3xl" />
+      <div className="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-[8px] bg-gradient-to-br from-[#C2481F]/30 to-transparent opacity-20 blur-2xl" />
 
       <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
         {super_heading && (
-          <span className="inline-block px-4 py-1 text-sm font-semibold text-white bg-[#155dfc] rounded-[8px] mb-6">
+          <span className="inline-block px-4 py-1 text-sm font-semibold text-white bg-[#C2481F] rounded-[8px] mb-6">
             {super_heading}
           </span>
         )}
@@ -33,7 +33,7 @@ export default function WhyChooseUs({ initialData }) {
         <h2 className="text-4xl font-bold mb-4 text-gray-900">
           {heading}{" "}
           {highlighted_heading && (
-            <span className="bg-gradient-to-r from-[#155dfc] to-[#6C63FF] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#C2481F] to-[#6C63FF] bg-clip-text text-transparent">
               {highlighted_heading}
             </span>
           )}
@@ -54,7 +54,7 @@ export default function WhyChooseUs({ initialData }) {
                 >
                   <div className="flex items-start gap-4">
                     {item.icon && (
-                      <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-[#155dfc] to-[#6C63FF] text-white rounded-[8px] shrink-0">
+                      <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-[#C2481F] to-[#6C63FF] text-white rounded-[8px] shrink-0">
                         <img
                           src={normalizeImageUrl(item.icon)}
                           alt={item.title || ""}

@@ -155,7 +155,7 @@ export default function WhatWeProvideSection({ data }) {
           >
           <button 
             onClick={() => setShowAll(!showAll)}
-            className="bg-[#155dfc] hover:bg-[#1047c1] text-white py-3 px-8 rounded-[8px] font-medium transition-colors duration-300 flex items-center mx-auto border border-[#1047c1]"
+            className="bg-[#C2481F] hover:bg-[#A63D1A] text-white py-3 px-8 rounded-[8px] font-medium transition-colors duration-300 flex items-center mx-auto border border-[#A63D1A]"
           >
             {showAll ? 'Show Less Services' : 'View All Services'}
             <svg 

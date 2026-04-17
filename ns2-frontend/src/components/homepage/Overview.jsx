@@ -36,7 +36,7 @@ export default function Overview({ data }) {
           height="80"
           viewBox="0 0 100 80"
           className="fill-current"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           <path
             d="M80,40 C80,40 20,10 20,40 C20,70 0,40 0,40"
@@ -56,7 +56,7 @@ export default function Overview({ data }) {
           height="40"
           viewBox="0 0 120 40"
           className="fill-current"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           <path
             d="M0,20 Q30,0 60,20 T120,20"
@@ -73,7 +73,7 @@ export default function Overview({ data }) {
           height="60"
           viewBox="0 0 80 60"
           className="fill-current"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           <path d="M70,10 C73,10 80,13 80,20 C80,27 73,30 70,30 L10,30 C7,30 0,27 0,20 C0,13 7,10 10,10 Z M50,40 L60,50 L50,40 Z" />
         </svg>
@@ -85,7 +85,7 @@ export default function Overview({ data }) {
           height="40"
           viewBox="0 0 40 40"
           className="fill-current"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           <path d="M20,5 L24,16 L36,16 L26,23 L30,34 L20,27 L10,34 L14,23 L4,16 L16,16 Z" />
         </svg>
@@ -97,7 +97,7 @@ export default function Overview({ data }) {
           height="20"
           viewBox="0 0 60 20"
           className="fill-current"
-          style={{ color: "#155dfc" }}
+          style={{ color: "#C2481F" }}
         >
           <path d="M10,0 L10,8 L18,8 L18,12 L10,12 L10,20 L6,20 L6,12 L-2,12 L-2,8 L6,8 L6,0 Z M30,0 L30,8 L38,8 L38,12 L30,12 L30,20 L26,20 L26,12 L18,12 L18,8 L26,8 L26,0 Z M50,0 L50,8 L58,8 L58,12 L50,12 L50,20 L46,20 L46,12 L38,12 L38,8 L46,8 L46,0 Z" />
         </svg>
@@ -157,7 +157,7 @@ export default function Overview({ data }) {
                   height="40"
                   viewBox="0 0 60 40"
                   className="fill-current"
-                  style={{ color: "#155dfc" }}
+                  style={{ color: "#C2481F" }}
                 >
                   <path
                     d="M0,20 C20,10 40,30 60,20"
@@ -174,12 +174,12 @@ export default function Overview({ data }) {
           <div className="absolute -bottom-6 -left-6 flex space-x-2 opacity-30">
             <div
               className="w-4 h-4 rounded-full"
-              style={{ backgroundColor: "#155dfc" }}
+              style={{ backgroundColor: "#C2481F" }}
             ></div>
             <div className="w-6 h-6 bg-blue-300 rounded-full"></div>
             <div
               className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: "#155dfc" }}
+              style={{ backgroundColor: "#C2481F" }}
             ></div>
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function Overview({ data }) {
           {data.super_heading && (
             <h2
               className="font-semibold text-sm sm:text-base relative inline-block"
-              style={{ color: "#155dfc" }}
+              style={{ color: "#C2481F" }}
             >
               <span className="relative z-10">{data.super_heading}</span>
               <span className="absolute -left-2 -right-2 bottom-0 h-2 bg-blue-100 opacity-40 -z-10 rounded-full"></span>
@@ -215,11 +215,11 @@ export default function Overview({ data }) {
               >
                 <div
                   className="absolute -left-3 top-1.5 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ backgroundColor: "#155dfc" }}
+                  style={{ backgroundColor: "#C2481F" }}
                 ></div>
                 <CheckCircle
                   className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform"
-                  style={{ color: "#155dfc" }}
+                  style={{ color: "#C2481F" }}
                 />
                 <span className="group-hover:text-blue-800 transition-colors">
                   {item.text}
@@ -233,7 +233,7 @@ export default function Overview({ data }) {
               <Link
                 href={data.primary_button_url || "#"}
                 className="inline-flex items-center gap-2 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium shadow transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
-                style={{ backgroundColor: "#155dfc" }}
+                style={{ backgroundColor: "#C2481F" }}
                 prefetch={false}
               >
                 <span className="relative z-10 transition-transform group-hover:translate-x-1">
@@ -266,12 +266,12 @@ export default function Overview({ data }) {
           <div className="absolute -bottom-8 left-1/4 flex space-x-1 opacity-40">
             <div
               className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: "#155dfc" }}
+              style={{ backgroundColor: "#C2481F" }}
             ></div>
             <div className="w-3 h-3 bg-blue-300 rounded-full"></div>
             <div
               className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: "#155dfc" }}
+              style={{ backgroundColor: "#C2481F" }}
             ></div>
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function Overview({ data }) {
       <div
         className="absolute bottom-0 left-0 right-0 h-2 opacity-50"
         style={{
-          background: "linear-gradient(to right, #e0e7ff, #155dfc, #e0e7ff)",
+          background: "linear-gradient(to right, #e0e7ff, #C2481F, #e0e7ff)",
         }}
       ></div>
     </section>

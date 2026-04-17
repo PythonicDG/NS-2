@@ -20,7 +20,7 @@ export default function AboutCorporateClient({ data }) {
             {data.super_heading}
           </h3>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 font-heading">
-            <span className="text-[#155dfc]">{data.heading}</span>
+            <span className="text-[#C2481F]">{data.heading}</span>
           </h2>
           <h4 className="text-lg md:text-xl font-semibold text-[#6C757D] mt-4 font-heading">
             {data.highlighted_heading}
@@ -42,7 +42,7 @@ export default function AboutCorporateClient({ data }) {
                   />
                 )}
                 <div>
-                  <h5 className="font-semibold text-[#155dfc] font-heading">
+                  <h5 className="font-semibold text-[#C2481F] font-heading">
                     {item.title}
                   </h5>
                   <p className="text-sm text-[#6C757D] font-body">
@@ -80,7 +80,7 @@ export default function AboutCorporateClient({ data }) {
               className="absolute bottom-4 left-4 right-4 bg-white/90 p-4 shadow-md z-20"
               style={{ borderRadius: "8px" }}
             >
-              <h5 className="font-semibold text-[#155dfc] font-heading">
+              <h5 className="font-semibold text-[#C2481F] font-heading">
                 {data.overlay_title}
               </h5>
               <p className="text-sm text-[#6C757D] font-body">

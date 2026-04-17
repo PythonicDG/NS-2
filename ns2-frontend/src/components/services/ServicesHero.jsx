@@ -47,25 +47,35 @@ export default function ServicesHero({ data }) {
               {bannerData.subheading}
             </p>
 
-            {/* Buttons */}
-                <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
-                  {bannerData.primary_button_text && (
-                    <button
-                      className="px-6 py-3 bg-[#155dfc] text-white font-semibold shadow-lg hover:bg-[#134cbf] transition-all duration-300"
-                      style={{ borderRadius: '8px' }}
-                    >
-                      {bannerData.primary_button_text}
-                    </button>
-                  )}
-                  {bannerData.secondary_button_text && (
-                    <button
-                      className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold shadow hover:bg-blue-50 transition-all duration-300"
-                      style={{ borderRadius: '8px' }}
-                    >
-                      {bannerData.secondary_button_text}
-                    </button>
-                  )}
-                </div>
+                        {/* Buttons */}
+            <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
+              {bannerData.primary_button_text && bannerData.primary_button_url && (
+                <a
+                  href={bannerData.primary_button_url} // The ID of the target section
+                >
+                  <button
+                    className="px-6 py-3 bg-[#C2481F] text-white font-semibold shadow-lg hover:bg-[#A63D1A] transition-all duration-300"
+                    style={{ borderRadius: '8px' }}
+                  >
+                    {bannerData.primary_button_text}
+                  </button>
+                </a>
+              )}
+              {bannerData.secondary_button_text && bannerData.secondary_button_url && (
+                <a
+                  href={bannerData.secondary_button_url} // The ID of the target section
+                >
+                  <button
+                    className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold shadow hover:bg-blue-50 transition-all duration-300"
+                    style={{ borderRadius: '8px' }}
+                  >
+                    {bannerData.secondary_button_text}
+                  </button>
+                </a>
+              )}
+            </div>
+
+
 
 
             {/* Stats */}

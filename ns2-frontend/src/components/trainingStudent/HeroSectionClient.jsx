@@ -70,10 +70,10 @@ export default function HeroSectionClient({ data }) {
                     href={primary_button_url || "#"}
                     className="inline-flex items-center px-5 py-3 text-white rounded-[8px] font-semibold shadow-md transition"
                     style={{
-                      backgroundColor: "#155dfc",
+                      backgroundColor: "#C2481F",
                     }}
-                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#1047c1")}
-                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#155dfc")}
+                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#A63D1A")}
+                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#C2481F")}
                   >
                     {primary_button_text}
                   </Link>
