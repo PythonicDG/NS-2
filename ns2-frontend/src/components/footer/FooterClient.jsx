@@ -31,6 +31,7 @@ export default function FooterClient({ data }) {
                   width={180}
                   height={80}
                   className="object-contain"
+                  style={{ width: 'auto', height: 'auto' }}
                   unoptimized
                 />
               </div>

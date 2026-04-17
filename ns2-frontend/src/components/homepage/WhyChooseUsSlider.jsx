@@ -36,6 +36,7 @@ export default function WhyChooseUsSlider({ contentItems }) {
         src={imageUrl}
         alt="Icon Slide"
         fill
+        sizes="(max-width: 768px) 100vw, 50vw"
         className="object-contain transition-opacity duration-1000 ease-in-out"
       />
     </div>
