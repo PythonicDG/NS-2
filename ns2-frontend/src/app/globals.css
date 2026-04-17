@@ -1,6 +1,5 @@
-/* Tailwind and other imports */
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap");
+@import "tailwindcss";
 @import "./../styles/base.css";
 @import "./../styles/variables.css";
 @import "./../styles/components.css";
