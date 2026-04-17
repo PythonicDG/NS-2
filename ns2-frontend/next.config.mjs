@@ -15,6 +15,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ns2-infotech-backend-production.up.railway.app",
+        port: "",
+        pathname: "/media/**",
+      },
     ],
   },
 };
