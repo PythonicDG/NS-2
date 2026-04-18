@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useMemo } from "react";
+import { motion } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -132,7 +133,16 @@ export default function Overview({ data }) {
           )}
 
           {primaryImageUrl && (
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.4, rotate: 15, x: 150, y: 150 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0, x: 0, y: 0 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 60, 
+                damping: 12,
+                duration: 1.2
+              }}
+              viewport={{ once: true, margin: "-100px" }}
               className="
               absolute 
               bottom-0 right-0 
@@ -140,7 +150,7 @@ export default function Overview({ data }) {
               sm:w-[75%] sm:h-[60%]
               md:w-[70%] md:h-[62%]
               lg:w-[65%] lg:h-[64%]
-              rounded-lg overflow-hidden shadow-lg border-4 border-white z-20
+              rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20
             "
             >
               <Image
@@ -168,7 +178,7 @@ export default function Overview({ data }) {
                   <polygon points="60,20 50,15 50,25" fill="currentColor" />
                 </svg>
               </div>
-            </div>
+            </motion.div>
           )}
 
           <div className="absolute -bottom-6 -left-6 flex space-x-2 opacity-30">
