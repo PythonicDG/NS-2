@@ -133,16 +133,7 @@ export default function Overview({ data }) {
           )}
 
           {primaryImageUrl && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.4, rotate: 15, x: 150, y: 150 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0, x: 0, y: 0 }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 60, 
-                damping: 12,
-                duration: 1.2
-              }}
-              viewport={{ once: true, margin: "-100px" }}
+            <div
               className="
               absolute 
               bottom-0 right-0 
@@ -178,7 +169,7 @@ export default function Overview({ data }) {
                   <polygon points="60,20 50,15 50,25" fill="currentColor" />
                 </svg>
               </div>
-            </motion.div>
+            </div>
           )}
 
           <div className="absolute -bottom-6 -left-6 flex space-x-2 opacity-30">
