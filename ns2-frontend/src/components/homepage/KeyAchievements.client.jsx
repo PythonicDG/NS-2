@@ -70,7 +70,7 @@ function StudentCard({ item, index }) {
             />
             
             <div className="relative w-full h-full rounded-[1.8rem] bg-gradient-to-br from-[#C2481F] to-orange-400 p-[2px] shadow-lg">
-              <div className="w-full h-full rounded-[1.7rem] bg-white overflow-hidden">
+              <div className="relative w-full h-full rounded-[1.7rem] bg-white overflow-hidden">
                 {photoUrl ? (
                   <Image
                     src={photoUrl}
