@@ -17,8 +17,8 @@ const opensans = Open_Sans({
 });
 
 export const metadata = {
-  title: "NS^2",
-  description: "Next.js Project with Dynamic Navbar & Footer",
+  title: "MIA",
+  description: "Modern Institute of Automation",
   icons: {
     icon: "/favicon.svg",
   },

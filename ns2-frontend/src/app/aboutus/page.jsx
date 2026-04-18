@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "NS^2 | | About Us",
+  title: "MIA | | About Us",
   description:
-    "At NS², we craft innovative solutions that bridge technology and human creativity.",
+    "At MIA, we craft innovative solutions that bridge industry needs and technical training.",
 };
 
 import CompanyGallery from "@/components/aboutus/CompanyGallery";

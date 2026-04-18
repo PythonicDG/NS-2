@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "NS^2 | | Training Programs",
+  title: "MIA | | Training Programs",
   description:
-    "At NS², we offer comprehensive training programs for both corporate professionals and students.",
+    "At MIA, we offer comprehensive training programs for both corporate professionals and students.",
 };
 
 import WhatYouWillLearnServer from "@/components/trainingStudent/WhatYouWillLearnServer";

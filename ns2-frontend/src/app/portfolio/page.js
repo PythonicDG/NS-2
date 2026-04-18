@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "NS^2 | | Portfolio",
+  title: "MIA | | Portfolio",
   description:
-    "Explore NS²'s innovative projects, trusted partnerships, and expert team.",
+    "Explore MIA's innovative projects, trusted partnerships, and expert team.",
 };
 import ContactUs from "@/components/homepage/ContactUs";
 import Testimonial from "@/components/homepage/Testimonial";
