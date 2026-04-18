@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -16,6 +17,41 @@ export default function Hero({ data }) {
 
   return (
     <section className="relative w-full bg-black text-white pb-40 sm:pb-48">
+      {/* Moving Orange Announcement Strip */}
+      <div className="w-full bg-[#C2481F] py-2.5 z-30 relative overflow-hidden border-b border-white/10 shadow-lg">
+        <motion.div 
+          animate={{ x: [0, "-50%"] }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity, 
+            ease: "linear",
+            repeatType: "loop"
+          }}
+          className="flex whitespace-nowrap w-max"
+        >
+          {/* Announcement Content Block (Repeated for seamless loop) */}
+          {[1, 2].map((block) => (
+            <div key={block} className="flex items-center gap-12 px-6 text-white text-[10px] sm:text-xs font-black uppercase tracking-widest">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">🎓</span>
+                <span>Admission Open - Enroll Now for Limited Seats!</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
+              <div className="flex items-center gap-2">
+                <span className="text-sm">🚀</span>
+                <span>New Batch Starting - Don't Miss Out!</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
+              <div className="flex items-center gap-2">
+                <span className="text-sm">💼</span>
+                <span>100% Placement Assistance Available</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
       {backgroundImageUrl && (
         <div className="absolute inset-0">
           <Image
