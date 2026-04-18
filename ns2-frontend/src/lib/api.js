@@ -56,7 +56,10 @@ export async function fetchHomepageSection(sectionType) {
     );
 
     if (!section) {
-      console.warn(`${sectionType} section not found.`);
+      const availableTypes = sections.filter(s => s.is_active).map(s => s.section_type);
+      console.warn(
+        `${sectionType} section not found. Available active sections: ${availableTypes.join(", ")}`
+      );
       return null;
     }
 
