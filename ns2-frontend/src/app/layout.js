@@ -2,8 +2,10 @@ import Footer from "@/components/footer/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ScrollToTop from "@/components/homepage/ScrollToTop";
 import Navbar from "@/components/navbar/Navbar";
+import TopCredibilityBar from "@/components/navbar/TopCredibilityBar";
 import { Open_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
+import { fetchNavbarData } from "@/lib/api";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -24,7 +26,11 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const navbarData = await fetchNavbarData();
+  const statistics = navbarData?.header?.statistics || [];
+  const socialLinks = navbarData?.footer?.social_links || [];
+
   return (
     <html lang="en" className={`${poppins.variable} ${opensans.variable}`}>
       <head>
@@ -51,7 +57,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-opensans flex flex-col min-h-screen">
         <GoogleAnalytics />
-
+        <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
         <Navbar />
         <main className="flex-grow">{children}</main>
         <ScrollToTop />

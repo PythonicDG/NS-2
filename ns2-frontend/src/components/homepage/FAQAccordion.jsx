@@ -23,9 +23,8 @@ export default function FAQAccordion({ items }) {
           >
             <span className="font-medium text-gray-900">{item.question}</span>
             <ChevronDown
-              className={`w-5 h-5 text-gray-500 transition-transform ${
-                openIndex === index ? "rotate-180" : ""
-              }`}
+              className={`w-5 h-5 text-gray-500 transition-transform ${openIndex === index ? "rotate-180" : ""
+                }`}
             />
           </button>
           {openIndex === index && (
