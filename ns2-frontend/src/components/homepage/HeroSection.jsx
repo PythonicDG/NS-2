@@ -62,6 +62,8 @@ export default function Hero({ data }) {
             sizes="100vw"
             className="object-cover object-[50%_50%] opacity-50"
           />
+          {/* Dark gradient overlay for text clarity */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
         </div>
       )}
 
