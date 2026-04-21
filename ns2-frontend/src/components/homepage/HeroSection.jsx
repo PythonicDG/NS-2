@@ -84,14 +84,25 @@ export default function Hero({ data }) {
             {data.subheading}
           </p>
 
-          {data.primary_button_text && (
-            <Link
-              href={data.primary_button_url || "#"}
-              className="inline-block bg-[#C2481F] hover:bg-blue-700 text-white hover:text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors font-body"
-            >
-              {data.primary_button_text}
-            </Link>
-          )}
+          <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
+            {data.primary_button_text && (
+              <Link
+                href={data.primary_button_url || "#"}
+                className="inline-block bg-[#C2481F] hover:bg-[#A83D1A] text-white px-8 py-3.5 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-[#C2481F]/30 hover:-translate-y-0.5 font-body"
+              >
+                {data.primary_button_text}
+              </Link>
+            )}
+
+            {(data.secondary_button_text || data.secondary_button_url) && (
+              <Link
+                href={data.secondary_button_url || "#"}
+                className="inline-block bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 hover:border-white/40 px-8 py-3.5 rounded-xl font-bold transition-all duration-300 hover:-translate-y-0.5 font-body"
+              >
+                {data.secondary_button_text || "Book Free Demo"}
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 
