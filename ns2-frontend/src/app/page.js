@@ -5,6 +5,7 @@ export const metadata = {
 };
 
 export const dynamic = "force-dynamic";
+import CallToAction from "@/components/homepage/CallToAction";
 import ContactUs from "@/components/homepage/ContactUs";
 import FAQSection from "@/components/homepage/FAQSection";
 import Hero from "@/components/homepage/HeroSection";
@@ -25,6 +26,7 @@ export default async function HomePage() {
   const contact = await fetchHomepageSection("Contact Us");
   const keyAchievements = await fetchHomepageSection("Key Achivements");
   const ourServices = await fetchHomepageSection("Our Services");
+  const callToAction = await fetchHomepageSection("Call To Action");
 
   return (
     <main>
@@ -34,6 +36,7 @@ export default async function HomePage() {
       {ourServices && <ServicesSection data={ourServices} />}
       <KeyAchievementsServer data={keyAchievements} />
       <Testimonial data={testimonial} />
+      <CallToAction data={callToAction} />
       <FAQSection data={faq} />
       <ContactUs data={contact} />
       <ScrollToTop />
