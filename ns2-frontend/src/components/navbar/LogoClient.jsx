@@ -9,7 +9,7 @@ export default function LogoClient({ logoUrl }) {
   if (!logoUrl || imageError) {
     return (
       <Link href="/" className="flex items-center">
-        <div className="h-10 w-32 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
+        <div className="h-14 w-40 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
           Company Logo
         </div>
       </Link>
@@ -21,7 +21,7 @@ export default function LogoClient({ logoUrl }) {
       <img
         src={logoUrl}
         alt="Company Logo"
-        className="h-10 w-auto"
+        className="h-14 w-auto drop-shadow-sm"
         onError={() => {
           console.error("Failed to load logo:", logoUrl);
           setImageError(true);
