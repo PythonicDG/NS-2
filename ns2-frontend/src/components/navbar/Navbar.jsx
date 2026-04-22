@@ -22,7 +22,7 @@ export default async function Navbar() {
   const buttonMenuItems = menuItems.filter((item) => item.is_button);
 
   return (
-    <nav className="sticky top-0 bg-[#F8F9FA] shadow-md py-4 z-50">
+    <nav className="bg-[#F8F9FA] shadow-md py-4 w-full">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="pl-4 lg:pl-8">
           <LogoClient logoUrl={logoUrl} />

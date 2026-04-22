@@ -57,8 +57,10 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="font-opensans flex flex-col min-h-screen">
         <GoogleAnalytics />
-        <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
-        <Navbar />
+        <div className="sticky top-0 z-[100]">
+          <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
+          <Navbar />
+        </div>
         <main className="flex-grow">{children}</main>
         <ScrollToTop />
         <Footer />
