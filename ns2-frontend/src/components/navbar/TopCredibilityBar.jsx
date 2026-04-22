@@ -1,4 +1,4 @@
-import { normalizeImageUrl } from "@/lib/api";
+import { Facebook, Instagram, Twitter, Youtube, MessageCircle, Send } from "lucide-react";
 
 export default function TopCredibilityBar({ stats, socialLinks }) {
   // Filter out "top companies" related stats as requested
@@ -6,6 +6,19 @@ export default function TopCredibilityBar({ stats, socialLinks }) {
     !stat.label?.toLowerCase().includes("placed") && 
     !stat.sub_label?.toLowerCase().includes("top companies")
   ) || [];
+
+  const getSocialIcon = (platform) => {
+    const p = platform?.toLowerCase() || "";
+    if (p.includes("facebook")) return <Facebook className="w-3.5 h-3.5 sm:w-4 sm:h-4" />;
+    if (p.includes("instagram")) return <Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4" />;
+    if (p.includes("twitter") || p.includes("x")) return <Twitter className="w-3.5 h-3.5 sm:w-4 sm:h-4" />;
+    if (p.includes("youtube")) return <Youtube className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" />;
+    if (p.includes("whatsapp")) return <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />;
+    if (p.includes("linkedin")) return <div className="p-0.5 border border-current rounded-sm flex items-center justify-center text-[8px] font-bold">in</div>;
+    if (p.includes("telegram")) return <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />;
+    
+    return <span className="text-[10px] lowercase">{platform}</span>;
+  };
 
   return (
     <div className="w-full bg-[#111111] text-white/90 py-1.5 border-b border-white/5">
@@ -24,25 +37,17 @@ export default function TopCredibilityBar({ stats, socialLinks }) {
 
         {/* Right: Social Links */}
         {socialLinks && socialLinks.length > 0 && (
-          <div className="flex items-center gap-3 sm:gap-4 border-l border-white/10 pl-4">
+          <div className="flex items-center gap-4 sm:gap-6 border-l border-white/10 pl-6">
             {socialLinks.map((social, idx) => (
               <a
                 key={idx}
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-100 opacity-70 transition-all duration-300 transform hover:scale-110"
+                className="hover:text-[#C2481F] text-white/70 transition-all duration-300 transform hover:scale-110 flex items-center"
                 aria-label={social.platform || `social-${idx}`}
               >
-                {social.icon ? (
-                  <img
-                    src={normalizeImageUrl(social.icon)}
-                    alt={social.platform || "Social icon"}
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
-                  />
-                ) : (
-                  <span className="text-[10px]">{social.platform}</span>
-                )}
+                {getSocialIcon(social.platform)}
               </a>
             ))}
           </div>
