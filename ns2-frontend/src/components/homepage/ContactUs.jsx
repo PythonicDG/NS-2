@@ -3,6 +3,15 @@
 import { useState, useRef, useEffect } from "react";
 import { submitContactForm } from "@/lib/api";
 
+/**
+ * ContactUs Component
+ * 
+ * A comprehensive contact form with validation and integration with the backend API.
+ * 
+ * @param {Object} props - Component properties
+ * @param {Object} props.data - Dynamic content data fetched from the API
+ * @returns {JSX.Element} The rendered ContactUs section
+ */
 export default function ContactUs({ data }) {
   const subjects = [
     { value: "general", label: "General Inquiry" },
