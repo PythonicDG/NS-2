@@ -3,6 +3,16 @@ import { CheckCircle, ShieldCheck, TrendingUp } from "lucide-react";
 
 const iconMap = [CheckCircle, TrendingUp, ShieldCheck];
 
+/**
+ * WhyChooseUs Component
+ * 
+ * Renders a section highlighting key benefits and features of the institute.
+ * Includes a text area with animated headings and a slider for showcasing items.
+ * 
+ * @param {Object} props - Component properties
+ * @param {Object} props.data - Content data for headings and items
+ * @returns {JSX.Element|null} The rendered WhyChooseUs section
+ */
 const WhyChooseUs = ({ data }) => {
   if (!data) return null;
 
