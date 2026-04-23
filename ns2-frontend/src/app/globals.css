@@ -1,7 +1,13 @@
+/* ==========================================================================
+   Project: NS2 Infotech
+   Author: Antigravity
+   Description: Global styles and Tailwind configuration
+   ========================================================================== */
+
 /* Google Fonts - must be first to satisfy CSS @import ordering rules */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap");
 
-/* Tailwind and other imports */
+/* Modern CSS Reset & Imports */
 @import "tailwindcss";
 @import "./../styles/base.css";
 @import "./../styles/variables.css";
