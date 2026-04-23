@@ -19,8 +19,17 @@ const opensans = Open_Sans({
 });
 
 export const metadata = {
-  title: "MIA",
-  description: "Modern Institute of Automation",
+  title: "NS2 Infotech | Modern Institute of Automation",
+  description:
+    "Empowering the next generation of automation experts with industry-leading training and placement support.",
+  keywords: [
+    "Automation",
+    "PLC",
+    "SCADA",
+    "Robotics",
+    "Industrial training",
+    "NS2 Infotech",
+  ],
   icons: {
     icon: "/favicon.svg",
   },
