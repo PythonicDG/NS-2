@@ -56,7 +56,7 @@ export const ServicesSection = ({ data = {} }) => {
           {contentItems.map((item, index) => (
             <div
               key={item.order || index}
-              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 ${
+              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ${
                 animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
               }`}
               style={{
