@@ -230,7 +230,7 @@ export default function Hero({ data }) {
         {data.content_items?.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white text-black p-4 sm:p-6 rounded-lg shadow hover:shadow-lg transition-transform flex flex-col items-center justify-center text-center"
+            className="bg-white text-black p-4 sm:p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300 flex flex-col items-center justify-center text-center"
           >
             <p className="text-lg sm:text-2xl lg:text-3xl font-bold font-heading">
               {item.label}
