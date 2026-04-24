@@ -38,7 +38,7 @@ const WhyChooseUs = ({ data }) => {
 
           <h3
             className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight"
-            style={{ color: "#C2481F" }}
+            style={{ color: "#C2481F", textShadow: "0 2px 4px rgba(0,0,0,0.05)" }}
           >
             {data.heading.split(" ").map((word, i) => (
               <span
