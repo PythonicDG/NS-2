@@ -19,6 +19,8 @@ export default function FAQAccordion({ items }) {
         >
           <button
             onClick={() => toggle(index)}
+            aria-expanded={openIndex === index}
+            aria-controls={`faq-content-${index}`}
             className="w-full flex justify-between items-center px-4 py-3 text-left"
           >
             <span className="font-medium text-gray-900">{item.question}</span>
@@ -28,7 +30,10 @@ export default function FAQAccordion({ items }) {
             />
           </button>
           {openIndex === index && (
-            <div className="px-4 pb-4 text-gray-600">
+            <div 
+              id={`faq-content-${index}`}
+              className="px-4 pb-4 text-gray-600"
+            >
               {item.answer || "No answer provided yet."}
             </div>
           )}
