@@ -49,6 +49,7 @@ export default function Overview({ data }) {
               lg:w-[58%] lg:h-[54%]
               rounded-lg overflow-hidden shadow-lg z-10
               border-2 border-blue-100
+              group cursor-pointer transition-transform duration-500 hover:scale-[1.02]
             "
             >
               <Image
@@ -56,7 +57,7 @@ export default function Overview({ data }) {
                 alt="Overview Background"
                 fill
                 sizes="(max-width: 640px) 70vw, (max-width: 1024px) 60vw, 55vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
           )}
@@ -71,6 +72,7 @@ export default function Overview({ data }) {
               md:w-[72%] md:h-[62%]
               lg:w-[68%] lg:h-[65%]
               rounded-lg overflow-hidden shadow-2xl border-4 border-white z-20
+              group cursor-pointer transition-transform duration-500 hover:scale-[1.02]
             "
             >
               <Image
@@ -78,7 +80,7 @@ export default function Overview({ data }) {
                 alt="Overview Primary"
                 fill
                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 70vw, 65vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
           )}
