@@ -378,11 +378,16 @@ export default function ContactUs({ data }) {
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                   />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.message}
+                  <div className="flex justify-between mt-1">
+                    {errors.message ? (
+                      <p className="text-red-500 text-sm">{errors.message}</p>
+                    ) : (
+                      <div />
+                    )}
+                    <p className="text-gray-400 text-xs">
+                      {formData.message.length} characters
                     </p>
-                  )}
+                  </div>
                 </div>
 
                 <div className="flex space-x-3">
