@@ -23,9 +23,11 @@ export default function ScrollToTop() {
     <div className="fixed bottom-6 right-6 z-[9999]">
       <button
         onClick={scrollToTop}
+        aria-label="Scroll to top"
         className={`p-3 rounded-full shadow-lg transition-all duration-300
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-          bg-blue-600 text-white hover:bg-blue-700`}
+          text-white hover:opacity-90 active:scale-95`}
+        style={{ backgroundColor: "#C2481F" }}
       >
         <ChevronUp size={24} />
       </button>
