@@ -65,7 +65,7 @@ const WhyChooseUs = ({ data }) => {
               return (
                 <div
                   key={idx}
-                  className="rounded-lg shadow-md p-6 hover:shadow-xl transition-transform transform hover:-translate-y-2 hover:scale-[1.02] duration-300 flex flex-col gap-4 group animate-fade-in-up"
+                  className="rounded-lg shadow-md p-6 hover:shadow-xl hover:border-[#C2481F]/20 border border-transparent transition-all transform hover:-translate-y-2 hover:scale-[1.02] duration-300 flex flex-col gap-4 group animate-fade-in-up"
                   style={{
                     backgroundColor: "#F8F9FA",
                     animationDelay: `${idx * 100}ms`,
