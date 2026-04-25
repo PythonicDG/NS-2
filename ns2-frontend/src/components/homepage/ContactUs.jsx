@@ -197,11 +197,11 @@ export default function ContactUs({ data }) {
                     key={idx}
                     className="flex items-start p-5 rounded-2xl shadow-md bg-white border border-gray-200"
                   >
-                    {item.icon && (
+                    {item.icon && API_BASE_URL && (
                       <img
                         src={`${API_BASE_URL}${item.icon}`}
-                        alt=""
-                        className="w-10 h-10 mr-4"
+                        alt={item.label || "contact icon"}
+                        className="w-10 h-10 mr-4 object-contain"
                       />
                     )}
                     <div>
