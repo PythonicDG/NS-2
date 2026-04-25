@@ -9,8 +9,14 @@ This is the frontend application for NS2 Infotech (Modern Institute of Automatio
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
 - **Data Fetching**: [SWR](https://swr.vercel.app/)
+- **Components**: Client & Server components for optimized performance
 
-## Getting Started
+## Key Features
+
+- **Dynamic Content**: Data-driven homepage components managed via a backend API.
+- **Premium Design**: Modern, responsive UI with glassmorphism and smooth animations.
+- **Interactive Forms**: Robust contact forms with client-side validation.
+- **SEO Optimized**: Pre-configured meta tags and semantic HTML structure.
 
 ### Prerequisites
 
