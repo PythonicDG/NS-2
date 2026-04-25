@@ -12,13 +12,14 @@ import { submitContactForm } from "@/lib/api";
  * @param {Object} props.data - Dynamic content data fetched from the API
  * @returns {JSX.Element} The rendered ContactUs section
  */
+const subjects = [
+  { value: "general", label: "General Inquiry" },
+  { value: "project", label: "Project Collaboration" },
+  { value: "support", label: "Technical Support" },
+  { value: "feedback", label: "Feedback" },
+];
+
 export default function ContactUs({ data }) {
-  const subjects = [
-    { value: "general", label: "General Inquiry" },
-    { value: "project", label: "Project Collaboration" },
-    { value: "support", label: "Technical Support" },
-    { value: "feedback", label: "Feedback" },
-  ];
 
   const [formData, setFormData] = useState({
     fullName: "",
