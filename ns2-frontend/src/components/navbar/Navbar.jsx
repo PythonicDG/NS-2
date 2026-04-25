@@ -6,6 +6,14 @@ import Link from "next/link";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+/**
+ * Navbar Component
+ * 
+ * A server component that fetches navbar data and renders the responsive navigation bar.
+ * Features include a dynamic logo, desktop menu with submenus, and a mobile menu.
+ * 
+ * @returns {Promise<JSX.Element>} The rendered navigation bar.
+ */
 export default async function Navbar() {
   let navbarData;
   try {
