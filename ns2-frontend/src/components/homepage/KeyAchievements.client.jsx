@@ -1,15 +1,15 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function KeyAchievementsClient({ items = [] }) {
-  if (!items?.length) return null;
+  const displayItems = useMemo(() => [...items, ...items, ...items], [items]);
 
-  // Duplicate items for a seamless infinite loop
-  const displayItems = [...items, ...items, ...items];
+  if (!items?.length) return null;
 
   return (
     <div className="w-full overflow-hidden pt-2 pb-12 group">
