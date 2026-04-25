@@ -46,6 +46,7 @@ export default function TopCredibilityBar({ stats, socialLinks }) {
                 rel="noopener noreferrer"
                 className="hover:text-[#C2481F] text-white/70 transition-all duration-300 transform hover:scale-110 flex items-center"
                 aria-label={social.platform || `social-${idx}`}
+                title={social.platform || `Social ${idx}`}
               >
                 {getSocialIcon(social.platform)}
               </a>
