@@ -1,6 +1,8 @@
 {
   "name": "ns2-frontend",
   "version": "0.1.0",
+  "description": "Frontend for NS-2 Professional Training Institute",
+  "author": "PythonicDG",
   "private": true,
   "scripts": {
     "dev": "next dev",
