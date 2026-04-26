@@ -75,7 +75,7 @@ export default function Hero({ data }) {
             className="absolute inset-0"
           >
             <Image
-              alt="Hero Background"
+              alt={data.heading || "Professional Training Institute Hero Background"}
               src={backgroundImageUrl}
               fill
               priority
@@ -162,6 +162,7 @@ export default function Hero({ data }) {
             {data.primary_button_text && (
               <Link
                 href={data.primary_button_url || "#"}
+                aria-label={data.primary_button_text}
                 className="inline-block bg-[#C2481F] hover:bg-[#A83D1A] text-white px-8 py-3.5 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-[#C2481F]/30 hover:-translate-y-0.5 font-body"
               >
                 {data.primary_button_text}
@@ -171,6 +172,7 @@ export default function Hero({ data }) {
             {(data.secondary_button_text || data.secondary_button_url) && (
               <Link
                 href={data.secondary_button_url || "#"}
+                aria-label={data.secondary_button_text || "Book Free Demo"}
                 className="inline-block bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 hover:border-white/40 px-8 py-3.5 rounded-xl font-bold transition-all duration-300 hover:-translate-y-0.5 font-body"
               >
                 {data.secondary_button_text || "Book Free Demo"}
