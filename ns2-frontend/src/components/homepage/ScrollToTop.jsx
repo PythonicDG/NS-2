@@ -24,9 +24,10 @@ export default function ScrollToTop() {
       <button
         onClick={scrollToTop}
         aria-label="Scroll to top"
+        aria-hidden={!isVisible}
         className={`p-3 rounded-full shadow-lg transition-all duration-300
-          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-          text-white hover:opacity-90 active:scale-95`}
+          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"}
+          text-white hover:opacity-90 hover:scale-110 active:scale-95`}
         style={{ backgroundColor: "#C2481F" }}
       >
         <ChevronUp size={24} />
