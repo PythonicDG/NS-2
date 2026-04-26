@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function AboutCorporateClient({ data }) {
   if (!data) return null;
@@ -15,7 +16,12 @@ export default function AboutCorporateClient({ data }) {
     <section className="relative bg-[#F8F9FA] py-16 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h3 className="text-lg font-semibold text-[#6C757D] uppercase tracking-wide font-heading">
             {data.super_heading}
           </h3>
@@ -30,12 +36,19 @@ export default function AboutCorporateClient({ data }) {
           </p>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {activeItems.map((item) => (
-              <div key={item.id} className="flex items-start space-x-3">
+            {activeItems.map((item, idx) => (
+              <motion.div 
+                key={item.id} 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="flex items-start space-x-3"
+              >
                 {item.icon && apiBase && (
                   <Image
                     src={`${apiBase}${item.icon}`}
-                    alt={item.title || "Icon"}
+                    alt={item.title || "Feature icon"}
                     width={32}
                     height={32}
                     className="w-8 h-8 object-contain"
@@ -49,10 +62,10 @@ export default function AboutCorporateClient({ data }) {
                     {item.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Image */}
         <div className="relative w-full max-w-md mx-auto">
