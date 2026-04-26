@@ -376,6 +376,7 @@ export default function ContactUs({ data }) {
                     placeholder="Message *"
                     value={formData.message}
                     onChange={handleChange}
+                    maxLength={1000}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                   />
@@ -385,8 +386,8 @@ export default function ContactUs({ data }) {
                     ) : (
                       <div />
                     )}
-                    <p className="text-gray-400 text-xs">
-                      {formData.message.length} characters
+                    <p className={`text-xs ${formData.message.length > 950 ? "text-red-500 font-semibold" : "text-gray-400"}`}>
+                      {formData.message.length}/1000 characters
                     </p>
                   </div>
                 </div>
