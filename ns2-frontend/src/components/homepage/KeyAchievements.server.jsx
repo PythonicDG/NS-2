@@ -1,5 +1,14 @@
 import KeyAchievementsClient from "./KeyAchievements.client";
 
+/**
+ * KeyAchievementsServer Component
+ * 
+ * A server component that renders the layout for key achievements,
+ * using a client component for interactive elements.
+ * 
+ * @param {Object} props - Component properties
+ * @param {Object} props.data - Achievement data from API
+ */
 export default function KeyAchievementsServer({ data }) {
   if (!data) return null;
 
@@ -11,6 +20,11 @@ export default function KeyAchievementsServer({ data }) {
 
       <div className="container mx-auto px-4 lg:px-12 relative z-10">
         <div className="text-center mb-6">
+          {data.super_heading && (
+            <p className="text-[#C2481F] font-bold tracking-widest uppercase mb-2 text-sm">
+              {data.super_heading}
+            </p>
+          )}
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-black font-heading text-gray-900 tracking-tighter uppercase mb-8">
             {data.heading || "Our Placed Engineers"}
           </h2>
