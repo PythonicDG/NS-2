@@ -17,26 +17,29 @@ export default function FAQAccordion({ items }) {
           key={index}
           className="border border-gray-200 rounded-lg bg-white shadow-sm"
         >
-          <button
-            onClick={() => toggle(index)}
-            aria-expanded={openIndex === index}
-            aria-controls={`faq-content-${index}`}
-            className="w-full flex justify-between items-center px-4 py-3 text-left"
-          >
-            <span className="font-medium text-gray-900">{item.question}</span>
-            <ChevronDown
-              className={`w-5 h-5 text-gray-500 transition-transform ${openIndex === index ? "rotate-180" : ""
-                }`}
-            />
-          </button>
-          {openIndex === index && (
-            <div 
-              id={`faq-content-${index}`}
-              className="px-4 pb-4 text-gray-600"
+            <button
+              id={`faq-btn-${index}`}
+              onClick={() => toggle(index)}
+              aria-expanded={openIndex === index}
+              aria-controls={`faq-content-${index}`}
+              className="w-full flex justify-between items-center px-4 py-3 text-left"
             >
-              {item.answer || "No answer provided yet."}
-            </div>
-          )}
+              <span className="font-medium text-gray-900">{item.question}</span>
+              <ChevronDown
+                className={`w-5 h-5 text-gray-500 transition-transform ${openIndex === index ? "rotate-180" : ""
+                  }`}
+              />
+            </button>
+            {openIndex === index && (
+              <div 
+                id={`faq-content-${index}`}
+                role="region"
+                aria-labelledby={`faq-btn-${index}`}
+                className="px-4 pb-4 text-gray-600"
+              >
+                {item.answer || "No answer provided yet."}
+              </div>
+            )}
         </div>
       ))}
     </div>
