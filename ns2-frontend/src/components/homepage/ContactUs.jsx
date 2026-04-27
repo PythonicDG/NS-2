@@ -71,18 +71,16 @@ export default function ContactUs({ data }) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
 
     if (name === "phone") {
-      const digitsOnly = value.replace(/\D/g, "");
-      const truncatedValue = digitsOnly.slice(0, 10);
-      setFormData({ ...formData, [name]: truncatedValue });
-    } else {
-      setFormData({ ...formData, [name]: value });
+      value = value.replace(/\D/g, "").slice(0, 10);
     }
 
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
