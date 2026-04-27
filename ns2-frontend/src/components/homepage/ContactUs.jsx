@@ -7,6 +7,11 @@ import { submitContactForm } from "@/lib/api";
  * ContactUs Component
  * 
  * A comprehensive contact form with validation and integration with the backend API.
+ * Features:
+ * - Real-time field validation
+ * - Custom subject dropdown
+ * - Responsive grid layout
+ * - Success feedback after submission
  * 
  * @param {Object} props - Component properties
  * @param {Object} props.data - Dynamic content data fetched from the API
