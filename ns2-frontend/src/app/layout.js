@@ -33,6 +33,18 @@ export const metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  openGraph: {
+    title: "NS2 Infotech | Modern Institute of Automation",
+    description: "Empowering the next generation of automation experts.",
+    type: "website",
+    locale: "en_US",
+    siteName: "NS2 Infotech",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NS2 Infotech | Modern Institute of Automation",
+    description: "Empowering the next generation of automation experts.",
+  },
 };
 
 export default async function RootLayout({ children }) {
