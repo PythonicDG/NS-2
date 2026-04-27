@@ -25,7 +25,9 @@ export default async function Navbar() {
 
   const menuItems = navbarData?.header?.menu || [];
   const logoPath = navbarData?.footer?.company?.logo;
-  const logoUrl = logoPath ? `${API_BASE_URL}${logoPath}` : null;
+  const logoUrl = logoPath 
+    ? (logoPath.startsWith("http") ? logoPath : `${API_BASE_URL}${logoPath.startsWith("/") ? "" : "/"}${logoPath}`)
+    : null;
 
   const regularMenuItems = menuItems.filter((item) => !item.is_button);
   const buttonMenuItems = menuItems.filter((item) => item.is_button);
