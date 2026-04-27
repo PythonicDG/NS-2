@@ -286,7 +286,7 @@ export default function ContactUs({ data }) {
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                     />
                     {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-sm mt-1" role="alert">
                         {errors.fullName}
                       </p>
                     )}
@@ -302,7 +302,7 @@ export default function ContactUs({ data }) {
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                     />
                     {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-sm mt-1" role="alert">
                         {errors.email}
                       </p>
                     )}
@@ -320,7 +320,7 @@ export default function ContactUs({ data }) {
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                   />
                   {errors.phone && (
-                    <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                    <p className="text-red-500 text-sm mt-1" role="alert">{errors.phone}</p>
                   )}
                 </div>
 
@@ -366,7 +366,7 @@ export default function ContactUs({ data }) {
                   )}
 
                   {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1">
+                    <p className="text-red-500 text-sm mt-1" role="alert">
                       {errors.subject}
                     </p>
                   )}
@@ -385,7 +385,7 @@ export default function ContactUs({ data }) {
                   />
                   <div className="flex justify-between mt-1">
                     {errors.message ? (
-                      <p className="text-red-500 text-sm">{errors.message}</p>
+                      <p className="text-red-500 text-sm" role="alert">{errors.message}</p>
                     ) : (
                       <div />
                     )}
@@ -442,6 +442,7 @@ export default function ContactUs({ data }) {
                       setErrors({});
                     }}
                     className="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                    aria-label="Reset form fields"
                   >
                     Reset
                   </button>
