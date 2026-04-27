@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "MIA | | Home",
+  title: "NS-2 Infotech | Home",
   description:
-    "At MIA, we craft innovative solutions that bridge industry needs and technical training.",
+    "At NS-2 Infotech, we craft innovative solutions that bridge industry needs and technical training.",
 };
 
 export const dynamic = "force-dynamic";
