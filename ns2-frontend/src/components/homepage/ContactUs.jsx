@@ -230,7 +230,7 @@ export default function ContactUs({ data }) {
               <p className="font-semibold text-black">Follow Us</p>
               <div className="flex space-x-4 mt-3">
                 {data.social_links?.map((link, i) => (
-                  <a key={i} href={link.url} target="_blank" rel="noreferrer">
+                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer">
                     <img
                       src={`${API_BASE_URL}${link.icon}`}
                       alt={link.platform}
