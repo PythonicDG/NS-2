@@ -6,7 +6,18 @@ import Image from "next/image";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+/**
+ * KeyAchievementsClient Component
+ * 
+ * A client-side carousel that displays student achievements with a continuous scroll effect.
+ * Uses Framer Motion for smooth animations.
+ * 
+ * @param {Object} props
+ * @param {Array} props.items - List of achievement items to display
+ * @returns {JSX.Element}
+ */
 export default function KeyAchievementsClient({ items = [] }) {
+  // Triple the items to ensure seamless infinite scrolling
   const displayItems = useMemo(() => [...items, ...items, ...items], [items]);
 
   if (!items?.length) return null;
