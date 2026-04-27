@@ -6,11 +6,27 @@ import { normalizeImageUrl } from "@/lib/api";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
+/**
+ * Helper to construct a full image URL from the API base path.
+ * 
+ * @param {string} url - The raw URL or path from the API
+ * @returns {string|null} The absolute URL or null if no URL provided
+ */
 function getImageUrl(url) {
   if (!url) return null;
-  return url.startsWith("http") ? url : `${API_BASE_URL}${url}`;
+  if (url.startsWith("http")) return url;
+  return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 }
 
+/**
+ * FooterClient Component
+ * 
+ * A comprehensive footer component with company info, social links, and navigation.
+ * 
+ * @param {Object} props
+ * @param {Object} props.data - Footer content data from API
+ * @returns {JSX.Element}
+ */
 export default function FooterClient({ data }) {
   if (!data) return null;
 
