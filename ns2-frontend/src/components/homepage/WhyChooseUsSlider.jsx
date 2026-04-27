@@ -5,6 +5,15 @@ import { useMemo, useState, useEffect } from "react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+/**
+ * WhyChooseUsSlider Component
+ * 
+ * An auto-playing slider for the 'Why Choose Us' section images.
+ * 
+ * @param {Object} props
+ * @param {Array} props.contentItems - List of items with icons to display
+ * @returns {JSX.Element}
+ */
 export default function WhyChooseUsSlider({ contentItems }) {
   const [currentImage, setCurrentImage] = useState(0);
 
@@ -12,9 +21,11 @@ export default function WhyChooseUsSlider({ contentItems }) {
     if (!contentItems) return [];
     return contentItems
       .filter((item) => item.icon)
-      .map((item) =>
-        item.icon.startsWith("http") ? item.icon : `${API_BASE_URL}${item.icon}`
-      );
+      .map((item) => {
+        const icon = item.icon;
+        if (icon.startsWith("http")) return icon;
+        return `${API_BASE_URL}${icon.startsWith("/") ? "" : "/"}${icon}`;
+      });
   }, [contentItems]);
 
   useEffect(() => {
