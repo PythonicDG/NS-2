@@ -4,6 +4,17 @@ import { useState, useEffect } from "react";
 import NavLinkClient from "@/components/navbar/NavLinkClient";
 import { usePathname } from "next/navigation";
 
+/**
+ * MobileMenu Component
+ * 
+ * A client-side mobile navigation menu with slide-in animation,
+ * backdrop blur, and accordion-style submenus.
+ * 
+ * @param {Object} props
+ * @param {Array} props.menuItems - Navigation links and submenus
+ * @param {string} props.logoUrl - URL of the company logo
+ * @returns {JSX.Element}
+ */
 export default function MobileMenu({ menuItems, logoUrl }) {
   const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
