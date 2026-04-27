@@ -17,10 +17,10 @@ export default function LogoClient({ logoUrl }) {
   }
 
   return (
-    <Link href="/" className="flex items-center">
+    <Link href="/" className="flex items-center transition-opacity hover:opacity-90" title="Home">
       <img
         src={logoUrl}
-        alt="Company Logo"
+        alt="NS-2 Infotech Logo"
         className="h-14 w-auto drop-shadow-sm"
         onError={() => {
           console.error("Failed to load logo:", logoUrl);
