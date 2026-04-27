@@ -7,6 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+/**
+ * Normalizes an image URL to ensure it has the correct API base path.
+ * 
+ * @param {string} url - The raw URL or path from the API
+ * @returns {string|null} The normalized URL or null if no URL provided
+ */
 function normalizeUrl(url) {
   if (!url) return null;
   if (url.startsWith("http")) return url;
@@ -30,6 +36,15 @@ const StarRating = ({ rating = 5 }) => {
   );
 };
 
+/**
+ * TestimonialSlider Component
+ * 
+ * A responsive carousel for student testimonials with smooth animations.
+ * 
+ * @param {Object} props
+ * @param {Array} props.items - List of testimonial objects
+ * @returns {JSX.Element}
+ */
 export default function TestimonialSlider({ items = [] }) {
   const [current, setCurrent] = useState(0);
   const total = items.length;
