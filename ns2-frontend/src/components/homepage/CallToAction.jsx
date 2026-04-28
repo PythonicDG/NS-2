@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function CallToAction({ data }) {
   if (!data) return null;
 
+  // Main Call to Action section with placement guarantee badge
   return (
     <section className="bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92] py-16 md:py-20 overflow-hidden relative">
       <div className="container mx-auto px-6 lg:px-16 relative z-10">
