@@ -17,6 +17,7 @@ This is the frontend application for NS2 Infotech (Modern Institute of Automatio
 - **Premium Design**: Modern, responsive UI with glassmorphism and smooth animations.
 - **Interactive Forms**: Robust contact forms with client-side validation.
 - **SEO Optimized**: Pre-configured meta tags and semantic HTML structure.
+- **Performance Optimized**: Image optimization and efficient server-side rendering.
 
 ### Prerequisites
 
