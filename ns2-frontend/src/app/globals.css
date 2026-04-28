@@ -24,6 +24,11 @@
   --font-heading: "Poppins", sans-serif;
 }
 
+::selection {
+  background-color: #C2481F;
+  color: white;
+}
+
 html {
   scroll-behavior: smooth;
 }
