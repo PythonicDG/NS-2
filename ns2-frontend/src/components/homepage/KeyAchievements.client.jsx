@@ -27,7 +27,7 @@ export default function KeyAchievementsClient({ items = [] }) {
       <motion.div
         animate={{ x: [0, "-50%"] }}
         transition={{
-          duration: 35,
+          duration: 40,
           repeat: Infinity,
           ease: "linear",
           repeatType: "loop",
