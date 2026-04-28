@@ -3,6 +3,7 @@ import TestimonialSlider from "./TestimonialSlider";
 export default function Testimonial({ data }) {
   if (!data) return null;
 
+  // Section to display student testimonials and success stories
   return (
     <section className="relative w-full bg-white py-16 sm:py-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
