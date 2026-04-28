@@ -32,7 +32,7 @@ export default async function AboutUsPage() {
   const team = data.find(
     (section) => section.section_type === "OUR_TEAM" && section.is_active
   );
-  const [contact, initialSections] = await Promise.all([
+  const [contact] = await Promise.all([
       fetchHomepageSection("Contact Us"),
     ]);
 
