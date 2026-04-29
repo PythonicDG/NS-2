@@ -1,7 +1,7 @@
 {
   "name": "ns2-frontend",
-  "version": "0.1.0",
-  "description": "Frontend for NS-2 Professional Training Institute",
+  "version": "0.1.1",
+  "description": "Modern Frontend for NS-2 Professional Training Institute built with Next.js",
   "author": "PythonicDG",
   "private": true,
   "scripts": {
