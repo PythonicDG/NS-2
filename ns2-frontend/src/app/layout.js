@@ -46,6 +46,8 @@ export const metadata = {
     title: "NS2 Infotech | Modern Institute of Automation",
     description: "Empowering the next generation of automation experts.",
   },
+  viewport: "width=device-width, initial-scale=1",
+  robots: "index, follow",
 };
 
 export default async function RootLayout({ children }) {
