@@ -86,7 +86,7 @@ export default function Overview({ data }) {
           )}
 
           {/* Dots Pattern */}
-          <div className="absolute -bottom-6 -left-6 flex space-x-2 opacity-30">
+          <div className="absolute -bottom-6 -left-6 flex space-x-2 opacity-30" aria-hidden="true">
             <div
               className="w-4 h-4 rounded-full"
               style={{ backgroundColor: "#C2481F" }}
