@@ -60,3 +60,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The project is optimized for deployment on [Vercel](https://vercel.com).
 
+## Contribution Guidelines
+
+- Use descriptive commit messages.
+- Maintain consistent code style using Prettier.
+- Ensure all components are responsive.
+- Document complex logic using JSDoc.
+

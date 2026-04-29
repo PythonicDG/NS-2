@@ -8,6 +8,9 @@ import KeyAchievementsClient from "./KeyAchievements.client";
  * 
  * @param {Object} props - Component properties
  * @param {Object} props.data - Achievement data from API
+ * @param {string} [props.data.super_heading] - Optional small text above the heading
+ * @param {string} [props.data.heading] - Main section heading
+ * @param {Array} props.data.content_items - List of achievement items to display
  */
 export default function KeyAchievementsServer({ data }) {
   if (!data) return null;
