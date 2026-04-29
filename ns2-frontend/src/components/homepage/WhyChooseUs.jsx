@@ -29,7 +29,7 @@ const WhyChooseUs = ({ data }) => {
         <div className="space-y-8 text-center lg:text-left flex flex-col justify-center animate-fade-in-up">
           {data.super_heading && (
             <h2
-              className="font-semibold text-xs sm:text-sm uppercase tracking-widest relative inline-block after:absolute after:-bottom-1 after:left-0 after:w-1/2 after:h-0.5 after:transition-all after:duration-500 hover:after:w-full"
+              className="font-semibold text-xs sm:text-sm uppercase tracking-widest relative inline-block after:absolute after:-bottom-1 after:left-0 after:w-1/2 after:h-0.5 after:transition-all after:duration-500 hover:after:w-full transition-all duration-300 hover:tracking-widest"
               style={{ color: "#C2481F" }}
             >
               {data.super_heading}
