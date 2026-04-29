@@ -28,9 +28,9 @@ export default function Overview({ data }) {
   return (
     <section className="relative w-full bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20 sm:py-32 overflow-hidden">
       {/* Consistent Decorative Pattern - Soft Spheres */}
-      <div className="absolute -left-10 top-20 w-40 h-40 bg-blue-100 rounded-full opacity-30 blur-2xl"></div>
-      <div className="absolute right-10 top-40 w-32 h-32 bg-orange-100 rounded-full opacity-20 blur-2xl"></div>
-      <div className="absolute left-1/2 bottom-20 w-60 h-60 bg-blue-50 rounded-full opacity-40 blur-3xl -translate-x-1/2"></div>
+      <div className="absolute -left-10 top-20 w-40 h-40 bg-blue-100 rounded-full opacity-30 blur-2xl" aria-hidden="true"></div>
+      <div className="absolute right-10 top-40 w-32 h-32 bg-orange-100 rounded-full opacity-20 blur-2xl" aria-hidden="true"></div>
+      <div className="absolute left-1/2 bottom-20 w-60 h-60 bg-blue-50 rounded-full opacity-40 blur-3xl -translate-x-1/2" aria-hidden="true"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
         <div className="relative w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[550px]">
