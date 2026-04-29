@@ -142,10 +142,10 @@ export default function Overview({ data }) {
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 justify-center lg:justify-start">
             {data.primary_button_text && (
               <Link
-                href={data.primary_button_url || "#"}
+                href={data.primary_button_url || "/contact"}
                 className="inline-flex items-center gap-3 text-white px-8 py-3.5 sm:py-4 rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
                 style={{ backgroundColor: "#C2481F" }}
-                prefetch={false}
+                prefetch={true}
               >
                 <span className="relative z-10 transition-transform group-hover:translate-x-1">
                   {data.primary_button_text}
@@ -159,9 +159,9 @@ export default function Overview({ data }) {
 
             {data.secondary_button_text && (
               <Link
-                href={data.secondary_button_url || "#"}
+                href={data.secondary_button_url || "/courses"}
                 className="inline-flex items-center gap-3 border-2 border-gray-200 text-gray-700 px-8 py-3.5 sm:py-4 rounded-xl text-base font-semibold bg-white hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
-                prefetch={false}
+                prefetch={true}
               >
                 <span className="relative z-10">
                   {data.secondary_button_text}
