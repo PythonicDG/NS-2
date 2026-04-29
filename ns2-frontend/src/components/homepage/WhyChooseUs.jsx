@@ -81,6 +81,7 @@ const WhyChooseUs = ({ data }) => {
                       <IconComponent
                         className="w-6 h-6 flex-shrink-0"
                         style={{ color: "#C2481F" }}
+                        title={item.title}
                       />
                     </div>
                     <h4
