@@ -19,7 +19,7 @@ const SectionHeader = ({ superHeading, heading, subheading }) => (
 
 export const ServicesSection = ({ data = {} }) => {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
-  const contentItems = data.content_items || [];
+  const contentItems = data?.content_items || [];
 
   const [animate, setAnimate] = useState(false);
 
@@ -56,9 +56,8 @@ export const ServicesSection = ({ data = {} }) => {
           {contentItems.map((item, index) => (
             <div
               key={item.order || index}
-              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ${
-                animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
-              }`}
+              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ${animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
+                }`}
               style={{
                 animationDelay: `${index * 150}ms`,
                 animationFillMode: "forwards",
