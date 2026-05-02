@@ -3,7 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-export default function FAQAccordion({ items }) {
+export default function FAQAccordion({ items = [] }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {
