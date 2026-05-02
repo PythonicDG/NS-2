@@ -9,6 +9,7 @@ const SectionHeader = ({ superHeading, heading, subheading }) => (
     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight font-poppins">
       {superHeading} <span className="text-blue-600">{heading}</span>
     </h2>
+
     {subheading && (
       <p className="mt-4 text-lg text-gray-500 font-opensans max-w-xl mx-auto">
         {subheading}
@@ -29,7 +30,7 @@ export const ServicesSection = ({ data = {} }) => {
 
   return (
     <section className="relative bg-gradient-to-b from-blue-50 via-white to-gray-100 py-24 md:py-32 overflow-hidden">
-      {/* Decorative background wave */}
+      {/* Background Wave */}
       <div className="absolute inset-x-0 bottom-0 -z-10 overflow-hidden pointer-events-none">
         <svg
           className="w-full h-40 md:h-56"
@@ -52,11 +53,12 @@ export const ServicesSection = ({ data = {} }) => {
           subheading={data.subheading || data.overview_text}
         />
 
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+        {/* Cards Row */}
+        <div className="mt-20 flex flex-wrap justify-center gap-8">
           {contentItems.map((item, index) => (
             <div
               key={item.order || index}
-              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ${
+              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-full sm:w-[48%] lg:w-[31%] ${
                 animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
               }`}
               style={{
@@ -78,29 +80,29 @@ export const ServicesSection = ({ data = {} }) => {
                 )}
 
                 {/* Heading */}
-                <h3 className="text-xl font-bold text-gray-900 font-poppins">
+                <h3 className="text-2xl font-bold text-gray-900 font-poppins">
                   {item.label || "Untitled Service"}
                 </h3>
 
                 {/* Description */}
-                <p className="mt-2 text-gray-600 font-opensans text-sm max-w-[320px]">
+                <p className="text-gray-600 font-opensans text-sm leading-relaxed">
                   {item.title}
                 </p>
 
-                {/* Bullet points */}
-                <ul className="mt-4 space-y-2 mb-6">
+                {/* Bullet Points */}
+                <ul className="mt-2 space-y-3 mb-6">
                   {item.description?.split(",").map((point, i) => (
                     <li
                       key={i}
                       className="flex items-start text-gray-500 text-sm font-opensans"
                     >
-                      <span className="mt-1 mr-2 w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+                      <span className="mt-1.5 mr-3 w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
                       {point.trim()}
                     </li>
                   ))}
                 </ul>
 
-                {/* Learn More Button */}
+                {/* Button */}
                 <div className="mt-auto">
                   {item.text && item.question && (
                     <Link
@@ -111,7 +113,6 @@ export const ServicesSection = ({ data = {} }) => {
                       {item.text} →
                     </Link>
                   )}
-
                 </div>
               </div>
             </div>
@@ -119,7 +120,7 @@ export const ServicesSection = ({ data = {} }) => {
         </div>
       </div>
 
-      {/* Animations */}
+      {/* Animation */}
       <style jsx>{`
         @keyframes fadeSlideUp {
           0% {
