@@ -31,6 +31,7 @@ export const ServicesSection = ({ data = {} }) => {
     setAnimate(true);
   }, []);
 
+  // Render the services section component
   return (
     <section className="relative bg-gradient-to-b from-blue-50 via-white to-gray-100 py-24 md:py-32 overflow-hidden">
       {/* Background Wave */}
