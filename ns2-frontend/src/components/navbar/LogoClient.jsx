@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function LogoClient({ logoUrl }) {
+  // Track image loading errors
   const [imageError, setImageError] = useState(false);
 
   if (!logoUrl || imageError) {
