@@ -8,6 +8,7 @@ export default function LogoClient({ logoUrl }) {
   const [imageError, setImageError] = useState(false);
 
   if (!logoUrl || imageError) {
+    // Render fallback element if logo fails to load
     return (
       <Link href="/" className="flex items-center">
         <div className="h-14 w-40 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
