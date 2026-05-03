@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "MIA | | Services",
+  title: "MIA | Services",
   description:
     "At MIA, we craft innovative solutions that bridge industry needs and technical training.",
 };

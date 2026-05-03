@@ -149,7 +149,7 @@ export default function ContactUs({ data }) {
 
   if (!data) return null;
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const selectedSubjectLabel =
     subjects.find((sub) => sub.value === formData.subject)?.label ||
     "Select a subject";

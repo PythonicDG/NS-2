@@ -1,6 +1,6 @@
 # NS2 Infotech - Frontend
 
-This is the frontend application for NS2 Infotech (Modern Institute of Automation), built with Next.js 15.
+This is the frontend application for NS2 Infotech (Modern Institute of Automation), built with the Next.js 15 framework.
 
 ## Technology Stack
 

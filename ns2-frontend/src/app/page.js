@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "NS-2 Infotech | Home",
+  title: "NS2 Infotech | Home",
   description:
     "At NS-2 Infotech, we craft innovative solutions that bridge industry needs and technical training.",
 };
