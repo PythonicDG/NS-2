@@ -22,6 +22,7 @@ export const ServicesSection = ({ data = {} }) => {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const contentItems = data?.content_items || [];
 
+  // Track if the component has mounted to trigger animations
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
