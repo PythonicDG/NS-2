@@ -26,6 +26,7 @@ export const ServicesSection = ({ data = {} }) => {
   // Track if the component has mounted to trigger animations
   const [animate, setAnimate] = useState(false);
 
+  // Trigger animation on component mount
   useEffect(() => {
     setAnimate(true);
   }, []);
