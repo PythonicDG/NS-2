@@ -62,8 +62,6 @@ export const ServicesSection = ({ data = {} }) => {
               className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-full sm:w-[48%] lg:w-[31%] ${
                 animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
               }`}
-              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ${animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
-                }`}
  
               style={{
                 animationDelay: `${index * 150}ms`,
