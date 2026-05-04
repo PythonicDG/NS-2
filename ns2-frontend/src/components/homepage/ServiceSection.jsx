@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { normalizeImageUrl } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 // Section Header
@@ -22,6 +23,7 @@ export const ServicesSection = ({ data = {} }) => {
   // Base URL for API requests, defaulting to empty string
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const contentItems = data?.content_items || [];
+  console.log("Debugging API_BASE_URL:", API_BASE_URL);
 
   // Track if the component has mounted to trigger animations
   const [animate, setAnimate] = useState(false);
@@ -63,10 +65,9 @@ export const ServicesSection = ({ data = {} }) => {
             <div
               key={item.order || index}
 
-              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-full sm:w-[48%] lg:w-[31%] ${
-                animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
-              }`}
- 
+              className={`group bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-full sm:w-[48%] lg:w-[31%] ${animate ? "animate-fade-slide-up" : "opacity-0 translate-y-6"
+                }`}
+
               style={{
                 animationDelay: `${index * 150}ms`,
                 animationFillMode: "forwards",
@@ -77,7 +78,7 @@ export const ServicesSection = ({ data = {} }) => {
                 {item.icon && (
                   <div className="flex-shrink-0">
                     <img
-                      src={`${API_BASE_URL}${item.icon}`}
+                      src={normalizeImageUrl(item.icon)}
                       alt={`${item.label || "Service"} icon`}
                       className="h-12 w-12 object-contain"
                       loading="lazy"

@@ -2,6 +2,22 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 export function normalizeImageUrl(url) {
   if (!url) return null;
+  
+  // Workaround for backend returning duplicated URLs (e.g., https://domain.comhttps//domain.com/media/...)
+  if (url.includes("https//")) {
+    url = url.replace("https//", "https://");
+  }
+  
+  // If URL has multiple https:// or http://, take the last one
+  const httpsParts = url.split("https://");
+  if (httpsParts.length > 2) {
+    url = "https://" + httpsParts[httpsParts.length - 1];
+  }
+  const httpParts = url.split("http://");
+  if (httpParts.length > 2) {
+    url = "http://" + httpParts[httpParts.length - 1];
+  }
+
   if (url.startsWith("http")) return url;
   return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 }
