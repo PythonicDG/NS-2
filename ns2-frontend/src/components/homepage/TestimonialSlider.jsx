@@ -93,7 +93,17 @@ export default function TestimonialSlider({ items = [] }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="bg-[#1A1A1A] rounded-2xl p-8 md:p-10 flex flex-col border border-neutral-800 shadow-2xl h-full min-h-[350px]"
+                className="bg-[#1A1A1A] rounded-2xl p-8 md:p-10 flex flex-col border border-neutral-800 shadow-2xl h-full min-h-[350px] touch-pan-y cursor-grab active:cursor-grabbing"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(e, { offset, velocity }) => {
+                  if (offset.x < -50 || velocity.x < -500) {
+                    handleNext();
+                  } else if (offset.x > 50 || velocity.x > 500) {
+                    handlePrev();
+                  }
+                }}
               >
                 <StarRating />
 
