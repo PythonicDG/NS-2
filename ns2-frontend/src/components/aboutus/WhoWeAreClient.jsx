@@ -2,6 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { normalizeImageUrl } from "@/lib/api";
 import {
   Laptop,
   Rocket,
@@ -92,12 +93,12 @@ export default function WhoWeAreClient({ data }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
-              className="bg-transparent overflow-hidden w-full"
+              className="bg-transparent overflow-hidden w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl"
             >
               <motion.img
-                src={data.primary_image}
+                src={normalizeImageUrl(data.primary_image)}
                 alt={data.heading || "Who We Are"}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-2xl"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{
                   duration: 6,

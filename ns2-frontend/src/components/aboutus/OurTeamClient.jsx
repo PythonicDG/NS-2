@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { normalizeImageUrl } from "@/lib/api";
 import { FaLinkedin, FaTwitter, FaGlobe } from "react-icons/fa";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 // Helper to get initials from full name
 function getInitials(name) {
   return name
@@ -43,17 +41,13 @@ export default function OurTeamClient({ data }) {
 
         {/* Team Grid */}
         <motion.div
-          className="flex flex-wrap justify-center -mx-2 sm:gap-8 gap-y-4"
+          className="flex flex-wrap justify-center gap-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
           {items.map((item, index) => {
-            const imageUrl = item.image?.startsWith("http")
-              ? item.image
-              : item.image
-                ? `${API_BASE_URL}${item.image}`
-                : null;
+            const imageUrl = normalizeImageUrl(item.image);
 
             return (
               <motion.div
@@ -61,16 +55,7 @@ export default function OurTeamClient({ data }) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="
-                  relative bg-white rounded-2xl shadow-md hover:shadow-lg
-                  transition-all duration-500 overflow-hidden group
-                  w-full px-2                   /* Mobile: 1 per row */
-                  sm:w-[calc(50%-20px)]         /* Tablet: 2 per row */
-                  md:w-[calc(50%-24px)]         /* Desktop: 2 per row */
-                  lg:w-[calc(33.333%-26px)]     /* Large: 3 per row */
-                  xl:w-[calc(25%-28px)]         /* Extra large: 4 per row */
-                  flex flex-col items-center text-center
-                "
+                className="w-full sm:w-72 lg:w-80 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 group flex flex-col items-center text-center p-6 pb-8 border border-gray-100"
                 whileHover={{ y: -5 }}
               >
                 {/* Profile Image or Initials Fallback */}
@@ -78,39 +63,41 @@ export default function OurTeamClient({ data }) {
                   <img
                     src={imageUrl}
                     alt={item.label}
-                    className="w-24 h-24 object-cover rounded-full shadow-md mt-4"
+                    className="w-24 h-24 object-cover rounded-full shadow-md border-4 border-white ring-2 ring-gray-100"
                   />
                 ) : (
-                  <div className="w-24 h-24 bg-gray-400 rounded-full mt-4 flex items-center justify-center text-xl font-semibold text-white shadow-md">
+                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-xl font-semibold text-white shadow-md">
                     {getInitials(item.label)}
                   </div>
                 )}
 
                 {/* Name */}
-                <h3 className="mt-4 text-xl font-semibold text-gray-900">
+                <h3 className="mt-5 text-xl font-semibold text-gray-900">
                   {item.label}
                 </h3>
 
                 {/* Title */}
-                <p className="mt-1 text-sm font-medium text-[#007BFF]">
-                  {item.title}
-                </p>
+                {item.title && (
+                  <p className="mt-1 text-sm font-medium text-[#C2481F]">
+                    {item.title}
+                  </p>
+                )}
 
                 {/* Description */}
                 {item.description && (
-                  <p className="mt-3 text-sm text-[#6C757D] leading-relaxed">
+                  <p className="mt-3 text-sm text-[#6C757D] leading-relaxed flex-grow">
                     {item.description}
                   </p>
                 )}
 
                 {/* Social Links */}
-                <div className="mt-4 flex gap-3">
+                <div className="mt-5 flex gap-3">
                   {item.linkedin_url && (
                     <a
                       href={item.linkedin_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 shadow hover:bg-[#007BFF] hover:text-white transition"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5] transition-all duration-300"
                     >
                       <FaLinkedin className="text-lg" />
                     </a>
@@ -120,17 +107,17 @@ export default function OurTeamClient({ data }) {
                       href={item.twitter_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 shadow hover:bg-[#007BFF] hover:text-white transition"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2] transition-all duration-300"
                     >
                       <FaTwitter className="text-lg" />
                     </a>
                   )}
-                  {item.other_social_url && (
+                  {item.facebook_url && (
                     <a
-                      href={item.other_social_url}
+                      href={item.facebook_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 shadow hover:bg-[#007BFF] hover:text-white transition"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300"
                     >
                       <FaGlobe className="text-lg" />
                     </a>

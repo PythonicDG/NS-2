@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { normalizeImageUrl } from "@/lib/api";
 import { Laptop, Lightbulb, BarChart3 } from "lucide-react";
 
 export default function VisionSectionClient({ data }) {
@@ -106,7 +107,7 @@ export default function VisionSectionClient({ data }) {
                 transition={{ duration: 0.8 }}
               >
                 <motion.img
-                  src={activeContent.image}
+                  src={normalizeImageUrl(activeContent.image)}
                   alt={activeContent.label || "Vision"}
                   className="w-full h-full object-cover rounded-[10px]"
                   animate={{ scale: [1, 1.05, 1] }}

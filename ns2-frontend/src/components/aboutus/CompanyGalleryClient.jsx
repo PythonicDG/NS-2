@@ -3,6 +3,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { normalizeImageUrl } from "@/lib/api";
 
 export default function CompanyGalleryClient({ data }) {
   if (!data) return null;
@@ -42,7 +43,7 @@ export default function CompanyGalleryClient({ data }) {
                 {/* Image */}
                 <div className="aspect-[1/1] w-full overflow-hidden">
                   <img
-                    src={item.image}
+                    src={normalizeImageUrl(item.image)}
                     alt={item.label}
                     className="w-full h-full object-cover transform transition duration-500 group-hover:scale-110"
                   />
@@ -72,7 +73,7 @@ export default function CompanyGalleryClient({ data }) {
           >
             <div className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden">
               <img
-                src={data.primary_image}
+                src={normalizeImageUrl(data.primary_image)}
                 alt={data.subheading || "Company Headquarters"}
                 className="w-full h-full object-cover transform transition duration-700 hover:scale-105"
               />

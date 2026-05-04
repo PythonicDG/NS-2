@@ -23,7 +23,6 @@ export const ServicesSection = ({ data = {} }) => {
   // Base URL for API requests, defaulting to empty string
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const contentItems = data?.content_items || [];
-  console.log("Debugging API_BASE_URL:", API_BASE_URL);
 
   // Track if the component has mounted to trigger animations
   const [animate, setAnimate] = useState(false);

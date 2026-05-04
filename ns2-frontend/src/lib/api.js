@@ -2,12 +2,12 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 export function normalizeImageUrl(url) {
   if (!url) return null;
-  
+
   // Workaround for backend returning duplicated URLs (e.g., https://domain.comhttps//domain.com/media/...)
   if (url.includes("https//")) {
     url = url.replace("https//", "https://");
   }
-  
+
   // If URL has multiple https:// or http://, take the last one
   const httpsParts = url.split("https://");
   if (httpsParts.length > 2) {
@@ -68,7 +68,7 @@ export async function fetchHomepageSection(sectionType) {
     const section = sections.find(
       (s) =>
         s.section_type?.toLowerCase().replace(/\s/g, "") ===
-          sectionType.toLowerCase().replace(/\s/g, "") && s.is_active
+        sectionType.toLowerCase().replace(/\s/g, "") && s.is_active
     );
 
     if (!section) {
