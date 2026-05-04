@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { submitContactForm } from "@/lib/api";
+import { submitContactForm, normalizeImageUrl } from "@/lib/api";
 
 /**
  * ContactUs Component
@@ -149,7 +149,6 @@ export default function ContactUs({ data }) {
 
   if (!data) return null;
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   const selectedSubjectLabel =
     subjects.find((sub) => sub.value === formData.subject)?.label ||
     "Select a subject";
@@ -200,9 +199,9 @@ export default function ContactUs({ data }) {
                     key={idx}
                     className="flex items-start p-5 rounded-2xl shadow-md bg-white border border-gray-200"
                   >
-                    {item.icon && API_BASE_URL && (
+                    {item.icon && (
                       <img
-                        src={`${API_BASE_URL}${item.icon}`}
+                        src={normalizeImageUrl(item.icon)}
                         alt={item.label || "contact icon"}
                         className="w-10 h-10 mr-4 object-contain"
                       />
@@ -232,7 +231,7 @@ export default function ContactUs({ data }) {
                 {data.social_links?.map((link, i) => (
                   <a key={i} href={link.url} target="_blank" rel="noopener noreferrer">
                     <img
-                      src={`${API_BASE_URL}${link.icon}`}
+                      src={normalizeImageUrl(link.icon)}
                       alt={link.platform}
                       className="w-6 h-6"
                     />
