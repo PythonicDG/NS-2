@@ -11,6 +11,7 @@ import FAQSection from "@/components/homepage/FAQSection";
 import Hero from "@/components/homepage/HeroSection";
 import KeyAchievementsServer from "@/components/homepage/KeyAchievements.server";
 import Overview from "@/components/homepage/Overview";
+import PlacedStudents from "@/components/homepage/PlacedStudents";
 import ScrollToTop from "@/components/homepage/ScrollToTop";
 import { ServicesSection } from "@/components/homepage/ServiceSection";
 import Testimonial from "@/components/homepage/Testimonial";
@@ -27,6 +28,7 @@ export default async function HomePage() {
   const keyAchievements = await fetchHomepageSection("Key Achievements");
   const ourServices = await fetchHomepageSection("Our Services");
   const callToAction = await fetchHomepageSection("Call To Action");
+  const placedStudents = await fetchHomepageSection("Our Placed Students");
 
   return (
     <main>
@@ -35,6 +37,7 @@ export default async function HomePage() {
       <WhyChooseUs data={whyChooseUs} />
       {ourServices && <ServicesSection data={ourServices} />}
       <KeyAchievementsServer data={keyAchievements} />
+      {placedStudents && <PlacedStudents data={placedStudents} />}
       <Testimonial data={testimonial} />
       <CallToAction data={callToAction} />
       <FAQSection data={faq} />
