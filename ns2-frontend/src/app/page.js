@@ -24,7 +24,7 @@ export default async function HomePage() {
   const testimonial = await fetchHomepageSection("Testimonials Slider");
   const faq = await fetchHomepageSection("Frequently Asked Questions");
   const contact = await fetchHomepageSection("Contact Us");
-  const keyAchievements = await fetchHomepageSection("Key Achivements");
+  const keyAchievements = await fetchHomepageSection("Key Achievements");
   const ourServices = await fetchHomepageSection("Our Services");
   const callToAction = await fetchHomepageSection("Call To Action");
 

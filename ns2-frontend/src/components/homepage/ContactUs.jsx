@@ -299,6 +299,7 @@ export default function ContactUs({ data }) {
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      suppressHydrationWarning={true}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
                     />
                     {errors.email && (
