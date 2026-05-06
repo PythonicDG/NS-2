@@ -2,31 +2,22 @@
 
 import Image from "next/image";
 import { useMemo, useState, useEffect } from "react";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { normalizeImageUrl } from "@/lib/api";
 
 /**
  * WhyChooseUsSlider Component
  *
- * Auto-playing image slider
+ * An auto-playing image slider that displays icons from content items.
+ * Utilizes Next.js Image component for optimization.
  */
-
 export default function WhyChooseUsSlider({ contentItems = [] }) {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Prepare image URLs
+  // Prepare image URLs using the centralized normalization utility
   const images = useMemo(() => {
     return contentItems
       .filter((item) => item.icon)
-      .map((item) => {
-        const icon = item.icon;
-
-        if (icon.startsWith("http")) return icon;
-
-        return `${API_BASE_URL}${
-          icon.startsWith("/") ? "" : "/"
-        }${icon}`;
-      });
+      .map((item) => normalizeImageUrl(item.icon));
   }, [contentItems]);
 
   // Auto Slide
