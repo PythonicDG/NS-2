@@ -3,6 +3,14 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
+/**
+ * FAQAccordion Component
+ * Renders a list of collapsible FAQ items with smooth interaction.
+ * 
+ * @param {Object} props
+ * @param {Array<{question: string, answer: string}>} props.items - List of FAQ objects
+ * @returns {JSX.Element}
+ */
 export default function FAQAccordion({ items = [] }) {
   const [openIndex, setOpenIndex] = useState(null);
 
