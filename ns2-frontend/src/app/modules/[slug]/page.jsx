@@ -1,0 +1,50 @@
+import { fetchModuleBySlug, fetchHomepageSection } from "@/lib/api";
+import { redirect } from "next/navigation";
+import ModulePageClient from "@/components/modules/ModulePageClient";
+import ContactUs from "@/components/homepage/ContactUs";
+
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params: incomingParams }) {
+  try {
+    const params = await incomingParams;
+    const slug = params.slug;
+    const moduleData = await fetchModuleBySlug(slug);
+
+    if (!moduleData) {
+      return { 
+        title: "Module Not Found | NS² Infotech",
+        description: "The requested training module could not be found."
+      };
+    }
+
+    return {
+      title: `${moduleData.title} | NS² Infotech`,
+      description: moduleData.tagline || `Learn more about ${moduleData.title} and enhance your skills with NS² Infotech's expert-led training.`,
+    };
+  } catch (error) {
+    console.error("Metadata generation error:", error);
+    return { title: "NS² Infotech Training" };
+  }
+}
+
+export default async function ModuleDetailPage({ params: incomingParams }) {
+  const params = await incomingParams;
+  const slug = params.slug;
+
+  const [moduleData, contact] = await Promise.all([
+    fetchModuleBySlug(slug),
+    fetchHomepageSection("Contact Us"),
+  ]);
+
+  if (!moduleData) {
+    redirect("/");
+  }
+
+  return (
+    <>
+      <ModulePageClient moduleData={moduleData} />
+      <ContactUs data={contact} />
+    </>
+  );
+}
