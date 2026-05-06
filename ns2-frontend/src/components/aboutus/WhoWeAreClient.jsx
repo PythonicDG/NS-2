@@ -102,7 +102,7 @@ export default function WhoWeAreClient({ data }) {
             >
               <motion.img
                 src={normalizeImageUrl(data.primary_image)}
-                alt={data.heading || "Who We Are"}
+                alt={data.heading || "Professional training and development"}
                 className="w-full h-full object-cover rounded-2xl"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{
