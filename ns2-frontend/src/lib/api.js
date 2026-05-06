@@ -208,3 +208,39 @@ export async function fetchInternshipPage() {
     return [];
   }
 }
+
+export async function fetchModuleBySlug(slug) {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/internships/modules/${slug}/`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch module: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching module by slug:", error);
+    return null;
+  }
+}
+
+export async function fetchModulesList() {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/internships/modules/`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch modules list: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching modules list:", error);
+    return [];
+  }
+}
