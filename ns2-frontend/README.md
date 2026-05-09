@@ -52,9 +52,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Project Structure
 
 - `src/app`: Next.js App Router pages and layouts.
-- `src/components`: Reusable UI components.
-- `src/lib`: Utility functions and API helpers.
-- `public`: Static assets like images and icons.
+- `src/components`: Reusable UI components organized by module.
+- `src/lib`: Utility functions, API constants, and helper modules.
+- `src/styles`: Global CSS and Tailwind configuration.
+- `public`: Static assets like images, icons, and fonts.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- `npm run dev`: Runs the app in development mode.
+- `npm run build`: Builds the app for production.
+- `npm run start`: Starts the production server.
+- `npm run lint`: Runs ESLint to check for code quality issues.
 
 ## Deployment
 
