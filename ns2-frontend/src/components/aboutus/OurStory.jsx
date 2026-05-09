@@ -75,6 +75,7 @@ export default function OurStory({ data }) {
 
             <div className="space-y-12 md:space-y-16">
               {milestones.map((item, idx) => {
+                // Alternating layout for timeline items on desktop
                 const isLeft = idx % 2 === 0;
                 const itemImage = normalizeImageUrl(item.image);
 
@@ -89,10 +90,10 @@ export default function OurStory({ data }) {
                       isLeft ? "md:flex-row" : "md:flex-row-reverse"
                     }`}
                   >
-                    {/* Timeline dot */}
+                    {/* Timeline dot (centered on desktop, left on mobile) */}
                     <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#C2481F] border-4 border-white shadow-md z-10" />
 
-                    {/* Content card */}
+                    {/* Content card container */}
                     <div
                       className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
                         isLeft ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
