@@ -1,5 +1,11 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
+/**
+ * Normalizes an image URL by handling duplicated domains and prepending the API base URL if needed.
+ * 
+ * @param {string} url - The raw URL string from the backend
+ * @returns {string|null} - The normalized absolute URL or null if no URL provided
+ */
 export function normalizeImageUrl(url) {
   if (!url) return null;
 
@@ -22,6 +28,11 @@ export function normalizeImageUrl(url) {
   return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 }
 
+/**
+ * Fetches the navigation bar and footer data from the backend.
+ * 
+ * @returns {Promise<Object>} - Object containing header, menu, and footer data
+ */
 export async function fetchNavbarData() {
   try {
     const response = await fetch(`${API_BASE_URL}/api/core/header-footer`, {
