@@ -44,6 +44,16 @@ export default function KeyAchievementsClient({ items = [] }) {
   );
 }
 
+/**
+ * StudentCard Component
+ * 
+ * Individual card displaying student details, achievement photo, and verification status.
+ * 
+ * @param {Object} props
+ * @param {Object} props.item - Student achievement data
+ * @param {number} props.index - Original index of the item
+ * @returns {JSX.Element}
+ */
 function StudentCard({ item, index }) {
   const photoUrl = item.icon
     ? item.icon.startsWith("http")
