@@ -26,7 +26,7 @@ export default function AboutHeroBanner({ data }) {
         <div className="absolute inset-0 z-0">
           <img
             src={bgImage}
-            alt={data.heading || "About Us"}
+            alt={data.heading || data.super_heading || "About Us Hero"}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E]/90 to-[#0E4C92]/75" />
