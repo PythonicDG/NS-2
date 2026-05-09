@@ -3,10 +3,20 @@
 import { normalizeImageUrl } from "@/lib/api";
 import { BookOpen } from "lucide-react";
 
+/**
+ * ModuleCourseOverview Component
+ * 
+ * Displays a detailed overview of a course module with an optional image and content bullets.
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.data - Module data containing heading, subheading, and content items
+ * @returns {JSX.Element|null}
+ */
 export default function ModuleCourseOverview({ data }) {
   if (!data) return null;
 
   const primaryImage = normalizeImageUrl(data.primary_image);
+  const imageAlt = data.heading || data.super_heading || "Course Overview";
 
   return (
     <section id="module-course-overview" className="py-16 sm:py-20 bg-white relative overflow-hidden">
@@ -22,7 +32,7 @@ export default function ModuleCourseOverview({ data }) {
                 <div className="absolute -inset-3 bg-gradient-to-r from-[#C2481F]/20 to-blue-500/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img
                   src={primaryImage}
-                  alt={data.heading || "Course Overview"}
+                  alt={imageAlt}
                   className="relative rounded-2xl shadow-xl w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
                 {data.overlay_title && (
