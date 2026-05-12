@@ -69,13 +69,7 @@ function PlacementCard({ item, index }) {
       <div className="placed-card__info">
         <h4 className="placed-card__name">{studentName}</h4>
 
-        {company && (
-          <div className="placed-card__company">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>Placed at</span>
-            <strong>{company}</strong>
-          </div>
-        )}
+
 
         {testimonial && (
           <p className="placed-card__testimonial">
@@ -102,7 +96,7 @@ function PlacementCard({ item, index }) {
 export default function PlacedStudentsSlider({ items = [] }) {
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef(null);
-  
+
   // Filter out items that have no title (student name)
   const validItems = items.filter((item) => item?.title);
 
