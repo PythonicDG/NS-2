@@ -87,7 +87,7 @@ export default function VisionSectionClient({ data }) {
             {/* Left Content */}
             <div className="flex-1 lg:ml-40">
               {activeContent.label && (
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: "#C2481F" }}>
                   {activeContent.label}
                 </h3>
               )}
