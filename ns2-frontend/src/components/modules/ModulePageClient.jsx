@@ -33,7 +33,7 @@ const SECTION_COMPONENTS = {
 export default function ModulePageClient({ moduleData }) {
   if (!moduleData) return null;
 
-  const { title, tagline, sections = [] } = moduleData;
+  const { title, tagline, brochure, syllabus, sections = [] } = moduleData;
 
   // Scroll-based fade-in animation observer
   useEffect(() => {
@@ -66,7 +66,13 @@ export default function ModulePageClient({ moduleData }) {
           // FAQ uses 'data' prop; all others use 'data' too
           return (
             <div key={section.id || section.order} className="module-animate module-fade-up">
-              <Component data={section} moduleTitle={title} moduleTagline={tagline} />
+              <Component 
+                data={section} 
+                moduleTitle={title} 
+                moduleTagline={tagline} 
+                brochure={brochure}
+                syllabus={syllabus}
+              />
             </div>
           );
         })}

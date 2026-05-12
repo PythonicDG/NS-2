@@ -1,7 +1,7 @@
 "use client";
 
 import { normalizeImageUrl } from "@/lib/api";
-import { BookOpen } from "lucide-react";
+import { BookOpen, FileDown, FileText } from "lucide-react";
 
 /**
  * ModuleCourseOverview Component
@@ -10,12 +10,16 @@ import { BookOpen } from "lucide-react";
  * 
  * @param {Object} props - Component props
  * @param {Object} props.data - Module data containing heading, subheading, and content items
+ * @param {string} props.brochure - URL to the module brochure
+ * @param {string} props.syllabus - URL to the module syllabus
  * @returns {JSX.Element|null}
  */
-export default function ModuleCourseOverview({ data }) {
+export default function ModuleCourseOverview({ data, brochure, syllabus }) {
   if (!data) return null;
 
   const primaryImage = normalizeImageUrl(data.primary_image);
+  const brochureUrl = normalizeImageUrl(brochure);
+  const syllabusUrl = normalizeImageUrl(syllabus);
   const imageAlt = data.heading || data.super_heading || "Course Overview";
 
   return (
@@ -105,17 +109,43 @@ export default function ModuleCourseOverview({ data }) {
               </div>
             )}
 
-            {/* CTA */}
-            {data.primary_button_text && (
-              <div className="mt-8">
+            {/* CTA and Downloads */}
+            <div className="mt-10 flex flex-wrap gap-4">
+              {data.primary_button_text && (
                 <a
                   href={data.primary_button_url || "#"}
                   className="inline-flex items-center px-6 py-3 bg-[#C2481F] text-white font-semibold rounded-lg shadow-lg hover:bg-[#A63D1A] hover:shadow-xl transition-all duration-300"
                 >
                   {data.primary_button_text}
                 </a>
-              </div>
-            )}
+              )}
+
+              {brochureUrl && (
+                <a
+                  href={brochureUrl}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#C2481F] text-[#C2481F] font-semibold rounded-lg hover:bg-[#C2481F] hover:text-white transition-all duration-300"
+                >
+                  <FileDown className="w-5 h-5" />
+                  Download Brochure
+                </a>
+              )}
+
+              {syllabusUrl && (
+                <a
+                  href={syllabusUrl}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300"
+                >
+                  <FileText className="w-5 h-5" />
+                  View Full Syllabus
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
