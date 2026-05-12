@@ -16,14 +16,12 @@ import Accreditations from "@/components/aboutus/Accreditations";
 import InfrastructureHighlights from "@/components/aboutus/InfrastructureHighlights";
 import CompanyGallery from "@/components/aboutus/CompanyGallery";
 import OurTeam from "@/components/aboutus/OurTeam";
-import ContactUs from "@/components/homepage/ContactUs";
 import CallToAction from "@/components/homepage/CallToAction";
 import { fetchAboutPage, fetchHomepageSection } from "@/lib/api";
 
 export default async function AboutUsPage() {
-  const [data, contact, callToAction] = await Promise.all([
+  const [data, callToAction] = await Promise.all([
     fetchAboutPage(),
-    fetchHomepageSection("Contact Us"),
     fetchHomepageSection("Call To Action"),
   ]);
 
@@ -76,7 +74,6 @@ export default async function AboutUsPage() {
       {gallery && <CompanyGallery data={gallery} />}
       {team && <OurTeam data={team} />}
       <CallToAction data={callToAction} />
-      <ContactUs data={contact} />
     </main>
   );
 }
