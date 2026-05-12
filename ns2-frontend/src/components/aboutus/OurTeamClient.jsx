@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { normalizeImageUrl } from "@/lib/api";
-import { FaLinkedin, FaTwitter, FaGlobe } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaGlobe } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 // Helper to get initials from full name
 function getInitials(name) {
@@ -104,12 +105,11 @@ export default function OurTeamClient({ data }) {
                   )}
                   {item.twitter_url && (
                     <a
-                      href={item.twitter_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2] transition-all duration-300"
+                      href={`mailto:${item.twitter_url}`}
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#EA4335] hover:text-white hover:border-[#EA4335] transition-all duration-300"
+                      title="Send Email"
                     >
-                      <FaTwitter className="text-lg" />
+                      <MdEmail className="text-xl" />
                     </a>
                   )}
                   {item.facebook_url && (
