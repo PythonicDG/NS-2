@@ -2,6 +2,7 @@ import { fetchNavbarData } from "@/lib/api";
 import MobileMenu from "@/components/navbar/MobileMenuClient";
 import LogoClient from "@/components/navbar/LogoClient";
 import NavLinkClient from "@/components/navbar/NavLinkClient";
+import EnrollButton from "@/components/navbar/EnrollButton";
 import Link from "next/link";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -94,15 +95,23 @@ export default async function Navbar() {
 
         {buttonMenuItems.length > 0 && (
           <div className="hidden lg:flex space-x-4 pr-4 lg:pr-8">
-            {buttonMenuItems.map((buttonItem, index) => (
-              <Link
-                key={index}
-                href={buttonItem.url || "/"}
-                className="bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
-              >
-                {buttonItem.text}
-              </Link>
-            ))}
+            {buttonMenuItems.map((buttonItem, index) => {
+              const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
+              
+              if (isEnrollButton) {
+                return <EnrollButton key={index} text={buttonItem.text} />;
+              }
+
+              return (
+                <Link
+                  key={index}
+                  href={buttonItem.url || "/"}
+                  className="bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
+                >
+                  {buttonItem.text}
+                </Link>
+              );
+            })}
           </div>
         )}
 

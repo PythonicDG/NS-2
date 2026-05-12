@@ -1,157 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { submitContactForm, normalizeImageUrl } from "@/lib/api";
+import { normalizeImageUrl } from "@/lib/api";
 
 /**
  * ContactUs Component
  * 
- * A comprehensive contact form with validation and integration with the backend API.
- * Features:
- * - Real-time field validation
- * - Custom subject dropdown
- * - Responsive grid layout
- * - Success feedback after submission
+ * A section-based contact component that uses the shared ContactForm.
  * 
  * @param {Object} props - Component properties
  * @param {Object} props.data - Dynamic content data fetched from the API
  * @returns {JSX.Element} The rendered ContactUs section
  */
-const subjects = [
-  { value: "general", label: "General Inquiry" },
-  { value: "project", label: "Project Collaboration" },
-  { value: "support", label: "Technical Support" },
-  { value: "feedback", label: "Feedback" },
-];
-
 export default function ContactUs({ data }) {
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const validators = {
-    fullName: (val) =>
-      /^[A-Za-z\s]+$/.test(val) ? "" : "Name should contain only letters.",
-    email: (val) =>
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ? "" : "Enter a valid email.",
-    phone: (val) => {
-      if (!val) return "";
-      return /^\d{10}$/.test(val)
-        ? ""
-        : "Phone number must be exactly 10 digits.";
-    },
-    subject: (val) => (val ? "" : "Please select a subject."),
-    message: (val) =>
-      val.trim().length >= 10
-        ? ""
-        : "Message must be at least 10 characters long.",
-  };
-
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-
-    if (name === "phone") {
-      value = value.replace(/\D/g, "").slice(0, 10);
-    }
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const validateForm = () => {
-    let newErrors = {};
-    Object.keys(validators).forEach((field) => {
-      const errorMsg = validators[field](formData[field]);
-      if (errorMsg) newErrors[field] = errorMsg;
-    });
-    return newErrors;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    setLoading(true);
-    setSubmitted(false);
-
-    try {
-      const payload = {
-        full_name: formData.fullName,
-        email_address: formData.email,
-        phone_number: formData.phone,
-        subject: formData.subject,
-        message: formData.message,
-      };
-
-      const res = await submitContactForm(payload);
-
-      if (res.success) {
-        setSubmitted(true);
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
-      } else {
-        alert("❌ Failed to send message. Please try again.");
-      }
-    } catch (error) {
-      console.error("Contact form error:", error);
-      alert("❌ Something went wrong. Try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const selectSubject = (subjectValue) => {
-    setFormData({ ...formData, subject: subjectValue });
-    setIsDropdownOpen(false);
-    if (errors.subject) {
-      setErrors({ ...errors, subject: "" });
-    }
-  };
-
   if (!data) return null;
-
-  const selectedSubjectLabel =
-    subjects.find((sub) => sub.value === formData.subject)?.label ||
-    "Select a subject";
 
   return (
     <section id="contact" className="w-full py-16 bg-white text-black">
@@ -233,7 +94,7 @@ export default function ContactUs({ data }) {
                     <img
                       src={normalizeImageUrl(link.icon)}
                       alt={link.platform}
-                      className="w-6 h-6"
+                      className="w-6 h-6 transition-transform hover:scale-110"
                     />
                   </a>
                 ))}
@@ -241,214 +102,36 @@ export default function ContactUs({ data }) {
             </div>
           </div>
 
-          <div className="p-8 rounded-2xl shadow-lg bg-white border border-gray-200">
-            <h3
-              className="text-xl sm:text-2xl font-bold mb-2"
-              style={{ color: "#C2481F" }}
-            >
-              Send us a Message
-            </h3>
-            <p className="text-gray-800 text-sm sm:text-base mb-6">
-              Fill out the form below and we'll get back to you within 24 hours.
-            </p>
-
-            {submitted && (
-              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-green-700 font-medium flex items-center">
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Message sent successfully!
-                </p>
+          <div className="rounded-2xl shadow-lg bg-white border border-gray-200 overflow-hidden h-[400px] lg:h-full min-h-[400px]">
+            {data.map_url || data.company_address ? (
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={
+                  data.map_url || 
+                  `https://maps.google.com/maps?q=${encodeURIComponent(
+                    `Modern Institute of Automation, ${data.company_address
+                      ?.split(",")
+                      .filter(part => !part.toLowerCase().includes("flat") && !part.toLowerCase().includes("floor"))
+                      .join(",")}`
+                  )}&t=&z=15&ie=UTF8&iwloc=&output=embed`
+                }
+                title="Company Location"
+              ></iframe>
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 text-gray-400 p-8 text-center">
+                <svg className="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <p className="text-lg font-medium">Location Map Unavailable</p>
+                <p className="text-sm">Please contact us for directions.</p>
               </div>
             )}
-
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-5">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <input
-                      type="text"
-                      name="fullName"
-                      placeholder="Enter your full name *"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
-                    />
-                    {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1" role="alert">
-                        {errors.fullName}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Enter your email address *"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      suppressHydrationWarning={true}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1" role="alert">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Enter 10-digit phone number *"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
-                  />
-                  {errors.phone && (
-                    <p className="text-red-500 text-sm mt-1" role="alert">{errors.phone}</p>
-                  )}
-                </div>
-
-                <div className="relative" ref={dropdownRef}>
-                  <div
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.subject ? "border-red-500" : "border-gray-300"} focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black bg-white flex items-center justify-between cursor-pointer transition-colors ${isDropdownOpen ? "ring-2 ring-[#C2481F] border-[#C2481F]" : ""}`}
-                    onClick={toggleDropdown}
-                  >
-                    <span
-                      className={
-                        formData.subject ? "text-black" : "text-gray-400"
-                      }
-                    >
-                      {selectedSubjectLabel}
-                    </span>
-                    <svg
-                      className={`w-5 h-5 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-
-                  {isDropdownOpen && (
-                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-                      {subjects.map((subject, idx) => (
-                        <div
-                          key={idx}
-                          className={`px-4 py-3 cursor-pointer transition-colors ${formData.subject === subject.value ? "bg-[#eaf0ff] text-[#C2481F]" : "hover:bg-gray-50"}`}
-                          onClick={() => selectSubject(subject.value)}
-                        >
-                          {subject.label}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1" role="alert">
-                      {errors.subject}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <textarea
-                    name="message"
-                    rows="5"
-                    placeholder="Message *"
-                    value={formData.message}
-                    onChange={handleChange}
-                    maxLength={1000}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#C2481F] focus:border-[#C2481F] text-black transition-colors"
-                  />
-                  <div className="flex justify-between mt-1">
-                    {errors.message ? (
-                      <p className="text-red-500 text-sm" role="alert">{errors.message}</p>
-                    ) : (
-                      <div />
-                    )}
-                    <p className={`text-xs ${formData.message.length > 950 ? "text-red-500 font-semibold" : "text-gray-400"}`}>
-                      {formData.message.length}/1000 characters
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex space-x-3">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="px-6 py-3 bg-[#C2481F] text-white rounded-lg font-semibold hover:bg-blue-700 hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
-                  >
-                    {loading ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Sending...
-                      </>
-                    ) : (
-                      data.primary_button_text || "Send Message"
-                    )}
-                  </button>
-                  <button
-                    type="reset"
-                    onClick={() => {
-                      setFormData({
-                        fullName: "",
-                        email: "",
-                        phone: "",
-                        subject: "",
-                        message: "",
-                      });
-                      setErrors({});
-                    }}
-                    className="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                    aria-label="Reset form fields"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
       </div>

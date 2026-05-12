@@ -51,20 +51,34 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Project Structure
 
-- `src/app`: Next.js App Router pages and layouts.
-- `src/components`: Reusable UI components organized by module.
-- `src/lib`: Utility functions, API constants, and helper modules.
-- `src/styles`: Global CSS and Tailwind configuration.
+- `src/app`: Next.js App Router pages and layouts. Handles routing and server-side logic.
+- `src/components`: Reusable UI components.
+  - `homepage/`: Section-specific components for the landing page.
+  - `common/`: Shared components like Buttons, Inputs, and Cards.
+  - `layout/`: Global layout components (Navbar, Footer).
+- `src/lib`: Core logic, including API clients (`api.js`) and utility functions.
+- `src/styles`: Global CSS, Tailwind configuration, and design tokens.
 - `public`: Static assets like images, icons, and fonts.
+
+## Architecture & Conventions
+
+### Component Guidelines
+- **Server vs. Client**: Use Server Components by default for better performance and SEO. Use `"use client"` only when interactive features (hooks, event listeners) are required.
+- **Styling**: Prefer Tailwind CSS for layout and spacing. Use Vanilla CSS for complex, custom animations or unique design patterns that are hard to express in Tailwind.
+- **Data Fetching**: Use the centralized `src/lib/api.js` for all backend interactions to ensure consistent error handling and URL normalization.
+
+### State Management
+- **Server State**: Managed primarily via Next.js server-side data fetching and SWR for client-side revalidation.
+- **UI State**: Handled locally using React `useState` and `useReducer` for complex interactions.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-- `npm run dev`: Runs the app in development mode.
-- `npm run build`: Builds the app for production.
-- `npm run start`: Starts the production server.
-- `npm run lint`: Runs ESLint to check for code quality issues.
+- `npm run dev`: Runs the app in development mode with hot reloading.
+- `npm run build`: Optimizes the application for production deployment.
+- `npm run start`: Serves the production build.
+- `npm run lint`: Performs static analysis to ensure code quality and style consistency.
 
 ## Deployment
 

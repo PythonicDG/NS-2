@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import NavLinkClient from "@/components/navbar/NavLinkClient";
+import { useModal } from "@/context/ModalContext";
 import { usePathname } from "next/navigation";
 
 /**
@@ -22,6 +23,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [logoError, setLogoError] = useState(false);
   const pathname = usePathname();
+  const { openEnrollModal } = useModal();
 
   useEffect(() => setIsMounted(true), []);
 
@@ -224,16 +226,35 @@ export default function MobileMenu({ menuItems, logoUrl }) {
 
                 {buttonItems.length > 0 && (
                   <div className="pt-6 mt-auto border-t border-gray-200 space-y-3">
-                    {buttonItems.map((buttonItem, index) => (
-                      <NavLinkClient
-                        key={index}
-                        href={buttonItem.url}
-                        className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-blue-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {buttonItem.text}
-                      </NavLinkClient>
-                    ))}
+                    {buttonItems.map((buttonItem, index) => {
+                      const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
+
+                      if (isEnrollButton) {
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              openEnrollModal();
+                              setIsMenuOpen(false);
+                            }}
+                            className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
+                          >
+                            {buttonItem.text}
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <NavLinkClient
+                          key={index}
+                          href={buttonItem.url}
+                          className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {buttonItem.text}
+                        </NavLinkClient>
+                      );
+                    })}
                   </div>
                 )}
               </div>

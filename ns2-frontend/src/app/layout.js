@@ -6,6 +6,8 @@ import TopCredibilityBar from "@/components/navbar/TopCredibilityBar";
 import { Open_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
+import { ModalProvider } from "@/context/ModalContext";
+import EnrollModal from "@/components/common/EnrollModal";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -84,14 +86,17 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className="font-opensans flex flex-col min-h-screen">
-        <GoogleAnalytics />
-        <div className="sticky top-0 z-[100]">
-          <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
-          <Navbar />
-        </div>
-        <main className="flex-grow">{children}</main>
-        <ScrollToTop />
-        <Footer />
+        <ModalProvider>
+          <GoogleAnalytics />
+          <div className="sticky top-0 z-[100]">
+            <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
+            <Navbar />
+          </div>
+          <main className="flex-grow">{children}</main>
+          <ScrollToTop />
+          <Footer />
+          <EnrollModal />
+        </ModalProvider>
       </body>
     </html>
   );
