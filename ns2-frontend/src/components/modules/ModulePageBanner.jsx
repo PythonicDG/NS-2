@@ -4,10 +4,11 @@ import { normalizeImageUrl } from "@/lib/api";
 import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 
-export default function ModulePageBanner({ data, moduleTitle }) {
+export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus }) {
   if (!data) return null;
 
   const bgImage = normalizeImageUrl(data.background_image);
+  const downloadUrl = normalizeImageUrl(brochure || syllabus);
 
   return (
     <section
@@ -78,7 +79,10 @@ export default function ModulePageBanner({ data, moduleTitle }) {
             )}
             {data.secondary_button_text && (
               <a
-                href={data.secondary_button_url || "#"}
+                href={downloadUrl || "#"}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-8 py-3.5 border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300"
               >
                 {data.secondary_button_text}
