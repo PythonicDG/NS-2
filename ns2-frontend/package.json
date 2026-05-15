@@ -1,7 +1,7 @@
 {
-  "name": "ns2-frontend",
+  "name": "mia-frontend",
   "version": "0.1.1",
-  "description": "Modern Frontend for NS-2 Professional Training Institute built with Next.js",
+  "description": "Modern Frontend for Modern Institute of Automation (MIA) built with Next.js",
   "author": "PythonicDG",
   "private": true,
   "scripts": {

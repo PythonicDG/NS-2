@@ -102,7 +102,7 @@ export default function ContactUs({ data }) {
             </div>
           </div>
 
-          <div className="rounded-2xl shadow-lg bg-white border border-gray-200 overflow-hidden h-[400px] lg:h-full min-h-[400px]">
+          <div className="rounded-2xl shadow-lg bg-white border border-gray-200 overflow-hidden h-[300px] lg:h-[400px] min-h-[300px] lg:self-center">
             {data.map_url || data.company_address ? (
               <iframe
                 width="100%"
@@ -112,7 +112,7 @@ export default function ContactUs({ data }) {
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
                 src={
-                  data.map_url || 
+                  data.map_url ||
                   `https://maps.google.com/maps?q=${encodeURIComponent(
                     `Modern Institute of Automation, ${data.company_address
                       ?.split(",")

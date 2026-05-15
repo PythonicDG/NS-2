@@ -1,6 +1,6 @@
-# NS2 Infotech - Frontend
+# Modern Institute of Automation (MIA) - Frontend
 
-This is the frontend application for NS2 Infotech (Modern Institute of Automation), built with the Next.js 15 framework.
+This is the frontend application for MIA (Modern Institute of Automation), built with the Next.js 15 framework.
 
 ## Technology Stack
 

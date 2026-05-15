@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "NS2 Infotech | About Us",
+  title: "MIA | About Us",
   description:
-    "Learn about NS-2 Infotech — our mission, vision, team, and the expertise that makes us a leading automation training institute.",
+    "Learn about MIA (Modern Institute of Automation) — our mission, vision, team, and the expertise that makes us a leading automation training institute.",
 };
 
 export const revalidate = 0; // Full SSR (no cache)

@@ -22,7 +22,7 @@ export default function LogoClient({ logoUrl }) {
     <Link href="/" className="flex items-center transition-opacity hover:opacity-90" title="Home">
       <img
         src={logoUrl}
-        alt="NS-2 Infotech Logo"
+        alt="Modern Institute of Automation (MIA) Logo"
         className="h-14 w-auto drop-shadow-sm"
         onError={() => {
           console.error("Failed to load logo:", logoUrl);

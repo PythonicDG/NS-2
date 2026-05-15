@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "MIA | | Training Programs",
+  title: "MIA | Training Programs",
   description:
     "At MIA, we offer comprehensive training programs for both corporate professionals and students.",
 };

@@ -1,51 +1,51 @@
 import ContactUs from "@/components/homepage/ContactUs";
 import FAQSection from "@/components/homepage/FAQSection";
-import FeatureHighlights from "@/components/internship/FeatureHighlights";
-import HeroSection from "@/components/internship/HeroSection";
-import InternshipOpportunities from "@/components/internship/InternshipOpportunities";
-import ProgramStructure from "@/components/internship/ProgramStructure";
-import WhyChooseUs from "@/components/internship/WhyChooseUs";
-import { fetchHomepageSection, fetchInternshipPage } from "@/lib/api";
+import FeatureHighlights from "@/components/modules_list/FeatureHighlights";
+import HeroSection from "@/components/modules_list/HeroSection";
+import ModuleOpportunities from "@/components/modules_list/ModuleOpportunities";
+import ProgramStructure from "@/components/modules_list/ProgramStructure";
+import WhyChooseUs from "@/components/modules_list/WhyChooseUs";
+import { fetchHomepageSection, fetchModulePage } from "@/lib/api";
 
 export const metadata = {
-  title: "NS² | | Internships",
-  description: "Explore internship opportunities and innovative projects.",
+  title: "MIA | Modules",
+  description: "Explore our specialized modules and innovative projects.",
 };
 
 export const dynamic = "force-dynamic";
 
-export default async function InternshipPage() {
-  const internshipData = await fetchInternshipPage();
+export default async function ModulesPage() {
+  const moduleData = await fetchModulePage();
 
   const heroBanner =
-    internshipData.find(
+    moduleData.find(
       (section) =>
         section.section_type === "HERO" ||
         section.section_type === "Hero Banner"
     ) || null;
 
   const opportunities =
-    internshipData.find(
-      (section) => section.section_type === "INTERNSHIP_OPPORTUNITIES"
+    moduleData.find(
+      (section) => section.section_type === "MODULE_OPPORTUNITIES"
     ) || null;
 
   const whyChooseUs =
-    internshipData.find(
+    moduleData.find(
       (section) => section.section_type === "WHY_CHOOSE_US"
     ) || null;
 
   const featureHighlights =
-    internshipData.find(
+    moduleData.find(
       (section) => section.section_type === "FEATURE_HIGHLIGHTS"
     ) || null;
 
   const programStructure =
-    internshipData.find(
+    moduleData.find(
       (section) => section.section_type === "PROGRAM_STRUCTURE"
     ) || null;
 
   const faqSection =
-    internshipData.find((section) => section.section_type === "FAQ") || null;
+    moduleData.find((section) => section.section_type === "FAQ") || null;
 
   const [contact, initialSections] = await Promise.all([
       fetchHomepageSection("Contact Us"),
@@ -54,7 +54,7 @@ export default async function InternshipPage() {
   return (
     <main className="bg-white">
       {heroBanner && <HeroSection data={heroBanner} />}
-      {opportunities && <InternshipOpportunities initialData={opportunities} />}
+      {opportunities && <ModuleOpportunities initialData={opportunities} />}
       {whyChooseUs && <WhyChooseUs initialData={whyChooseUs} />}
       {featureHighlights && (
         <FeatureHighlights initialData={featureHighlights} />

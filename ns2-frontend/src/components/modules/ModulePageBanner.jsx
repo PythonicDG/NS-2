@@ -41,7 +41,7 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
             <span>Home</span>
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <Link href="/internship" className="hover:text-white transition-colors">
+          <Link href="/modules" className="hover:text-white transition-colors">
             Programs
           </Link>
           <ChevronRight className="w-4 h-4" />

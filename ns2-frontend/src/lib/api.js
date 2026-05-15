@@ -25,7 +25,7 @@ export function normalizeImageUrl(url) {
   }
 
   if (url.startsWith("http")) return url;
-  return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+  return `${API_BASE_URL.replace(/\/$/, "")}${url.startsWith("/") ? "" : "/"}${url}`;
 }
 
 /**
@@ -196,10 +196,10 @@ export async function fetchTrainingPage(slug) {
 
   return res.json();
 }
-export async function fetchInternshipPage() {
+export async function fetchModulePage() {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/api/internships/fetch-internship-page`,
+      `${API_BASE_URL}/api/modules/fetch-module-page`,
       {
         next: { revalidate: 60 },
       }
@@ -215,7 +215,7 @@ export async function fetchInternshipPage() {
     if (data && typeof data === "object") return [data];
     return [];
   } catch (err) {
-    console.error("fetchInternshipPage error:", err);
+    console.error("fetchModulePage error:", err);
     return [];
   }
 }
@@ -223,7 +223,7 @@ export async function fetchInternshipPage() {
 export async function fetchModuleBySlug(slug) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/api/internships/modules/${slug}/`,
+      `${API_BASE_URL}/api/modules/modules/${slug}/`,
       { cache: "no-store" }
     );
 
@@ -241,7 +241,7 @@ export async function fetchModuleBySlug(slug) {
 export async function fetchModulesList() {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/api/internships/modules/`,
+      `${API_BASE_URL}/api/modules/modules/`,
       { cache: "no-store" }
     );
 

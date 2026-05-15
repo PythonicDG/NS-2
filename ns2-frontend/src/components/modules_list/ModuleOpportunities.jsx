@@ -4,7 +4,7 @@ import { normalizeImageUrl } from "@/lib/api";
 import { Download } from "lucide-react";
 import { useState } from "react";
 
-export default function InternshipOpportunities({ initialData }) {
+export default function ModuleOpportunities({ initialData }) {
   const [data] = useState(initialData);
 
   if (!data) {

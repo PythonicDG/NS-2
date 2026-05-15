@@ -21,8 +21,8 @@ const opensans = Open_Sans({
 });
 
 export const metadata = {
-  applicationName: "NS-2 Infotech",
-  title: "NS2 Infotech | Modern Institute of Automation",
+  applicationName: "Modern Institute of Automation",
+  title: "MIA | Modern Institute of Automation",
   description:
     "Empowering the next generation of automation experts with industry-leading training and placement support.",
   keywords: [
@@ -31,21 +31,22 @@ export const metadata = {
     "SCADA",
     "Robotics",
     "Industrial training",
-    "NS2 Infotech",
+    "MIA",
+    "Modern Institute of Automation",
   ],
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "NS2 Infotech | Modern Institute of Automation",
+    title: "MIA | Modern Institute of Automation",
     description: "Empowering the next generation of automation experts.",
     type: "website",
     locale: "en_US",
-    siteName: "NS2 Infotech",
+    siteName: "Modern Institute of Automation",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NS2 Infotech | Modern Institute of Automation",
+    title: "MIA | Modern Institute of Automation",
     description: "Empowering the next generation of automation experts.",
   },
   robots: "index, follow",

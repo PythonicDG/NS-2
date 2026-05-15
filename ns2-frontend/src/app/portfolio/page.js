@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Portfolio | NS-2 Infotech",
+  title: "MIA | Portfolio",
   description:
-    "Explore NS-2 Infotech's innovative projects, trusted partnerships, and expert team.",
+    "Explore MIA's innovative projects, trusted partnerships, and expert team.",
 };
 import ContactUs from "@/components/homepage/ContactUs";
 import Testimonial from "@/components/homepage/Testimonial";

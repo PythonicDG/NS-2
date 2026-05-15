@@ -13,18 +13,18 @@ export async function generateMetadata({ params: incomingParams }) {
 
     if (!moduleData) {
       return { 
-        title: "Module Not Found | NS² Infotech",
+        title: "Module Not Found | MIA",
         description: "The requested training module could not be found."
       };
     }
 
     return {
-      title: `${moduleData.title} | NS² Infotech`,
-      description: moduleData.tagline || `Learn more about ${moduleData.title} and enhance your skills with NS² Infotech's expert-led training.`,
+      title: `${moduleData.title} | MIA`,
+      description: moduleData.tagline || `Learn more about ${moduleData.title} and enhance your skills with MIA's expert-led training.`,
     };
   } catch (error) {
     console.error("Metadata generation error:", error);
-    return { title: "NS² Infotech Training" };
+    return { title: "MIA Training" };
   }
 }
 
