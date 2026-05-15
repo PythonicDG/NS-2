@@ -102,32 +102,6 @@ export async function fetchHomepageSection(sectionType) {
   }
 }
 
-export async function fetchPortfolioData() {
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/portfolio/fetch-portfolio`,
-      {
-        cache: "no-store",
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (data && Array.isArray(data) && data.length > 0) {
-      return data;
-    }
-
-    console.warn(
-      "API for Portfolio page returned an empty or invalid response."
-    );
-    return [];
-  } catch (error) {
-    console.error("Failed to fetch Portfolio page data:", error);
-    return [];
-  }
-}
 
 export async function submitContactForm(payload) {
   try {
@@ -152,21 +126,6 @@ export async function submitContactForm(payload) {
   }
 }
 
-export async function fetchServiceBySlug(slug) {
-  try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/services/fetch-services/?submenu=${slug}`,
-      { cache: "no-store" }
-    );
-
-    if (!res.ok) throw new Error("Failed to fetch service data");
-
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching service by slug:", error);
-    return null;
-  }
-}
 
 export async function fetchAboutPage() {
   try {
@@ -184,18 +143,7 @@ export async function fetchAboutPage() {
   }
 }
 
-export async function fetchTrainingPage(slug) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/training/fetch-training-page/?slug=${slug}`,
-    { cache: "no-store" }
-  );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch training page data");
-  }
-
-  return res.json();
-}
 export async function fetchModulePage() {
   try {
     const res = await fetch(
