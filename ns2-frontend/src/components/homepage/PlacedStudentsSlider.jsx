@@ -22,7 +22,7 @@ function normalizeUrl(url) {
  */
 function PlacementCard({ item, index }) {
   const studentName = item?.title || "Student";
-  const company = item?.text || "Company";
+  const company = item?.text;
   const testimonial = item?.description || "";
   const photoUrl = normalizeUrl(item?.icon);
 
@@ -75,6 +75,12 @@ function PlacementCard({ item, index }) {
           <p className="placed-card__testimonial">
             &ldquo;{testimonial}&rdquo;
           </p>
+        )}
+        
+        {company && (
+          <div className="placed-card__company mt-3">
+             <span className="text-xs font-semibold">{company}</span>
+          </div>
         )}
       </div>
 
