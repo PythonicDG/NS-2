@@ -38,7 +38,7 @@ export default function AboutHeroBanner({ data }) {
   }, [finalImages.length]);
 
   return (
-    <section className="relative w-full min-h-[500px] md:min-h-[650px] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-[600px] md:min-h-[800px] flex items-center overflow-hidden">
       {/* Background Slideshow */}
       {finalImages.length > 0 && (
         <div className="absolute inset-0 z-0">
@@ -74,7 +74,7 @@ export default function AboutHeroBanner({ data }) {
       <div className="absolute right-0 bottom-0 w-96 h-96 bg-blue-900 opacity-15 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 z-0" />
 
       {/* Content */}
-      <div className="container mx-auto px-6 lg:px-16 relative z-10 py-16 md:py-24">
+      <div className="container mx-auto px-6 lg:px-16 relative z-10 py-12 md:py-16 -translate-y-8 md:-translate-y-20">
         {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0, y: -10 }}

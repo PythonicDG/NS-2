@@ -32,7 +32,7 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
   return (
     <section
       id="module-page-banner"
-      className="relative min-h-[340px] sm:min-h-[400px] flex items-center overflow-hidden"
+      className="relative w-full min-h-[600px] md:min-h-[800px] flex items-center overflow-hidden"
     >
       {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
@@ -66,7 +66,7 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-16 py-16 sm:py-20">
+      <div className="relative z-10 container mx-auto px-6 lg:px-16 py-12 md:py-16 -translate-y-8 md:-translate-y-20">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-white/70 mb-6">
           <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
