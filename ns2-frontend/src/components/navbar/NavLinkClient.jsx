@@ -22,7 +22,14 @@ export default function NavLinkClient({
   onClick,
 }) {
   const pathname = usePathname();
-  const isActive = pathname === href;
+  
+  // Ensure the link is absolute for internal routes to prevent broken relative navigation
+  const normalizedHref = 
+    href && !href.startsWith("http") && !href.startsWith("/") && !href.startsWith("#")
+      ? `/${href}`
+      : href;
+
+  const isActive = pathname === normalizedHref;
 
   const baseClasses = isActive
     ? "text-[#C2481F] font-semibold"
@@ -30,7 +37,7 @@ export default function NavLinkClient({
 
   return (
     <Link
-      href={href}
+      href={normalizedHref || "#"}
       onClick={onClick}
       className={`${baseClasses} ${className} transition-colors duration-200`}
     >

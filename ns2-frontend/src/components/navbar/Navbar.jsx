@@ -105,7 +105,7 @@ export default async function Navbar() {
               return (
                 <Link
                   key={index}
-                  href={buttonItem.url || "/"}
+                  href={buttonItem.url?.startsWith("/") || buttonItem.url?.startsWith("http") ? buttonItem.url : `/${buttonItem.url}`}
                   className="bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
                 >
                   {buttonItem.text}

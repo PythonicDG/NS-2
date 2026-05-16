@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { normalizeImageUrl } from "@/lib/api";
 
@@ -15,26 +17,55 @@ import { normalizeImageUrl } from "@/lib/api";
  * @returns {JSX.Element}
  */
 export default function AboutHeroBanner({ data }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   if (!data) return null;
 
   const bgImage = normalizeImageUrl(data.background_image) || normalizeImageUrl(data.primary_image);
 
+  const heroImages = (data.content_items || [])
+    .filter((item) => item.image)
+    .map((item) => normalizeImageUrl(item.image));
+
+  const finalImages = heroImages.length > 0 ? heroImages : (bgImage ? [bgImage] : []);
+
+  useEffect(() => {
+    if (finalImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % finalImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [finalImages.length]);
+
   return (
     <section className="relative w-full min-h-[340px] md:min-h-[420px] flex items-center overflow-hidden">
-      {/* Background Image */}
-      {bgImage && (
+      {/* Background Slideshow */}
+      {finalImages.length > 0 && (
         <div className="absolute inset-0 z-0">
-          <img
-            src={bgImage}
-            alt={data.heading || data.super_heading || "About Us Hero"}
-            className="w-full h-full object-cover"
-          />
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={currentImageIndex}
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 1.05, opacity: 0 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={finalImages[currentImageIndex]}
+                alt={data.heading || "About Us Hero"}
+                fill
+                priority
+                className="object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E]/90 to-[#0E4C92]/75" />
         </div>
       )}
 
       {/* Fallback gradient if no image */}
-      {!bgImage && (
+      {finalImages.length === 0 && (
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92]" />
       )}
 

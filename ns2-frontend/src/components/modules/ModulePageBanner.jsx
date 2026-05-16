@@ -1,27 +1,60 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { normalizeImageUrl } from "@/lib/api";
 import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   if (!data) return null;
 
   const bgImage = normalizeImageUrl(data.background_image);
   const downloadUrl = normalizeImageUrl(brochure || syllabus);
+
+  const heroImages = (data.content_items || [])
+    .filter((item) => item.icon)
+    .map((item) => normalizeImageUrl(item.icon));
+
+  const finalImages = heroImages.length > 0 ? heroImages : (bgImage ? [bgImage] : []);
+
+  useEffect(() => {
+    if (finalImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % finalImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [finalImages.length]);
 
   return (
     <section
       id="module-page-banner"
       className="relative min-h-[340px] sm:min-h-[400px] flex items-center overflow-hidden"
     >
-      {/* Background */}
+      {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
-        {bgImage ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${bgImage})` }}
-          />
+        {finalImages.length > 0 ? (
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={currentImageIndex}
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 1.05, opacity: 0 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={finalImages[currentImageIndex]}
+                alt={data.heading || moduleTitle || "Module Hero"}
+                fill
+                priority
+                className="object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92]" />
         )}

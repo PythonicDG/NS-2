@@ -1,5 +1,5 @@
 import { fetchModuleBySlug, fetchHomepageSection } from "@/lib/api";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import ModulePageClient from "@/components/modules/ModulePageClient";
 import ContactUs from "@/components/homepage/ContactUs";
 
@@ -38,7 +38,7 @@ export default async function ModuleDetailPage({ params: incomingParams }) {
   ]);
 
   if (!moduleData) {
-    redirect("/");
+    notFound();
   }
 
   return (

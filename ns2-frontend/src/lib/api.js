@@ -46,16 +46,31 @@ export async function fetchNavbarData() {
     const data = await response.json();
 
     if (data && (data.header || data.menu || data.footer)) {
+      // Safely normalize menu URLs if they exist
+      if (Array.isArray(data.menu)) {
+        data.menu = data.menu.map((item) => {
+          if (item.url && !item.url.startsWith("http") && !item.url.startsWith("/")) {
+            item.url = `/${item.url}`;
+          }
+          if (Array.isArray(item.submenus)) {
+            item.submenus = item.submenus.map((sub) => {
+              if (sub.url && !sub.url.startsWith("http") && !sub.url.startsWith("/")) {
+                sub.url = `/${sub.url}`;
+              }
+              return sub;
+            });
+          }
+          return item;
+        });
+      }
       return data;
     } else {
-      console.warn(
-        "API response missing expected structure, returning empty array instead of fallback"
-      );
-      return { header: [], menu: [], footer: null };
+      console.warn("API response missing expected structure");
+      return { header: {}, menu: [], footer: {} };
     }
   } catch (error) {
     console.error("Failed to fetch Navbar data:", error);
-    return { header: [], menu: [], footer: null };
+    return { header: {}, menu: [], footer: {} };
   }
 }
 
@@ -170,10 +185,16 @@ export async function fetchModulePage() {
 
 export async function fetchModuleBySlug(slug) {
   try {
+    const baseUrl = API_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
-      `${API_BASE_URL}/api/modules/modules/${slug}/`,
+      `${baseUrl}/api/modules/modules/${slug}/`,
       { cache: "no-store" }
     );
+
+    if (res.status === 404) {
+      console.warn(`Module not found: ${slug}`);
+      return null;
+    }
 
     if (!res.ok) {
       throw new Error(`Failed to fetch module: ${res.status}`);
