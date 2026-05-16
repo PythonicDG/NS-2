@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 import CallToAction from "@/components/homepage/CallToAction";
 import ContactUs from "@/components/homepage/ContactUs";
 import FAQSection from "@/components/homepage/FAQSection";
+import GoogleReviews from "@/components/homepage/GoogleReviews";
 import Hero from "@/components/homepage/HeroSection";
 import KeyAchievementsServer from "@/components/homepage/KeyAchievements.server";
 import Overview from "@/components/homepage/Overview";
@@ -42,6 +43,7 @@ export default async function HomePage() {
       <CallToAction data={callToAction} />
       <FAQSection data={faq} />
       <ContactUs data={contact} />
+      <GoogleReviews />
       <ScrollToTop />
     </main>
   );
