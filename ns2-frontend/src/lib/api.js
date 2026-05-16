@@ -257,3 +257,46 @@ export async function fetchModulesList() {
     return [];
   }
 }
+
+export async function fetchAnnouncements(categorySlug = "") {
+  try {
+    const baseUrl = API_BASE_URL.replace(/\/$/, "");
+    let url = `${baseUrl}/api/announcements/items/`;
+    if (categorySlug) {
+      url += `?category=${categorySlug}`;
+    }
+    console.log("Fetching Announcements from:", url); // Debug Log
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to fetch announcements: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching announcements:", error);
+    return [];
+  }
+}
+
+
+export async function fetchAnnouncementBySlug(slug) {
+  try {
+    const baseUrl = API_BASE_URL.replace(/\/$/, "");
+    const res = await fetch(`${baseUrl}/api/announcements/items/${slug}/`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to fetch announcement: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching announcement by slug:", error);
+    return null;
+  }
+}
+
+export async function fetchAnnouncementCategories() {
+  try {
+    const baseUrl = API_BASE_URL.replace(/\/$/, "");
+    const res = await fetch(`${baseUrl}/api/announcements/categories/`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to fetch announcement categories: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching announcement categories:", error);
+    return [];
+  }
+}
+

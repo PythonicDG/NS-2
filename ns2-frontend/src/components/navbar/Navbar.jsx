@@ -37,20 +37,24 @@ export default async function Navbar() {
   return (
     <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-3 w-full transition-all duration-300">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="pl-4 lg:pl-8 transform hover:scale-105 transition-transform duration-300">
-          <LogoClient logoUrl={logoUrl} />
+        {/* Logo Section */}
+        <div className="flex-1 flex justify-start pl-4 lg:pl-8">
+          <div className="transform hover:scale-105 transition-transform duration-300">
+            <LogoClient logoUrl={logoUrl} />
+          </div>
         </div>
 
-        <div className="hidden lg:flex flex-1 justify-center items-center">
-          <ul className="flex space-x-8">
+        {/* Center Menu Section */}
+        <div className="hidden lg:flex justify-center items-center">
+          <ul className="flex space-x-6 xl:space-x-8">
             {regularMenuItems.map((item, index) => (
-              <li key={index} className="relative group py-2">
+              <li key={index} className="relative group py-2 flex items-center">
                 {item.submenus?.length > 0 ? (
                   <>
-                    <button className="text-gray-600 hover:text-[#C2481F] text-sm font-semibold transition-colors duration-300 flex items-center gap-1 group">
-                      {item.text}
+                    <button className="bg-transparent border-none p-0 text-gray-600 hover:text-[#C2481F] text-sm font-semibold transition-colors duration-300 flex items-center gap-1 group cursor-pointer">
+                      <span>{item.text}</span>
                       <svg
-                        className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+                        className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180 flex-shrink-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -65,7 +69,7 @@ export default async function Navbar() {
                     </button>
 
                     {/* Premium Dropdown */}
-                    <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 py-3 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-[110]">
+                    <div className="absolute left-0 top-full w-56 bg-white rounded-xl shadow-2xl border border-gray-100 py-3 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-[110]">
                       <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white border-t border-l border-gray-100 rotate-45"></div>
                       {item.submenus.map((subitem, subIndex) => (
                         <NavLinkClient
@@ -79,10 +83,10 @@ export default async function Navbar() {
                     </div>
                   </>
                 ) : (
-                  <div className="relative group">
+                  <div className="relative group flex items-center">
                     <NavLinkClient 
                       href={item.url}
-                      className="text-gray-600 hover:text-[#C2481F] text-sm font-semibold transition-colors duration-300"
+                      className="text-gray-600 hover:text-[#C2481F] text-sm font-semibold transition-colors duration-300 flex items-center"
                     >
                       {item.text}
                     </NavLinkClient>
@@ -91,35 +95,40 @@ export default async function Navbar() {
                 )}
               </li>
             ))}
+
           </ul>
         </div>
 
-        {buttonMenuItems.length > 0 && (
-          <div className="hidden lg:flex space-x-4 pr-4 lg:pr-8">
-            {buttonMenuItems.map((buttonItem, index) => {
-              const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
-              
-              if (isEnrollButton) {
-                return <EnrollButton key={index} text={buttonItem.text} />;
-              }
+        {/* Buttons Section */}
+        <div className="flex-1 flex justify-end items-center gap-4">
+          {buttonMenuItems.length > 0 && (
+            <div className="hidden lg:flex space-x-4 pr-4 lg:pr-8">
+              {buttonMenuItems.map((buttonItem, index) => {
+                const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
+                
+                if (isEnrollButton) {
+                  return <EnrollButton key={index} text={buttonItem.text} />;
+                }
 
-              return (
-                <NavButtonClient
-                  key={index}
-                  href={buttonItem.url}
-                  className="bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
-                >
-                  {buttonItem.text}
-                </NavButtonClient>
-              );
-            })}
+                return (
+                  <NavButtonClient
+                    key={index}
+                    href={buttonItem.url}
+                    className="bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
+                  >
+                    {buttonItem.text}
+                  </NavButtonClient>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="lg:hidden pr-4">
+            <MobileMenu menuItems={menuItems} logoUrl={logoUrl} />
           </div>
-        )}
-
-        <div className="lg:hidden">
-          <MobileMenu menuItems={menuItems} logoUrl={logoUrl} />
         </div>
       </div>
+
     </nav>
   );
 }
