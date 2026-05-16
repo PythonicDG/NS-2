@@ -28,7 +28,7 @@ export default function OurStory({ data }) {
     data.content_items?.filter((item) => item.is_active) || [];
 
   return (
-    <section className="py-16 md:py-24 bg-white overflow-hidden">
+    <section className="py-16 md:py-24 bg-white overflow-hidden" id="our-story">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -86,18 +86,16 @@ export default function OurStory({ data }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className={`relative flex items-start md:items-center gap-6 md:gap-0 ${
-                      isLeft ? "md:flex-row" : "md:flex-row-reverse"
-                    }`}
+                    className={`relative flex items-start md:items-center gap-6 md:gap-0 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"
+                      }`}
                   >
                     {/* Timeline dot (centered on desktop, left on mobile) */}
                     <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#C2481F] border-4 border-white shadow-md z-10" />
 
                     {/* Content card container */}
                     <div
-                      className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
-                        isLeft ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
-                      }`}
+                      className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${isLeft ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
+                        }`}
                     >
                       <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
                         {/* Year/Label badge */}
