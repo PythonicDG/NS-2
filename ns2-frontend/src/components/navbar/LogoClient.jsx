@@ -11,7 +11,7 @@ export default function LogoClient({ logoUrl }) {
     // Render fallback element if logo fails to load
     return (
       <Link href="/" className="flex items-center">
-        <div className="h-14 w-40 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
+        <div className="h-16 w-44 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
           Company Logo
         </div>
       </Link>
@@ -23,7 +23,7 @@ export default function LogoClient({ logoUrl }) {
       <img
         src={logoUrl}
         alt="Modern Institute of Automation (MIA) Logo"
-        className="h-14 w-auto drop-shadow-sm"
+        className="h-16 w-auto drop-shadow-sm"
         onError={() => {
           console.error("Failed to load logo:", logoUrl);
           setImageError(true);

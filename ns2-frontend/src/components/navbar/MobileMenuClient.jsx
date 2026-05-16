@@ -129,13 +129,13 @@ export default function MobileMenu({ menuItems, logoUrl }) {
                       <img
                         src={logoUrl}
                         alt="Company Logo"
-                        className="h-10 w-auto"
+                        className="h-12 w-auto"
                         onError={() => setLogoError(true)}
                       />
                     </NavLinkClient>
                   ) : (
                     <NavLinkClient href="/" onClick={() => setIsMenuOpen(false)}>
-                      <div className="h-10 w-32 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
+                      <div className="h-12 w-36 bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600 rounded-md">
                         Company Logo
                       </div>
                     </NavLinkClient>
