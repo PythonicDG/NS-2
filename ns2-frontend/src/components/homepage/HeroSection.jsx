@@ -104,42 +104,13 @@ export default function Hero({ data }) {
                 fill
                 priority
                 sizes="100vw"
+                quality={75}
                 className="object-cover object-center"
               />
             </motion.div>
           </AnimatePresence>
-          {/* Dark gradient overlay for text clarity */}
+          {/* Gradient overlay for text clarity */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent" />
-          
-          {/* Subtle Floating Tech Icons */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {[
-              { icon: "{ }", top: "20%", left: "10%", size: "text-4xl", delay: 0 },
-              { icon: "01", top: "60%", left: "15%", size: "text-6xl", delay: 1 },
-              { icon: "</>", top: "30%", left: "80%", size: "text-5xl", delay: 2 },
-              { icon: "[]", top: "70%", left: "85%", size: "text-4xl", delay: 0.5 },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: [0.05, 0.15, 0.05],
-                  y: [0, -30, 0],
-                  rotate: [0, 5, -5, 0]
-                }}
-                transition={{ 
-                  duration: 8 + idx * 2, 
-                  repeat: Infinity, 
-                  delay: item.delay,
-                  ease: "easeInOut" 
-                }}
-                style={{ top: item.top, left: item.left }}
-                className={`absolute ${item.size} font-mono text-white/20 select-none hidden lg:block`}
-              >
-                {item.icon}
-              </motion.div>
-            ))}
-          </div>
         </div>
       )}
 

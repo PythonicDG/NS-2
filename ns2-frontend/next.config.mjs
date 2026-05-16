@@ -1,18 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
+  compress: true,
   images: {
-    unoptimized: true,
+    // Image optimization enabled for LCP improvement
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 3600,
+    deviceSizes: [640, 768, 1024, 1280, 1920],
+    imageSizes: [64, 128, 256, 384],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "nsbackend.strangled.net", // Your GCP backend server
+        hostname: "nsbackend.strangled.net",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "github.githubassets.com", // GitHub assets domain
+        hostname: "github.githubassets.com",
         port: "",
         pathname: "/**",
       },
@@ -22,7 +27,16 @@ const nextConfig = {
         port: "",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "mia-backend.mooo.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
+  },
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lucide-react"],
   },
 };
 

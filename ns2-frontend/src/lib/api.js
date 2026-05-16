@@ -86,12 +86,22 @@ export async function fetchNavbarData() {
   }
 }
 
-export async function fetchHomepageSection(sectionType) {
+// Module-level cache for homepage data to avoid duplicate fetches within the same request
+let _homepageCache = null;
+let _homepageCacheTime = 0;
+const HOMEPAGE_CACHE_TTL = 30 * 1000; // 30 seconds in-memory cache
+
+async function fetchAllHomepageSections() {
+  const now = Date.now();
+  if (_homepageCache && now - _homepageCacheTime < HOMEPAGE_CACHE_TTL) {
+    return _homepageCache;
+  }
+
   try {
     const response = await fetch(
       `${API_BASE_URL}/api/homepage/fetch-homepage`,
       {
-        cache: "no-store",
+        next: { revalidate: 60 }, // ISR: serve cached, revalidate in background every 60s
       }
     );
 
@@ -101,19 +111,29 @@ export async function fetchHomepageSection(sectionType) {
     const sections = Array.isArray(data)
       ? data
       : Array.isArray(data?.data)
-        ? data.data
-        : [];
+      ? data.data
+      : [];
+
+    _homepageCache = sections;
+    _homepageCacheTime = now;
+    return sections;
+  } catch (error) {
+    console.error("Failed to fetch homepage sections:", error);
+    return [];
+  }
+}
+
+export async function fetchHomepageSection(sectionType) {
+  try {
+    const sections = await fetchAllHomepageSections();
+
     const section = sections.find(
       (s) =>
         s.section_type?.toLowerCase().replace(/\s/g, "") ===
-        sectionType.toLowerCase().replace(/\s/g, "") && s.is_active
+          sectionType.toLowerCase().replace(/\s/g, "") && s.is_active
     );
 
     if (!section) {
-      const availableTypes = sections.filter(s => s.is_active).map(s => s.section_type);
-      console.warn(
-        `${sectionType} section not found. Available active sections: ${availableTypes.join(", ")}`
-      );
       return null;
     }
 
@@ -128,6 +148,7 @@ export async function fetchHomepageSection(sectionType) {
     return null;
   }
 }
+
 
 
 export async function submitContactForm(payload) {

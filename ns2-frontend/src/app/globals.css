@@ -31,6 +31,22 @@
 
 html {
   scroll-behavior: smooth;
+  /* Hint browser to optimize text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Use GPU compositing for animated sections */
+[class*="placed-slider__track"],
+[class*="placed-card"] {
+  will-change: transform;
+}
+
+/* Skip rendering of off-screen sections until near-viewport */
+section:not(:first-child):not(:nth-child(2)) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }
 
 @theme inline {
