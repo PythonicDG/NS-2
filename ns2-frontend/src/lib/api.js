@@ -63,6 +63,18 @@ export async function fetchNavbarData() {
           return item;
         });
       }
+      // Safely normalize footer URLs if they exist
+      if (data.footer && Array.isArray(data.footer.sections)) {
+        data.footer.sections.forEach((section) => {
+          if (Array.isArray(section.items)) {
+            section.items.forEach((item) => {
+              if (item.url && !item.url.startsWith("http") && !item.url.startsWith("/")) {
+                item.url = `/${item.url}`;
+              }
+            });
+          }
+        });
+      }
       return data;
     } else {
       console.warn("API response missing expected structure");

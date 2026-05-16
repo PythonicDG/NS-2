@@ -160,28 +160,37 @@ export default function FooterClient({ data }) {
                         .sort((a, b) => (a.order || 0) - (b.order || 0))
                         .map((item, i) => (
                           <li key={i} className="group">
-                            <Link
-                              href={item.url || "#"}
-                              className="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-start"
-                            >
-                              <svg
-                                className="w-4 h-4 text-blue-400 mr-2 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 transition-transform"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M9 5l7 7-7 7"
-                                ></path>
-                              </svg>
-                              <span className="group-hover:translate-x-1 transform transition-transform inline-block">
-                                {item.text}
-                              </span>
-                            </Link>
+                            {(() => {
+                              const itemUrl = item.url || "#";
+                              const normalizedUrl = itemUrl.startsWith("http") || itemUrl.startsWith("/") || itemUrl.startsWith("#")
+                                ? itemUrl
+                                : `/${itemUrl}`;
+                              
+                              return (
+                                <Link
+                                  href={normalizedUrl}
+                                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-start"
+                                >
+                                  <svg
+                                    className="w-4 h-4 text-blue-400 mr-2 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 transition-transform"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M9 5l7 7-7 7"
+                                    ></path>
+                                  </svg>
+                                  <span className="group-hover:translate-x-1 transform transition-transform inline-block">
+                                    {item.text}
+                                  </span>
+                                </Link>
+                              );
+                            })()}
                           </li>
                         ))}
                     </ul>
