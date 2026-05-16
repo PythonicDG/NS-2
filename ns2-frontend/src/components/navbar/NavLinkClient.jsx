@@ -35,10 +35,24 @@ export default function NavLinkClient({
     ? "text-[#C2481F] font-semibold"
     : "text-[#6C757D] hover:text-[#C2481F]";
 
+  const handleClick = (e) => {
+    // If the link is for the current page, scroll to top smoothly
+    if (isActive) {
+      // For standard internal links that match the current path
+      if (normalizedHref && normalizedHref.startsWith("/") && !normalizedHref.includes("#")) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+    
+    // Execute original onClick if provided (e.g., closing mobile menu)
+    if (onClick) onClick(e);
+  };
+
   return (
     <Link
       href={normalizedHref || "#"}
-      onClick={onClick}
+      onClick={handleClick}
       className={`${baseClasses} ${className} transition-colors duration-200`}
     >
       {children}
