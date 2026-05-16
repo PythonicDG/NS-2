@@ -1,19 +1,40 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function Hero({ data }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   if (!data) return null;
 
   const backgroundImageUrl = data.background_image
     ? data.background_image.startsWith("http")
       ? data.background_image
-      : `${API_BASE_URL}${data.background_image}`
+      : `${API_BASE_URL}${data.background_image.startsWith("/") ? "" : "/"}${data.background_image}`
     : null;
+
+  const heroImages = (data.content_items || [])
+    .filter((item) => item.icon)
+    .map((item) =>
+      item.icon.startsWith("http")
+        ? item.icon
+        : `${API_BASE_URL}${item.icon.startsWith("/") ? "" : "/"}${item.icon}`
+    );
+
+  const finalImages = heroImages.length > 0 ? heroImages : (backgroundImageUrl ? [backgroundImageUrl] : []);
+
+  useEffect(() => {
+    if (finalImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % finalImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [finalImages.length]);
 
   return (
     <section className="relative w-full bg-black text-white pb-40 sm:pb-48">
@@ -66,25 +87,29 @@ export default function Hero({ data }) {
         </motion.div>
       </div>
 
-      {backgroundImageUrl && (
+      {finalImages.length > 0 && (
         <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            initial={{ scale: 1.2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 4, ease: "easeOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              alt={data.heading || "Professional Training Institute Hero Background"}
-              src={backgroundImageUrl}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-[50%_50%] opacity-50"
-            />
-          </motion.div>
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={currentImageIndex}
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 0.5 }}
+              exit={{ scale: 1.05, opacity: 0 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                alt={data.heading || "Professional Training Institute Hero Background"}
+                src={finalImages[currentImageIndex]}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </motion.div>
+          </AnimatePresence>
           {/* Dark gradient overlay for text clarity */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent" />
           
           {/* Subtle Floating Tech Icons */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
