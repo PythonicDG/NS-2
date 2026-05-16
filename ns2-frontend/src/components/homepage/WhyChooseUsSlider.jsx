@@ -26,7 +26,7 @@ export default function WhyChooseUsSlider({ contentItems = [] }) {
 
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [images]);
@@ -36,18 +36,26 @@ export default function WhyChooseUsSlider({ contentItems = [] }) {
 
   return (
     <div className="relative w-full h-[450px] md:h-[550px] overflow-hidden rounded-3xl shadow-2xl bg-white">
-      {/* Slider Image */}
-      <Image
-        src={images[currentImage]}
-        alt={`Slide ${currentImage + 1}`}
-        fill
-        priority
-        sizes="(max-width: 768px) 100vw, 50vw"
-        className="object-cover transition-all duration-1000 ease-in-out"
-      />
+      {/* Slider Images with Crossfade */}
+      {images.map((src, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImage ? "opacity-100 z-0" : "opacity-0 -z-10"
+            }`}
+        >
+          <Image
+            src={src}
+            alt={`Slide ${index + 1}`}
+            fill
+            priority={index === currentImage}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+        </div>
+      ))}
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/10"></div>
+      <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
 
       {/* Dots Indicator */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-10">
@@ -55,11 +63,10 @@ export default function WhyChooseUsSlider({ contentItems = [] }) {
           <button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-              currentImage === index
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${currentImage === index
                 ? "bg-white scale-125"
                 : "bg-white/50"
-            }`}
+              }`}
           />
         ))}
       </div>
