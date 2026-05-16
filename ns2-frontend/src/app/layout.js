@@ -1,6 +1,6 @@
 import Footer from "@/components/footer/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import ScrollToTop from "@/components/homepage/ScrollToTop";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
 import Navbar from "@/components/navbar/Navbar";
 import TopCredibilityBar from "@/components/navbar/TopCredibilityBar";
 import { Open_Sans, Poppins } from "next/font/google";
@@ -62,6 +62,7 @@ export default async function RootLayout({ children }) {
   const navbarData = await fetchNavbarData();
   const statistics = navbarData?.header?.statistics || [];
   const socialLinks = navbarData?.footer?.social_links || [];
+  const phone = navbarData?.footer?.company?.phone;
 
   return (
     <html lang="en" className={`${poppins.variable} ${opensans.variable}`}>
@@ -96,7 +97,7 @@ export default async function RootLayout({ children }) {
             <Navbar />
           </div>
           <main className="flex-grow">{children}</main>
-          <ScrollToTop />
+          <WhatsAppButton phone={phone} />
           <Footer />
           <EnrollModal />
         </ModalProvider>

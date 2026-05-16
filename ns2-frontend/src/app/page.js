@@ -21,7 +21,6 @@ const CallToAction = dynamic(() => import("@/components/homepage/CallToAction"))
 const FAQSection = dynamic(() => import("@/components/homepage/FAQSection"));
 const ContactUs = dynamic(() => import("@/components/homepage/ContactUs"));
 const GoogleReviews = dynamic(() => import("@/components/homepage/GoogleReviews"));
-const ScrollToTop = dynamic(() => import("@/components/homepage/ScrollToTop"));
 
 
 export default async function HomePage() {
@@ -49,7 +48,6 @@ export default async function HomePage() {
       <FAQSection data={faq} />
       <ContactUs data={contact} />
       <GoogleReviews />
-      <ScrollToTop />
     </main>
   );
 }
