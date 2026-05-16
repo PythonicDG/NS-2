@@ -38,7 +38,7 @@ export default function AboutHeroBanner({ data }) {
   }, [finalImages.length]);
 
   return (
-    <section className="relative w-full min-h-[340px] md:min-h-[420px] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-[500px] md:min-h-[650px] flex items-center overflow-hidden">
       {/* Background Slideshow */}
       {finalImages.length > 0 && (
         <div className="absolute inset-0 z-0">
