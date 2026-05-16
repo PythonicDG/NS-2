@@ -14,21 +14,31 @@ export default function NavigationScrollReset() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Disable the browser's automatic scroll restoration to prevent it
-    // from fighting with our manual reset.
+    // Disable the browser's automatic scroll restoration
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
 
     const scrollReset = () => {
-      // Force scroll to absolute top
+      // If there's a hash in the URL, don't scroll to top, 
+      // let the browser handle the anchor link.
+      if (window.location.hash) {
+        // Find the element with the hash ID
+        const id = window.location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+      }
+
+      // Force scroll to absolute top if no hash is present
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "instant" // Use instant for the primary reset to avoid visible jumping
+        behavior: "instant"
       });
       
-      // Also ensure the body and html elements are at the top
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     };
@@ -36,9 +46,8 @@ export default function NavigationScrollReset() {
     // Immediate reset
     scrollReset();
 
-    // Secondary reset after a tiny delay to catch any late layout shifts 
-    // or hydration-related scroll changes.
-    const timer = setTimeout(scrollReset, 50);
+    // Secondary reset to catch late renders or anchor elements
+    const timer = setTimeout(scrollReset, 100);
     
     return () => clearTimeout(timer);
   }, [pathname]);
