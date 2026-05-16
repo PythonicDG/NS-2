@@ -8,6 +8,7 @@ import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
 import { ModalProvider } from "@/context/ModalContext";
 import EnrollModal from "@/components/common/EnrollModal";
+import NavigationScrollReset from "@/components/common/NavigationScrollReset";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -87,6 +88,7 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className="font-opensans flex flex-col min-h-screen">
+        <NavigationScrollReset />
         <ModalProvider>
           <GoogleAnalytics />
           <div className="sticky top-0 z-[100]">
