@@ -227,17 +227,21 @@ export default function MobileMenu({ menuItems, logoUrl }) {
                 {buttonItems.length > 0 && (
                   <div className="pt-6 mt-auto border-t border-gray-200 space-y-3">
                     {buttonItems.map((buttonItem, index) => {
-                      const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
+                      const t = (buttonItem.text || "").toLowerCase();
+                      const u = (buttonItem.url || "").toLowerCase();
+                      const matchesText = t.includes("enroll") || t.includes("enquire") || t.includes("inquire");
+                      const matchesUrl = u.endsWith("#contact") || u.endsWith("#enquire") || u.endsWith("#enquiry");
+                      const isTrigger = matchesText || matchesUrl;
 
-                      if (isEnrollButton) {
+                      if (isTrigger) {
                         return (
                           <button
                             key={index}
                             onClick={() => {
-                              openEnrollModal();
+                              openEnrollModal(buttonItem.text);
                               setIsMenuOpen(false);
                             }}
-                            className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg"
+                            className="block w-full bg-[#C2481F] text-white text-center px-6 py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium shadow-md hover:shadow-lg cursor-pointer"
                           >
                             {buttonItem.text}
                           </button>

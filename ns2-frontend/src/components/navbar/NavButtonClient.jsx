@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useModal } from "@/context/ModalContext";
+
 /**
  * NavButtonClient Component
  * 
@@ -16,6 +18,7 @@ export default function NavButtonClient({
   onClick,
 }) {
   const pathname = usePathname();
+  const { openEnrollModal } = useModal();
   
   const normalizedHref = 
     href && !href.startsWith("http") && !href.startsWith("/") && !href.startsWith("#")
@@ -25,7 +28,17 @@ export default function NavButtonClient({
   const isActive = pathname === normalizedHref;
 
   const handleClick = (e) => {
-    if (isActive) {
+    const hrefStr = (normalizedHref || "").toLowerCase();
+    const isModalTrigger = 
+      hrefStr.endsWith("#contact") || 
+      hrefStr.endsWith("#enquire") || 
+      hrefStr.endsWith("#enquiry");
+
+    if (isModalTrigger) {
+      e.preventDefault();
+      const title = typeof children === "string" ? children : "Enquiry Form";
+      openEnrollModal(title);
+    } else if (isActive) {
       if (normalizedHref && normalizedHref.startsWith("/") && !normalizedHref.includes("#")) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });

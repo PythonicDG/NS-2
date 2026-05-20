@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useModal } from "@/context/ModalContext";
+
 /**
  * NavLinkClient Component
  * 
@@ -22,6 +24,7 @@ export default function NavLinkClient({
   onClick,
 }) {
   const pathname = usePathname();
+  const { openEnrollModal } = useModal();
   
   // Ensure the link is absolute for internal routes to prevent broken relative navigation
   const normalizedHref = 
@@ -36,8 +39,19 @@ export default function NavLinkClient({
     : "text-[#6C757D] hover:text-[#C2481F]";
 
   const handleClick = (e) => {
-    // If the link is for the current page, scroll to top smoothly
-    if (isActive) {
+    const hrefStr = (normalizedHref || "").toLowerCase();
+    const isModalTrigger = 
+      hrefStr.endsWith("#contact") || 
+      hrefStr.endsWith("#enquire") || 
+      hrefStr.endsWith("#enquiry");
+
+    if (isModalTrigger) {
+      e.preventDefault();
+      // Pass the text content of children as a title if it's a string, otherwise fallback
+      const title = typeof children === "string" ? children : "Enquiry Form";
+      openEnrollModal(title);
+    } else if (isActive) {
+      // If the link is for the current page, scroll to top smoothly
       // For standard internal links that match the current path
       if (normalizedHref && normalizedHref.startsWith("/") && !normalizedHref.includes("#")) {
         e.preventDefault();

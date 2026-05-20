@@ -8,6 +8,14 @@ import Link from "next/link";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+const shouldTriggerModal = (text = "", url = "") => {
+  const t = (text || "").toLowerCase();
+  const u = (url || "").toLowerCase();
+  const matchesText = t.includes("enroll") || t.includes("enquire") || t.includes("inquire");
+  const matchesUrl = u.endsWith("#contact") || u.endsWith("#enquire") || u.endsWith("#enquiry");
+  return matchesText || matchesUrl;
+};
+
 /**
  * Navbar Component
  * 
@@ -104,9 +112,7 @@ export default async function Navbar() {
           {buttonMenuItems.length > 0 && (
             <div className="hidden lg:flex space-x-4 pr-4 lg:pr-8">
               {buttonMenuItems.map((buttonItem, index) => {
-                const isEnrollButton = buttonItem.text.toLowerCase().includes("enroll");
-                
-                if (isEnrollButton) {
+                if (shouldTriggerModal(buttonItem.text, buttonItem.url)) {
                   return <EnrollButton key={index} text={buttonItem.text} />;
                 }
 

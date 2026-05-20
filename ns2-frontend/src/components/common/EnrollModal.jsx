@@ -7,7 +7,7 @@ import { useModal } from "@/context/ModalContext";
 import { useEffect } from "react";
 
 export default function EnrollModal() {
-  const { isEnrollModalOpen, closeEnrollModal } = useModal();
+  const { isEnrollModalOpen, enrollModalTitle, closeEnrollModal } = useModal();
 
   // Close on Escape key
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function EnrollModal() {
               >
                 <X size={20} />
               </button>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">Enroll Now</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">{enrollModalTitle || "Enroll Now"}</h2>
               <p className="text-orange-100 text-sm sm:text-base">Take the first step towards your career goals.</p>
             </div>
 
