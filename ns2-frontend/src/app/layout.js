@@ -2,7 +2,6 @@ import Footer from "@/components/footer/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import Navbar from "@/components/navbar/Navbar";
-import TopCredibilityBar from "@/components/navbar/TopCredibilityBar";
 import { Open_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
@@ -60,8 +59,6 @@ export const viewport = {
 
 export default async function RootLayout({ children }) {
   const navbarData = await fetchNavbarData();
-  const statistics = navbarData?.header?.statistics || [];
-  const socialLinks = navbarData?.footer?.social_links || [];
   const phone = navbarData?.footer?.company?.phone;
 
   return (
@@ -93,7 +90,6 @@ export default async function RootLayout({ children }) {
         <ModalProvider>
           <GoogleAnalytics />
           <div className="sticky top-0 z-[100]">
-            <TopCredibilityBar stats={statistics} socialLinks={socialLinks} />
             <Navbar />
           </div>
           <main className="flex-grow">{children}</main>

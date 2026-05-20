@@ -129,7 +129,7 @@ export default function MobileMenu({ menuItems, logoUrl }) {
                       <img
                         src={logoUrl}
                         alt="Company Logo"
-                        className="h-12 w-auto"
+                        className="h-12 w-auto object-contain max-w-full"
                         onError={() => setLogoError(true)}
                       />
                     </NavLinkClient>

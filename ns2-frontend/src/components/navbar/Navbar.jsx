@@ -38,7 +38,7 @@ export default async function Navbar() {
     <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-3 w-full transition-all duration-300">
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo Section */}
-        <div className="flex-1 flex justify-start pl-4 lg:pl-8">
+        <div className="flex-1 flex justify-start pl-2 sm:pl-4 lg:pl-8">
           <div className="transform hover:scale-105 transition-transform duration-300">
             <LogoClient logoUrl={logoUrl} />
           </div>
@@ -100,7 +100,7 @@ export default async function Navbar() {
         </div>
 
         {/* Buttons Section */}
-        <div className="flex-1 flex justify-end items-center gap-4">
+        <div className="flex-shrink-0 lg:flex-1 flex justify-end items-center gap-2 sm:gap-4">
           {buttonMenuItems.length > 0 && (
             <div className="hidden lg:flex space-x-4 pr-4 lg:pr-8">
               {buttonMenuItems.map((buttonItem, index) => {
