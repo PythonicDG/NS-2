@@ -1,10 +1,13 @@
+import Footer from "@/components/footer/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import Navbar from "@/components/navbar/Navbar";
 import { Open_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
 import { ModalProvider } from "@/context/ModalContext";
+import EnrollModal from "@/components/common/EnrollModal";
 import NavigationScrollReset from "@/components/common/NavigationScrollReset";
-import LayoutSwitcher from "./LayoutSwitcher";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -86,9 +89,13 @@ export default async function RootLayout({ children }) {
         <NavigationScrollReset />
         <ModalProvider>
           <GoogleAnalytics />
-          <LayoutSwitcher phone={phone}>
-            {children}
-          </LayoutSwitcher>
+          <div className="sticky top-0 z-[100]">
+            <Navbar />
+          </div>
+          <main className="flex-grow">{children}</main>
+          <WhatsAppButton phone={phone} />
+          <Footer />
+          <EnrollModal />
         </ModalProvider>
       </body>
     </html>
