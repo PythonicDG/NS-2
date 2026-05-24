@@ -103,6 +103,9 @@ export default function ContactForm({ initialSubject = "enrollment", onSuccess }
 
       if (res.success) {
         setSubmitted(true);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("hasEnquired", "true");
+        }
         setFormData({
           fullName: "",
           email: "",
