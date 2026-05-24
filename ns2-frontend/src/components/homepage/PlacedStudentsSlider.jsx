@@ -22,8 +22,6 @@ function normalizeUrl(url) {
  */
 function PlacementCard({ item, index }) {
   const studentName = item?.title || "Student";
-  const company = item?.text;
-  const testimonial = item?.description || "";
   const photoUrl = normalizeUrl(item?.icon);
 
   return (
@@ -32,63 +30,21 @@ function PlacementCard({ item, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="placed-card group"
+      className="w-full relative aspect-square rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-white"
     >
-      {/* Top decorative bar */}
-      <div className="placed-card__accent" />
-
-      {/* Hexagonal decorative elements */}
-      <div className="placed-card__hex placed-card__hex--1" />
-      <div className="placed-card__hex placed-card__hex--2" />
-
-      {/* Congratulations text */}
-      <p className="placed-card__congrats">Congratulations</p>
-
-      {/* Student Photo */}
-      <div className="placed-card__photo-wrapper">
-        <div className="placed-card__photo-ring">
-          <div className="placed-card__photo">
-            {photoUrl ? (
-              <Image
-                src={photoUrl}
-                alt={studentName}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100px, 120px"
-              />
-            ) : (
-              <div className="placed-card__photo-placeholder">
-                <span>{studentName.charAt(0)}</span>
-              </div>
-            )}
-          </div>
+      {photoUrl ? (
+        <Image
+          src={photoUrl}
+          alt={studentName}
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 300px, 340px"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#C2481F] to-orange-500 text-white font-bold text-3xl">
+          <span>{studentName.charAt(0)}</span>
         </div>
-      </div>
-
-      {/* Student Info */}
-      <div className="placed-card__info">
-        <h4 className="placed-card__name">{studentName}</h4>
-
-
-
-        {testimonial && (
-          <p className="placed-card__testimonial">
-            &ldquo;{testimonial}&rdquo;
-          </p>
-        )}
-        
-        {company && (
-          <div className="placed-card__company mt-3">
-             <span className="text-xs font-semibold">{company}</span>
-          </div>
-        )}
-      </div>
-
-      {/* Bottom badge */}
-      <div className="placed-card__badge">
-        <Award className="w-3.5 h-3.5" />
-        <span>Successfully Placed</span>
-      </div>
+      )}
     </motion.div>
   );
 }
@@ -96,8 +52,7 @@ function PlacementCard({ item, index }) {
 /**
  * PlacedStudentsSlider Component
  *
- * Jitter-free, high-performance infinite carousel using Framer Motion.
- * Uses CSS transforms for sub-pixel smoothness.
+ * Infinite carousel using Framer Motion.
  */
 export default function PlacedStudentsSlider({ items = [] }) {
   const [containerWidth, setContainerWidth] = useState(0);
@@ -129,14 +84,10 @@ export default function PlacedStudentsSlider({ items = [] }) {
             x: [0, -containerWidth],
           }}
           transition={{
-            duration: validItems.length * 5, // Speed adjustment: 5s per card
+            duration: validItems.length * 6, // Speed adjustment: 6s per card
             ease: "linear",
             repeat: Infinity,
           }}
-          whileHover={{ animationPlayState: "paused" }}
-          style={{ cursor: "grab" }}
-          drag="x"
-          dragConstraints={{ left: -containerWidth, right: 0 }}
         >
           {duplicatedItems.map((item, idx) => (
             <div key={`placed-${idx}`} className="placed-slider__slide">
