@@ -7,6 +7,7 @@ import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
 import { ModalProvider } from "@/context/ModalContext";
 import EnrollModal from "@/components/common/EnrollModal";
+import EnquiryPopupManager from "@/components/common/EnquiryPopupManager";
 import NavigationScrollReset from "@/components/common/NavigationScrollReset";
 import "./globals.css";
 
@@ -96,6 +97,7 @@ export default async function RootLayout({ children }) {
           <WhatsAppButton phone={phone} />
           <Footer />
           <EnrollModal />
+          <EnquiryPopupManager />
         </ModalProvider>
       </body>
     </html>
