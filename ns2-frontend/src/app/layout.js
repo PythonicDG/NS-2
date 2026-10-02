@@ -11,6 +11,9 @@ import EnquiryPopupManager from "@/components/common/EnquiryPopupManager";
 import NavigationScrollReset from "@/components/common/NavigationScrollReset";
 import "./globals.css";
 
+// Header and footer content is managed in Django and must be read on each request.
+export const dynamic = "force-dynamic";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["600"],

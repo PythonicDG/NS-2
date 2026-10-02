@@ -36,7 +36,8 @@ export function normalizeImageUrl(url) {
 export async function fetchNavbarData() {
   try {
     const response = await fetch(`${API_BASE_URL}/api/core/header-footer`, {
-      next: { revalidate: 60 },
+      // Admin-managed content must be fresh on every page request.
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -86,22 +87,12 @@ export async function fetchNavbarData() {
   }
 }
 
-// Module-level cache for homepage data to avoid duplicate fetches within the same request
-let _homepageCache = null;
-let _homepageCacheTime = 0;
-const HOMEPAGE_CACHE_TTL = 30 * 1000; // 30 seconds in-memory cache
-
-async function fetchAllHomepageSections() {
-  const now = Date.now();
-  if (_homepageCache && now - _homepageCacheTime < HOMEPAGE_CACHE_TTL) {
-    return _homepageCache;
-  }
-
+export async function fetchHomepageSections() {
   try {
     const response = await fetch(
       `${API_BASE_URL}/api/homepage/fetch-homepage`,
       {
-        next: { revalidate: 60 }, // ISR: serve cached, revalidate in background every 60s
+        next: { revalidate: 60 },
       }
     );
 
@@ -114,9 +105,15 @@ async function fetchAllHomepageSections() {
       ? data.data
       : [];
 
-    _homepageCache = sections;
-    _homepageCacheTime = now;
-    return sections;
+    return sections.map((section) => ({
+      ...section,
+      background_image: normalizeImageUrl(section.background_image),
+      primary_image: normalizeImageUrl(section.primary_image),
+      content_items: (section.content_items || []).map((item) => ({
+        ...item,
+        icon: normalizeImageUrl(item.icon),
+      })),
+    }));
   } catch (error) {
     console.error("Failed to fetch homepage sections:", error);
     return [];
@@ -125,7 +122,7 @@ async function fetchAllHomepageSections() {
 
 export async function fetchHomepageSection(sectionType) {
   try {
-    const sections = await fetchAllHomepageSections();
+    const sections = await fetchHomepageSections();
 
     const section = sections.find(
       (s) =>
@@ -197,7 +194,7 @@ export async function fetchModulePage() {
     const res = await fetch(
       `${API_BASE_URL}/api/modules/fetch-module-page`,
       {
-        next: { revalidate: 60 },
+        cache: "no-store",
       }
     );
 

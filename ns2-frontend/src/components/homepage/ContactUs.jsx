@@ -90,7 +90,7 @@ export default function ContactUs({ data }) {
               <p className="font-semibold text-black">Follow Us</p>
               <div className="flex space-x-4 mt-3">
                 {data.social_links?.map((link, i) => (
-                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer">
+                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow MIA on ${link.platform}`}>
                     <img
                       src={normalizeImageUrl(link.icon)}
                       alt={link.platform}

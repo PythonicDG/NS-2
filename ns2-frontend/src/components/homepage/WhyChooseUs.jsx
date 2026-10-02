@@ -1,81 +1,32 @@
-import WhyChooseUsSlider from "./WhyChooseUsSlider";
-import { CheckCircle, ShieldCheck, TrendingUp } from "lucide-react";
+import { CheckCircle2, Cpu, GraduationCap, Wrench } from "lucide-react";
 
-const iconMap = [CheckCircle, TrendingUp, ShieldCheck];
+const icons = [Wrench, Cpu, GraduationCap, CheckCircle2];
 
-const WhyChooseUs = ({ data }) => {
+export default function WhyChooseUs({ data }) {
   if (!data) return null;
+  const items = (data.content_items || []).filter((item) => item.is_active !== false);
 
   return (
-    <section className="w-full py-20 bg-[#F8F9FA]">
-      <div className="max-w-7xl mx-auto px-4 lg:px-10">
-
-        {/* 🔥 FIXED GRID RATIO */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
-
-          {/* ================= LEFT (MORE SPACE) ================= */}
-          <div className="lg:col-span-3 w-full">
-
-            <h2 className="text-sm uppercase tracking-widest text-[#C2481F] mb-3">
-              {data.super_heading}
-            </h2>
-
-            <h3 className="text-4xl lg:text-5xl font-bold text-[#C2481F] leading-tight mb-4">
-              {data.heading}
-            </h3>
-
-            <p className="text-gray-500 text-lg mb-8 max-w-xl">
-              {data.subheading}
-            </p>
-
-            {/* 🔥 NOW WILL FIT PERFECT */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-              {data.content_items?.map((item, idx) => {
-                const IconComponent = iconMap[idx % iconMap.length];
-
-                return (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between h-[230px]"
-                  >
-                    <div>
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="p-3 rounded-lg bg-gray-100">
-                          <IconComponent
-                            className="w-6 h-6"
-                            style={{ color: "#C2481F" }}
-                          />
-                        </div>
-
-                        <h4 className="font-semibold text-lg text-gray-800">
-                          {item.title}
-                        </h4>
-                      </div>
-
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-
-            </div>
-          </div>
-
-          {/* ================= RIGHT (LESS SPACE) ================= */}
-          <div className="lg:col-span-2 flex justify-center">
-
-            <div className="w-full max-w-[420px] h-[420px] rounded-xl overflow-hidden shadow-lg">
-              <WhyChooseUsSlider contentItems={data.content_items} />
-            </div>
-
-          </div>
+    <section aria-labelledby="why-mia-title" className="bg-[#F7F5F2] py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl">
+          {data.super_heading && <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#C2481F]">{data.super_heading}</p>}
+          <h2 id="why-mia-title" className="mt-3 text-balance text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl lg:text-5xl">{data.heading}</h2>
+          {data.subheading && <p className="mt-5 text-lg leading-8 text-gray-600">{data.subheading}</p>}
+        </div>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((item, index) => {
+            const Icon = icons[index % icons.length];
+            return (
+              <article key={item.title || index} className="min-w-0 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50 text-[#C2481F]"><Icon aria-hidden="true" className="h-6 w-6" /></span>
+                <h3 className="mt-5 text-xl font-bold text-gray-950">{item.title}</h3>
+                <p className="mt-3 [overflow-wrap:anywhere] text-sm leading-6 text-gray-600">{item.description}</p>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-export default WhyChooseUs;
+}

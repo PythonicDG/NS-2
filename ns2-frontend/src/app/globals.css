@@ -91,3 +91,13 @@ h5,
 h6 {
   font-family: var(--font-heading);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page,
+  .home-page * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

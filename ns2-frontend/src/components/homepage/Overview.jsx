@@ -5,22 +5,17 @@ import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { normalizeImageUrl } from "@/lib/api";
 
 export default function Overview({ data }) {
   const primaryImageUrl = useMemo(() => {
     if (!data?.primary_image) return null;
-    return data.primary_image.startsWith("http")
-      ? data.primary_image
-      : `${API_BASE_URL}${data.primary_image}`;
+    return normalizeImageUrl(data.primary_image);
   }, [data?.primary_image]);
 
   const backgroundImageUrl = useMemo(() => {
     if (!data?.background_image) return null;
-    return data.background_image.startsWith("http")
-      ? data.background_image
-      : `${API_BASE_URL}${data.background_image}`;
+    return normalizeImageUrl(data.background_image);
   }, [data?.background_image]);
 
   if (!data) return null;
@@ -54,7 +49,7 @@ export default function Overview({ data }) {
             >
               <Image
                 src={backgroundImageUrl}
-                alt="Overview Background"
+                alt="Industrial automation lab training at Modern Institute of Automation"
                 fill
                 sizes="(max-width: 640px) 70vw, (max-width: 1024px) 60vw, 55vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -77,7 +72,7 @@ export default function Overview({ data }) {
             >
               <Image
                 src={primaryImageUrl}
-                alt="Overview Primary"
+                alt="Student practising with automation equipment in the MIA lab"
                 fill
                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 70vw, 65vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"

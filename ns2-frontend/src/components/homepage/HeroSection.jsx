@@ -1,244 +1,91 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { normalizeImageUrl } from "@/lib/api";
 
 export default function Hero({ data }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = useMemo(() => {
+    if (!data) return [];
+    const itemImages = (data.content_items || [])
+      .map((item) => normalizeImageUrl(item.icon))
+      .filter(Boolean);
+    const background = normalizeImageUrl(data.background_image);
+    return itemImages.length ? itemImages : background ? [background] : [];
+  }, [data]);
+
+  useEffect(() => {
+    if (images.length <= 1) return undefined;
+    const timer = window.setInterval(
+      () => setCurrentImageIndex((index) => (index + 1) % images.length),
+      7000
+    );
+    return () => window.clearInterval(timer);
+  }, [images.length]);
 
   if (!data) return null;
 
-  const backgroundImageUrl = data.background_image
-    ? data.background_image.startsWith("http")
-      ? data.background_image
-      : `${API_BASE_URL}${data.background_image.startsWith("/") ? "" : "/"}${data.background_image}`
-    : null;
-
-  const heroImages = (data.content_items || [])
-    .filter((item) => item.icon)
-    .map((item) =>
-      item.icon.startsWith("http")
-        ? item.icon
-        : `${API_BASE_URL}${item.icon.startsWith("/") ? "" : "/"}${item.icon}`
-    );
-
-  const finalImages = heroImages.length > 0 ? heroImages : (backgroundImageUrl ? [backgroundImageUrl] : []);
-
-  useEffect(() => {
-    if (finalImages.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % finalImages.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [finalImages.length]);
+  const highlights = (data.content_items || []).filter(
+    (item) => item.is_active !== false && (item.label || item.title)
+  );
+  const announcements = data.announcements?.length
+    ? data.announcements.slice(0, 3)
+    : [{ text: "Admissions open for upcoming automation batches" }];
 
   return (
-    <section className="relative w-full bg-black text-white pb-40 sm:pb-48">
-      {/* Moving Orange Announcement Strip */}
-      <div className="w-full bg-[#C2481F] py-2.5 z-30 relative overflow-hidden border-b border-white/10 shadow-lg">
-        <motion.div 
-          animate={{ x: [0, "-50%"] }}
-          transition={{ 
-            duration: 25, 
-            repeat: Infinity, 
-            ease: "linear",
-            repeatType: "loop"
-          }}
-          className="flex whitespace-nowrap w-max"
-        >
-          {/* Announcement Content Block (Repeated for seamless loop) */}
-          {[1, 2].map((block) => (
-            <div key={block} className="flex items-center gap-12 px-6 text-white text-[10px] sm:text-xs font-black uppercase tracking-widest">
-              {data.announcements && data.announcements.length > 0 ? (
-                data.announcements.map((ann, idx) => (
-                  <div key={idx} className="flex items-center gap-12">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{ann.icon}</span>
-                      <span>{ann.text}</span>
-                    </div>
-                    <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
-                  </div>
-                ))
-              ) : (
-                <>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">🎓</span>
-                    <span>Admission Open - Enroll Now for Limited Seats!</span>
-                  </div>
-                  <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">🚀</span>
-                    <span>New Batch Starting - Don't Miss Out!</span>
-                  </div>
-                  <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">💼</span>
-                    <span>100% Placement Assistance Available</span>
-                  </div>
-                  <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20" />
-                </>
-              )}
-            </div>
-          ))}
-        </motion.div>
+    <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-[#11100f] text-white">
+      {images[currentImageIndex] && (
+        <Image src={images[currentImageIndex]} alt="" fill priority sizes="100vw" quality={78} className="-z-20 object-cover object-center opacity-45" />
+      )}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black via-black/80 to-black/30" />
+
+      <div className="border-b border-white/10 bg-[#C2481F]">
+        <div className="announcement-marquee mx-auto max-w-7xl overflow-hidden px-4 py-2.5 text-xs font-semibold sm:text-sm">
+          <div className="announcement-marquee__track">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="announcement-marquee__group" aria-hidden={copy === 1 ? true : undefined}>
+                {announcements.map((announcement, index) => (
+                  <span key={index}>{announcement.text}</span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {finalImages.length > 0 && (
-        <div className="absolute inset-0 overflow-hidden">
-          <AnimatePresence mode="popLayout">
-            <motion.div
-              key={currentImageIndex}
-              initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.5 }}
-              exit={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <Image
-                alt={data.heading || "Professional Training Institute Hero Background"}
-                src={finalImages[currentImageIndex]}
-                fill
-                priority
-                sizes="100vw"
-                quality={75}
-                className="object-cover object-center"
-              />
-            </motion.div>
-          </AnimatePresence>
-          {/* Gradient overlay for text clarity */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent" />
+      <div className="mx-auto grid min-h-[560px] max-w-7xl items-center px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)] lg:px-8 lg:py-24">
+        <div className="max-w-3xl text-center lg:text-left">
+          {data.super_heading && <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-orange-300">{data.super_heading}</p>}
+          <h1 id="home-hero-title" className="text-balance text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">{data.heading}</h1>
+          {data.subheading && <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-gray-200 sm:text-lg lg:mx-0">{data.subheading}</p>}
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+            {data.primary_button_text && (
+              <Link href={data.primary_button_url || "/modules"} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#C2481F] px-6 py-3 font-bold text-white shadow-lg transition hover:bg-[#A63D1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                {data.primary_button_text}<ArrowRight aria-hidden="true" className="h-5 w-5" />
+              </Link>
+            )}
+            {data.secondary_button_text && (
+              <Link href={data.secondary_button_url || "/contact"} className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">{data.secondary_button_text}</Link>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {highlights.length > 0 && (
+        <div className="border-t border-white/10 bg-black/45 backdrop-blur-sm">
+          <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {highlights.slice(0, 4).map((item, index) => (
+              <li key={`${item.label}-${index}`} className="flex items-center gap-3 bg-[#171513]/95 px-5 py-5 sm:py-6">
+                <CheckCircle2 aria-hidden="true" className="h-5 w-5 shrink-0 text-orange-400" />
+                <div className="min-w-0"><p className="font-bold text-white">{item.label}</p>{item.title && <p className="text-sm text-gray-300">{item.title}</p>}</div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-16 py-16 sm:py-20 grid lg:grid-cols-2 items-center gap-8 sm:gap-10">
-        <motion.div 
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="space-y-4 sm:space-y-6 text-center lg:text-left"
-        >
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="font-extrabold text-2xl sm:text-3xl lg:text-4xl font-heading"
-            style={{ color: "#C2481F" }}
-          >
-            {data.super_heading}
-          </motion.h2>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-snug font-heading"
-          >
-            {data.heading}
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="text-gray-300 max-w-lg mx-auto lg:mx-0 text-sm sm:text-base font-body"
-          >
-            {data.subheading}
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start"
-          >
-            {data.primary_button_text && (
-              <Link
-                href={data.primary_button_url || "#"}
-                aria-label={data.primary_button_text}
-                className="inline-block bg-[#C2481F] hover:bg-[#A83D1A] text-white px-8 py-3.5 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-[#C2481F]/30 hover:-translate-y-0.5 font-body"
-              >
-                {data.primary_button_text}
-              </Link>
-            )}
-
-            {(data.secondary_button_text || data.secondary_button_url) && (
-              <Link
-                href={data.secondary_button_url || "#"}
-                aria-label={data.secondary_button_text || "Book Free Demo"}
-                className="inline-block bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 hover:border-white/40 px-8 py-3.5 rounded-xl font-bold transition-all duration-300 hover:-translate-y-0.5 font-body"
-              >
-                {data.secondary_button_text || "Book Free Demo"}
-              </Link>
-            )}
-          </motion.div>
-
-          {/* Credibility Stats Section */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.5 }}
-            className="flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-4 pt-8 mt-8 border-t border-white/10"
-          >
-            {data.statistics && data.statistics.length > 0 ? (
-              data.statistics.map((stat, idx) => (
-                <div key={idx} className="flex items-center gap-2 group">
-                  <span className="text-xl group-hover:scale-110 transition-transform">{stat.icon}</span>
-                  <span className="text-sm font-medium text-gray-300">
-                    {stat.label} <span className="text-white font-bold">{stat.value}</span> {stat.sub_label}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <>
-                <div className="flex items-center gap-2 group">
-                  <span className="text-xl group-hover:scale-110 transition-transform">⭐</span>
-                  <span className="text-sm font-medium text-gray-300">
-                    Rated <span className="text-white font-bold">4.8/5</span> by 2,000+ students
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 group">
-                  <span className="text-xl group-hover:scale-110 transition-transform">🎓</span>
-                  <span className="text-sm font-medium text-gray-300">
-                    <span className="text-white font-bold">10,000+</span> students trained
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 group">
-                  <span className="text-xl group-hover:scale-110 transition-transform">🏢</span>
-                  <span className="text-sm font-medium text-gray-300">
-                    Placed in <span className="text-white font-bold">top companies</span>
-                  </span>
-                </div>
-              </>
-            )}
-          </motion.div>
-        </motion.div>
-      </div>
-
-      <div
-        className="
-          relative z-20 mt-8 px-4 sm:px-6
-          grid grid-cols-2 gap-4 sm:gap-6
-          lg:absolute lg:bottom-0 lg:left-1/2 lg:w-full lg:max-w-6xl lg:-translate-x-1/2 lg:translate-y-1/2 lg:grid-cols-4 lg:mt-0
-        "
-      >
-        {data.content_items?.map((item, idx) => (
-          <div
-            key={idx}
-            className="bg-white text-black p-4 sm:p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300 flex flex-col items-center justify-center text-center"
-          >
-            <p className="text-lg sm:text-2xl lg:text-3xl font-bold font-heading">
-              {item.label}
-            </p>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-600 font-body">
-              {item.title}
-            </p>
-          </div>
-        ))}
-      </div>
     </section>
   );
 }

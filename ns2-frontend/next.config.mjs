@@ -6,6 +6,11 @@ const nextConfig = {
     // Image optimization enabled for LCP improvement
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 3600,
+    // The Django media server runs on localhost during local development.
+    // Next.js 16 blocks loopback/private IP image origins by default even
+    // when they are included in remotePatterns, so explicitly allow it only
+    // for the development server.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     deviceSizes: [640, 768, 1024, 1280, 1920],
     imageSizes: [64, 128, 256, 384],
     remotePatterns: [
@@ -43,6 +48,28 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "8000",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "8001",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "8001",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
         pathname: "/**",
       },
     ],
