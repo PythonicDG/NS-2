@@ -1,0 +1,230 @@
+.section {
+  background: #fff;
+  padding: 40px 0 24px;
+  color: #202622;
+}
+.layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+}
+.introduction {
+  min-width: 0;
+}
+.label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: #61665f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.label span {
+  width: 24px;
+  height: 2px;
+  background: #c2481f;
+  flex-shrink: 0;
+}
+.heading {
+  margin: 0;
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.description {
+  margin: 18px 0 0;
+  color: #60665f;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.imageFrame {
+  position: relative;
+  margin: 22px 8px 8px 0;
+}
+.image {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f5f6f3;
+}
+.imageCorner {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 38px;
+  height: 38px;
+  border-right: 2px solid #c2481f;
+  border-bottom: 2px solid #c2481f;
+  pointer-events: none;
+}
+.benefitArea {
+  position: relative;
+  min-width: 0;
+  padding: 12px 0 0;
+}
+.technicalGrid {
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 144px;
+  height: 120px;
+  background-image:
+    linear-gradient(#e8ebe6 1px, transparent 1px),
+    linear-gradient(90deg, #e8ebe6 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(225deg, #000, transparent 75%);
+  pointer-events: none;
+}
+.benefitArea::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  height: 36px;
+  border-left: 1px solid #d9ded6;
+  border-bottom: 1px solid #d9ded6;
+  pointer-events: none;
+}
+.benefits {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+.benefit {
+  position: relative;
+  min-width: 0;
+  padding: 24px 26px 26px;
+  border-bottom: 1px solid #dfe3dc;
+  transition: background-color 200ms ease;
+}
+.benefit:nth-child(odd) {
+  border-right: 1px solid #dfe3dc;
+}
+.featured {
+  background: #f7f8f5;
+}
+.benefit:hover {
+  background: #f3f5f0;
+}
+.benefitTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  color: #c2481f;
+}
+.number {
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+.benefit:hover .icon {
+  transform: translateX(3px);
+}
+.benefitTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.featured .benefitTitle {
+  font-size: 23px;
+}
+.benefitDescription {
+  margin: 13px 0 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #60665f;
+  overflow-wrap: anywhere;
+}
+.underline {
+  position: absolute;
+  bottom: -1px;
+  left: 26px;
+  width: 32px;
+  height: 2px;
+  background: #c2481f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.featured .underline,
+.benefit:hover .underline {
+  transform: scaleX(1);
+}
+@media (max-width: 1023px) {
+  .section {
+    padding: 32px 0 20px;
+  }
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 0 24px;
+  }
+  .introduction {
+    max-width: 640px;
+  }
+  .image {
+    aspect-ratio: 16 / 10;
+  }
+  .benefitArea {
+    padding: 8px 0 0;
+  }
+}
+@media (max-width: 639px) {
+  .section {
+    padding: 28px 0 16px;
+  }
+  .layout {
+    padding: 0 20px;
+    gap: 24px;
+  }
+  .benefits {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .benefit {
+    padding: 22px 20px;
+  }
+  .benefit:nth-child(odd) {
+    border-right: 0;
+  }
+  .benefitTop {
+    margin-bottom: 18px;
+  }
+  .underline {
+    left: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .benefit,
+  .icon,
+  .underline {
+    transition: none;
+  }
+  .benefit:hover .icon {
+    transform: none;
+  }
+}
