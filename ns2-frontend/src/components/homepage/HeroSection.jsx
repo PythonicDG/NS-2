@@ -36,7 +36,8 @@ export default function Hero({ data }) {
     : [{ text: "Admissions open for upcoming automation batches" }];
 
   return (
-    <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-[#11100f] text-white">
+    <section aria-labelledby="home-hero-title" className="home-hero relative isolate flex min-h-[calc(100svh-73px)] flex-col overflow-hidden bg-[#11100f] text-white sm:min-h-[calc(100svh-81px)] md:min-h-[calc(100svh-89px)] lg:min-h-0">
+      <div className="home-hero__visual contents">
       {images[currentImageIndex] && (
         <Image src={images[currentImageIndex]} alt="" fill priority sizes="100vw" quality={78} className="-z-20 object-cover object-center opacity-45" />
       )}
@@ -57,31 +58,32 @@ export default function Hero({ data }) {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl items-start px-4 pb-10 pt-6 sm:px-6 sm:pb-14 sm:pt-8 lg:min-h-[clamp(380px,60svh,500px)] lg:grid-cols-[minmax(0,1.35fr)_minmax(240px,.65fr)] lg:px-8 lg:pb-16 lg:pt-10">
+      <div className="home-hero__content mx-auto grid w-full max-w-7xl flex-1 items-center px-4 py-6 sm:px-6 sm:py-8 lg:min-h-[clamp(380px,60svh,500px)] lg:items-start lg:grid-cols-[minmax(0,1.35fr)_minmax(240px,.65fr)] lg:px-8 lg:pb-16 lg:pt-10">
         <div className="max-w-3xl text-center lg:text-left">
           {data.super_heading && <p className="mb-3 text-xs font-bold uppercase leading-5 tracking-[0.18em] text-orange-300 sm:text-sm">{data.super_heading}</p>}
-          <h1 id="home-hero-title" className="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.5rem]">{data.heading}</h1>
-          {data.subheading && <p className="mx-auto mt-4 max-w-2xl text-pretty text-base leading-relaxed text-gray-200 sm:text-lg lg:mx-0">{data.subheading}</p>}
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
+          <h1 id="home-hero-title" className="text-balance text-[clamp(1.75rem,7.5vw,2.25rem)] font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.5rem]">{data.heading}</h1>
+          {data.subheading && <p className="mx-auto mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-gray-200 sm:mt-4 sm:text-lg lg:mx-0">{data.subheading}</p>}
+          <div className="home-hero__actions mt-6 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
             {data.primary_button_text && (
               <Link href={data.primary_button_url || "/modules"} className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-orange-300/20 bg-gradient-to-r from-[#C2481F] to-[#d85c34] px-6 py-3 font-bold text-white shadow-lg shadow-orange-950/30 transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                 {data.primary_button_text}<ArrowRight aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
               </Link>
             )}
             {data.secondary_button_text && (
-              <Link href={data.secondary_button_url || "/contact"} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/50 bg-white/10 px-6 py-3 font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">{data.secondary_button_text}</Link>
+              <Link href={data.secondary_button_url || "/contact"} className="home-hero__secondary inline-flex min-h-12 items-center justify-center rounded-xl border border-white/50 bg-white/10 px-6 py-3 font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">{data.secondary_button_text}</Link>
             )}
           </div>
         </div>
       </div>
+      </div>
 
       {highlights.length > 0 && (
-        <div className="border-t border-white/10 bg-black/45 backdrop-blur-sm">
-          <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="home-hero__features mt-auto shrink-0 border-t border-white/10 bg-black/45 backdrop-blur-sm">
+          <ul className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-white/10 lg:grid-cols-4">
             {highlights.slice(0, 4).map((item, index) => (
-              <li key={`${item.label}-${index}`} className="flex items-center gap-3 bg-[#171513]/95 px-5 py-5 sm:py-6">
-                <CheckCircle2 aria-hidden="true" className="h-5 w-5 shrink-0 text-orange-400" />
-                <div className="min-w-0"><p className="font-bold text-white">{item.label}</p>{item.title && <p className="text-sm text-gray-300">{item.title}</p>}</div>
+              <li key={`${item.label}-${index}`} className="flex min-w-0 items-start gap-2 bg-[#171513]/95 px-3 py-3 sm:items-center sm:gap-3 sm:px-5 sm:py-6">
+                <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-400 sm:mt-0 sm:h-5 sm:w-5" />
+                <div className="min-w-0 break-words"><p className="text-xs font-bold leading-5 text-white sm:text-base">{item.label}</p>{item.title && <p className="mt-0.5 text-[11px] leading-4 text-gray-300 sm:text-sm sm:leading-5">{item.title}</p>}</div>
               </li>
             ))}
           </ul>
