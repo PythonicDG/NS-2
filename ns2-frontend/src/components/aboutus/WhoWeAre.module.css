@@ -1,0 +1,283 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  color: #0b2c4b;
+}
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 88px 64px 96px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  grid-template-areas: "image header" "image content";
+  column-gap: clamp(32px, 4.5vw, 64px);
+  row-gap: 24px;
+  align-items: start;
+}
+
+.header {
+  grid-area: header;
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: #a63d1a;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: #c2481f;
+}
+
+.eyebrowDivider {
+  color: #aab5be;
+}
+
+.heading {
+  margin: 0;
+  color: #0b2c4b;
+  font-size: clamp(27px, 2.5vw, 34px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.visual {
+  position: relative;
+  grid-area: image;
+  align-self: center;
+  min-width: 0;
+}
+
+.imageFrame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: 6px;
+  background: #edf1f3;
+}
+
+.imageFrame::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 64px;
+  height: 64px;
+  border-right: 2px solid #c2481f;
+  border-bottom: 2px solid #c2481f;
+  border-bottom-right-radius: 3px;
+  pointer-events: none;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.gridMarks {
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  width: 80px;
+  height: 80px;
+  background-image:
+    repeating-linear-gradient(0deg, #0b2c4b14 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, #0b2c4b14 0 1px, transparent 1px 16px);
+}
+
+.crosshair {
+  position: absolute;
+  bottom: -44px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: #9eacb7;
+}
+
+.crosshair::before {
+  top: 7px;
+  width: 15px;
+  height: 1px;
+}
+
+.crosshair::after {
+  left: 7px;
+  width: 1px;
+  height: 15px;
+}
+
+.sectionNumber {
+  position: absolute;
+  bottom: -46px;
+  left: 28px;
+  color: #697c8b;
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.content {
+  grid-area: content;
+  min-width: 0;
+}
+
+.intro {
+  margin: 0 0 16px;
+  color: #263f53;
+  font-size: clamp(17px, 1.4vw, 19px);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.description {
+  margin: 0;
+  color: #5c6b77;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.highlights {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  border-top: 1px solid #dfe5e9;
+}
+
+.highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e8edef;
+}
+
+.highlight > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #c2481f;
+}
+
+.highlightContent {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.highlightTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0;
+  color: #0b2c4b;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.titleDivider {
+  color: #b0bac2;
+  font-weight: 400;
+}
+
+.highlightText {
+  margin: 3px 0 0;
+  color: #5c6b77;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.withoutImage {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "header" "content";
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 64px 32px 72px;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "header" "image" "content";
+    gap: 28px;
+  }
+
+  .gridMarks,
+  .crosshair,
+  .sectionNumber {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 44px 20px 48px;
+  }
+
+  .layout {
+    gap: 24px;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+    gap: 8px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .heading {
+    font-size: clamp(24px, 6.5vw, 29px);
+    line-height: 1.35;
+  }
+
+  .imageFrame::after {
+    right: -6px;
+    bottom: -6px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .intro {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .highlights {
+    margin-top: 22px;
+  }
+}
