@@ -1,147 +1,171 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  ArrowUpRight,
+  ChevronRight,
+  Cpu,
+  Settings2,
+  Wrench,
+} from "lucide-react";
 import { normalizeImageUrl } from "@/lib/api";
+import styles from "./AboutHeroBanner.module.css";
 
-/**
- * AboutHeroBanner Component
- *
- * A visually rich hero banner for the About Us page with breadcrumb navigation,
- * animated text, and dynamic background image from the API.
- *
- * @param {Object} props
- * @param {Object} props.data - The HERO section data from the About Us API
- * @returns {JSX.Element}
- */
+const highlights = [
+  { label: "Hands-On Training", detail: "Learn by doing", Icon: Wrench },
+  { label: "Industry-Focused", detail: "Built for the real world", Icon: Cpu },
+  {
+    label: "Practical Learning",
+    detail: "From concepts to application",
+    Icon: Settings2,
+  },
+];
+
+/** Page copy and background image sources remain managed by Django. */
 export default function AboutHeroBanner({ data }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  if (!data) return null;
-
-  const bgImage = normalizeImageUrl(data.background_image) || normalizeImageUrl(data.primary_image);
-
-  const heroImages = (data.content_items || [])
+  const reduceMotion = useReducedMotion();
+  const bgImage =
+    normalizeImageUrl(data?.background_image) ||
+    normalizeImageUrl(data?.primary_image);
+  const heroImages = (data?.content_items || [])
     .filter((item) => item.image)
     .map((item) => normalizeImageUrl(item.image));
-
-  const finalImages = heroImages.length > 0 ? heroImages : (bgImage ? [bgImage] : []);
+  const finalImages =
+    heroImages.length > 0 ? heroImages : bgImage ? [bgImage] : [];
 
   useEffect(() => {
-    if (finalImages.length <= 1) return;
+    if (finalImages.length <= 1 || reduceMotion) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % finalImages.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [finalImages.length]);
+  }, [finalImages.length, reduceMotion]);
+
+  if (!data) return null;
 
   return (
-    <section className="relative w-full min-h-[600px] md:min-h-[800px] flex items-center overflow-hidden">
-      {/* Background Slideshow */}
+    <section className={styles.hero} aria-labelledby="about-hero-title">
       {finalImages.length > 0 && (
-        <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="popLayout">
+        <div className={styles.background} aria-hidden="true">
+          <AnimatePresence initial={false}>
             <motion.div
-              key={currentImageIndex}
-              initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              className="absolute inset-0"
+              key={finalImages[currentImageIndex % finalImages.length]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 1.5 }}
+              className={styles.imageLayer}
             >
               <Image
-                src={finalImages[currentImageIndex]}
-                alt={data.heading || "About Us Hero"}
+                src={finalImages[currentImageIndex % finalImages.length]}
+                alt=""
                 fill
                 priority
                 sizes="100vw"
                 quality={75}
-                className="object-cover"
+                className={styles.image}
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E]/90 to-[#0E4C92]/75" />
+          <div className={styles.overlay} />
         </div>
       )}
-
-      {/* Fallback gradient if no image */}
-      {finalImages.length === 0 && (
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92]" />
-      )}
-
-      {/* Decorative circles */}
-      <div className="absolute left-0 top-0 w-72 h-72 bg-blue-400 opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
-      <div className="absolute right-0 bottom-0 w-96 h-96 bg-blue-900 opacity-15 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 z-0" />
-
-      {/* Content */}
-      <div className="container mx-auto px-6 lg:px-16 relative z-10 py-12 md:py-16 -translate-y-8 md:-translate-y-20">
-        {/* Breadcrumb */}
-        <motion.nav
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 text-sm text-blue-200 mb-6"
-          aria-label="Breadcrumb"
-        >
-          <Link href="/" className="hover:text-white transition-colors">
-            Home
-          </Link>
-          <span className="text-blue-300">/</span>
-          <span className="text-white font-medium">About Us</span>
-        </motion.nav>
-
-        {/* Super Heading */}
-        {data.super_heading && (
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-orange-400 text-sm font-semibold tracking-widest uppercase mb-3"
-          >
-            {data.super_heading}
-          </motion.p>
-        )}
-
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight max-w-2xl"
-        >
-          {data.heading || "About Us"}
-        </motion.h1>
-
-        {/* Subheading */}
-        {data.subheading && (
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-blue-100 text-base sm:text-lg mt-4 max-w-xl leading-relaxed opacity-90"
-          >
-            {data.subheading}
-          </motion.p>
-        )}
-
-        {/* CTA Button */}
-        {data.primary_button_text && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8"
-          >
-            <Link
-              href={data.primary_button_url || "#contact"}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C2481F] to-[#d85c34] text-white px-8 py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
+      <div className={styles.container}>
+        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          <ol>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <ChevronRight size={13} aria-hidden="true" />
+              <span aria-current="page">About Us</span>
+            </li>
+          </ol>
+        </nav>
+        <div className={styles.layout}>
+          <div className={styles.content}>
+            {data.super_heading && (
+              <p className={styles.eyebrow}>{data.super_heading}</p>
+            )}
+            <h1 id="about-hero-title" className={styles.heading}>
+              {data.heading || "About Us"}
+            </h1>
+            {data.subheading && (
+              <p className={styles.description}>{data.subheading}</p>
+            )}
+            {data.primary_button_text && (
+              <div className={styles.actions}>
+                <Link
+                  href={data.primary_button_url || "#contact"}
+                  className={styles.cta}
+                >
+                  <span>{data.primary_button_text}</span>
+                  <ArrowUpRight size={19} aria-hidden="true" />
+                </Link>
+              </div>
+            )}
+          </div>
+          <div className={styles.visual}>
+            <div className={styles.schematic} aria-hidden="true">
+              <div className={styles.grid} />
+              <div className={styles.frame} />
+              <div className={styles.diamond} />
+              <svg
+                className={styles.circuits}
+                viewBox="0 0 460 420"
+                fill="none"
+              >
+                <g stroke="currentColor" strokeWidth="1">
+                  <path d="M18 92H112L160 140H258V205H420M42 310H128V254L185 197H260M240 28V80H336L388 132V326H442M182 390V336H284L330 290V230" />
+                  <path
+                    d="M18 102H108L150 144M250 28V70H340L398 128V240"
+                    opacity=".4"
+                  />
+                  <circle cx="18" cy="92" r="4" />
+                  <circle cx="420" cy="205" r="4" />
+                  <circle cx="42" cy="310" r="4" />
+                  <circle cx="240" cy="28" r="4" />
+                  <circle cx="182" cy="390" r="4" />
+                  <circle cx="442" cy="326" r="4" />
+                  <rect x="220" y="170" width="66" height="66" rx="3" />
+                  <rect x="234" y="184" width="38" height="38" rx="1" />
+                  <path d="M232 158V170M244 158V170M256 158V170M268 158V170M232 236V248M244 236V248M256 236V248M268 236V248M208 182H220M208 194H220M208 206H220M208 218H220M286 182H298M286 194H298M286 206H298M286 218H298" />
+                </g>
+              </svg>
+              <span className={styles.coordinate}>
+                01 / AUTOMATION &amp; LEARNING
+              </span>
+            </div>
+            <ul
+              className={styles.highlights}
+              aria-label="Our approach to training"
             >
-              {data.primary_button_text}
-            </Link>
-          </motion.div>
-        )}
+              {highlights.map(({ label, detail, Icon }, index) => (
+                <li className={styles.highlight} key={label}>
+                  <span className={styles.icon}>
+                    <Icon size={21} strokeWidth={1.4} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className={styles.highlightTitle}>{label}</p>
+                    <p className={styles.highlightDetail}>{detail}</p>
+                  </div>
+                  <span className={styles.number} aria-hidden="true">
+                    0{index + 1}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className={styles.editorial} aria-hidden="true">
+          <span>01</span>
+          <i />
+          <span>ABOUT MIA</span>
+        </div>
       </div>
     </section>
   );
