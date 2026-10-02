@@ -6,7 +6,7 @@
 .placed-section {
   position: relative;
   width: 100%;
-  padding: 5rem 0;
+  padding: 3rem 0 1.5rem;
   background: linear-gradient(135deg, #fefefe 0%, #f8f5f2 50%, #fff5f0 100%);
   overflow: hidden;
 }
@@ -46,7 +46,7 @@
 /* --- Section Header --- */
 .placed-section__header {
   text-align: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .placed-section__icon-badge {
@@ -332,7 +332,7 @@
 /* --- Responsive --- */
 @media (min-width: 640px) {
   .placed-section {
-    padding: 6rem 0;
+    padding: 4rem 0 2rem;
   }
 
   .placed-section__title {

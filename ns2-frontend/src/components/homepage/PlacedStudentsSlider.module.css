@@ -1,0 +1,149 @@
+.carousel {
+  --gap: 16px;
+  --card-width: 86%;
+  width: 100%;
+  min-width: 0;
+}
+.viewport {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: 12px;
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+}
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+.viewport:focus-visible {
+  outline: 2px solid #c2481f;
+  outline-offset: 4px;
+}
+.carousel[data-loop="true"] .viewport {
+  cursor: grab;
+}
+.viewport[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--gap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.card {
+  flex: 0 0 var(--card-width);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  scroll-snap-align: start;
+}
+.carousel[data-loop="false"] .card[data-clone="true"] {
+  display: none;
+}
+.image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f5f2ef;
+}
+.photo {
+  object-fit: contain;
+}
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #c2481f, #f98c42);
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.caption {
+  box-sizing: border-box;
+  height: 76px;
+  padding: 14px 16px;
+}
+.caption h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  color: #292524;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding-top: 8px;
+}
+.carousel[data-loop="false"] .controls {
+  visibility: hidden;
+}
+.controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #e8d9d1;
+  border-radius: 50%;
+  background: transparent;
+  color: #c2481f;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+.controls button:hover {
+  background: #fff0e8;
+}
+.controls button:focus-visible {
+  outline: 2px solid #c2481f;
+  outline-offset: 3px;
+}
+.playIcon {
+  display: none;
+}
+.carousel[data-paused="true"] .pauseIcon {
+  display: none;
+}
+.carousel[data-paused="true"] .playIcon {
+  display: block;
+}
+@media (min-width: 640px) {
+  .carousel {
+    --card-width: calc((100% - var(--gap)) / 2);
+  }
+}
+@media (min-width: 768px) {
+  .carousel {
+    --card-width: calc((100% - 2 * var(--gap)) / 3);
+  }
+}
+@media (min-width: 1024px) {
+  .carousel {
+    --card-width: calc((100% - 3 * var(--gap)) / 4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .controls button {
+    transition: none;
+  }
+}

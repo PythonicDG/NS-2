@@ -138,13 +138,12 @@
     line-height: 1.6;
   }
 
-  /* A dedicated mobile row keeps the contact button clear of page content. */
+  /* Float the button so it does not leave an empty row above the footer. */
   .whatsapp-contact {
-    position: relative;
-    inset: auto;
-    align-self: flex-end;
-    margin: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
-    z-index: 1;
+    position: fixed;
+    inset: auto 16px calc(16px + env(safe-area-inset-bottom, 0px)) auto;
+    margin: 0;
+    z-index: 50;
   }
 
   .whatsapp-contact a:hover {

@@ -1,216 +1,137 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { normalizeImageUrl } from "@/lib/api";
+import { Mail, MapPin, Phone, ArrowUpRight, Globe } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaYoutube, FaXTwitter } from "react-icons/fa6";
+import styles from "./Footer.module.css";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+const socialIcons = {
+  facebook: FaFacebookF,
+  instagram: FaInstagram,
+  linkedin: FaLinkedinIn,
+  whatsapp: FaWhatsapp,
+  youtube: FaYoutube,
+  twitter: FaXTwitter,
+  x: FaXTwitter,
+};
 
-/**
- * Helper to construct a full image URL from the API base path.
- * 
- * @param {string} url - The raw URL or path from the API
- * @returns {string|null} The absolute URL or null if no URL provided
- */
-function getImageUrl(url) {
-  if (!url) return null;
-  if (url.startsWith("http")) return url;
-  return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+function linkUrl(url) {
+  if (!url) return "#";
+  // Older API normalization may prepend a slash to contact URI schemes.
+  const value = url.replace(/^\/(?=(?:tel|mailto):)/i, "");
+  return /^(?:https?:|tel:|mailto:|\/|#)/i.test(value) ? value : `/${value}`;
 }
 
-/**
- * FooterClient Component
- * 
- * A comprehensive footer component with company info, social links, and navigation.
- * 
- * @param {Object} props
- * @param {Object} props.data - Footer content data from API
- * @returns {JSX.Element}
- */
+function contactIcon(item) {
+  const url = linkUrl(item.url);
+  if (url.startsWith("tel:")) return Phone;
+  if (url.startsWith("mailto:")) return Mail;
+  return MapPin;
+}
+
+function Heading({ children }) {
+  return <h3 className={styles.heading}>{children}</h3>;
+}
+
 export default function FooterClient({ data }) {
   if (!data) return null;
 
   const { sections = [], company = {}, social_links = [] } = data;
+  const sortedSections = [...sections].sort((a, b) => (a.order || 0) - (b.order || 0));
+  const contactSection = sortedSections.find((section) => /get in touch|contact/i.test(section.title));
+  const navigationSections = sortedSections.filter((section) => section !== contactSection);
+  const contactItems = contactSection?.items?.length ? contactSection.items : [
+    company.phone && { text: company.phone, url: `tel:${company.phone.replace(/[^+\d]/g, "")}` },
+    company.email && { text: company.email, url: `mailto:${company.email}` },
+    (company.address || company.company_address) && { text: company.address || company.company_address, url: "/contact" },
+  ].filter(Boolean);
+  // Only show legal links when the CMS supplies published destinations.
+  const legalLinks = sortedSections.flatMap((section) => section.items || [])
+    .filter((item) => /^(privacy policy|terms(?: and conditions| of (?:use|service))?)$/i.test(item.text?.trim()) && item.url && item.url !== "#");
 
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-black text-gray-300 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 relative z-10">
-        {/* Main footer content - two column layout */}
-        <div className="flex flex-col md:flex-row gap-10 md:gap-16 mb-10">
-          {/* Left column - Company info */}
-          <div className="md:w-2/5">
-            {company?.logo && (
-              <div className="inline-flex items-center justify-center bg-white rounded-xl p-3 shadow-lg mb-6 transform transition-transform duration-500 hover:scale-105">
-                <Image
-                  src={getImageUrl(company.logo)}
-                  alt={company.name || "Company Logo"}
-                  width={180}
-                  height={80}
-                  className="object-contain"
-                  style={{ width: 'auto', height: 'auto' }}
-                  unoptimized
-                />
-              </div>
-            )}
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.grid} style={{ "--footer-columns": navigationSections.length }}>
+          <div className={styles.brand}>
+            <Link href="/" className={styles.logoLink} aria-label="Modern Institute of Automation home">
+              <Image
+                src="/footer-logo.png"
+                alt="Modern Institute of Automation — Automate your future."
+                width={120}
+                height={129}
+                className={styles.logo}
+              />
+            </Link>
+            <p className={styles.description}>
+              Hands-on automation training for industry-ready careers.
+            </p>
+          </div>
 
-            <h3 className="font-heading text-xl font-bold text-white mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
-              {company?.name}
-            </h3>
-
-            {company?.tagline && (
-              <p className="text-gray-400 mb-6 leading-relaxed">
-                {company.tagline}
-              </p>
-            )}
-
-            {/* Contact information */}
-            <div className="space-y-3">
-              {company?.email && (
-                <div className="flex items-start group">
-                  <svg
-                    className="w-5 h-5 text-blue-400 mr-3 mt-0.5 transform group-hover:scale-110 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    ></path>
-                  </svg>
-                  <a
-                    href={`mailto:${company.email}`}
-                    className="hover:text-blue-400 transition-colors group-hover:translate-x-1 inline-block transform transition-transform"
-                  >
-                    {company.email}
-                  </a>
-                </div>
-              )}
-
-              {company?.phone && (
-                <div className="flex items-start group">
-                  <svg
-                    className="w-5 h-5 text-blue-400 mr-3 mt-0.5 transform group-hover:scale-110 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    ></path>
-                  </svg>
-                  <a
-                    href={`tel:${company.phone}`}
-                    className="hover:text-blue-400 transition-colors group-hover:translate-x-1 inline-block transform transition-transform"
-                  >
-                    {company.phone}
-                  </a>
-                </div>
-              )}
-            </div>
-
-            {/* Social links */}
-            {social_links?.length > 0 && (
-              <div className="flex gap-5 mt-6">
-                {social_links.map((social, idx) => (
-                  <a
-                    key={idx}
-                    href={social.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative transition-all duration-300 transform hover:-translate-y-1"
-                    aria-label={social.platform || `social-${idx}`}
-                  >
-                    {social.icon ? (
-                      <img
-                        src={normalizeImageUrl(social.icon)}
-                        alt={social.platform || "Social Link"}
-                        className="w-6 h-6 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all"
-                      />
-                    ) : (
-                      <span className="text-sm">{social.platform}</span>
-                    )}
-                  </a>
-                ))}
+          <div className={styles.contact}>
+            <Heading>{contactSection?.title || "Get in Touch"}</Heading>
+            <ul className={styles.list}>
+              {[...contactItems].sort((a, b) => (a.order || 0) - (b.order || 0)).map((item, index) => {
+                const Icon = contactIcon(item);
+                return (
+                  <li key={`${item.text}-${index}`}>
+                    <a href={linkUrl(item.url)} className={styles.contactLink}>
+                      <Icon size={16} aria-hidden="true" className={styles.contactIcon} />
+                      <span>{item.text}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            {social_links.length > 0 && (
+              <div className={styles.socials} aria-label="Social media">
+                {social_links.filter((social) => social.link || social.url).map((social, index) => {
+                  const Icon = socialIcons[social.platform?.toLowerCase().trim()] || Globe;
+                  return (
+                    <a
+                      key={`${social.platform}-${index}`}
+                      href={linkUrl(social.link || social.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialLink}
+                      aria-label={`${social.platform || "Social media"} (opens in a new tab)`}
+                    >
+                      <Icon size={17} aria-hidden="true" />
+                    </a>
+                  );
+                })}
               </div>
             )}
           </div>
 
-          {/* Right column - Navigation links */}
-          <div className="md:w-3/5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {sections
-                .slice()
-                .sort((a, b) => (a.order || 0) - (b.order || 0))
-                .map((section, idx) => (
-                  <div key={idx} className="w-full">
-                    <h4 className="font-heading font-semibold text-white mb-4 text-lg relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-cyan-400">
-                      {section.title}
-                    </h4>
-                    <ul className="space-y-3">
-                      {(section.items || [])
-                        .slice()
-                        .sort((a, b) => (a.order || 0) - (b.order || 0))
-                        .map((item, i) => (
-                          <li key={i} className="group">
-                            {(() => {
-                              const itemUrl = item.url || "#";
-                              const normalizedUrl = itemUrl.startsWith("http") || itemUrl.startsWith("/") || itemUrl.startsWith("#")
-                                ? itemUrl
-                                : `/${itemUrl}`;
-                              
-                              return (
-                                <Link
-                                  href={normalizedUrl}
-                                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-start"
-                                >
-                                  <svg
-                                    className="w-4 h-4 text-blue-400 mr-2 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 transition-transform"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M9 5l7 7-7 7"
-                                    ></path>
-                                  </svg>
-                                  <span className="group-hover:translate-x-1 transform transition-transform inline-block">
-                                    {item.text}
-                                  </span>
-                                </Link>
-                              );
-                            })()}
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
+          {navigationSections.map((section, index) => (
+            <nav key={`${section.title}-${index}`} className={styles.navigation} aria-label={`Footer ${section.title}`}>
+              <Heading>{section.title}</Heading>
+              <ul className={styles.list}>
+                {[...(section.items || [])].sort((a, b) => (a.order || 0) - (b.order || 0)).map((item, itemIndex) => (
+                  <li key={`${item.text}-${itemIndex}`}>
+                    <Link href={linkUrl(item.url)} className={styles.navLink}>
+                      <span>{item.text}</span>
+                      <ArrowUpRight size={13} aria-hidden="true" className={styles.arrow} />
+                    </Link>
+                  </li>
                 ))}
-            </div>
-          </div>
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-gray-800/50 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-sm text-gray-400">
-            <p>{company?.copyright_text}</p>
-          </div>
-
-          <div className="text-sm text-gray-400 text-center md:text-right">
-            <p>{company?.credits_text}</p>
-          </div>
+        <div className={styles.bottom}>
+          <p>© 2026 Modern Institute of Automation <span aria-hidden="true">•</span> All Rights Reserved.</p>
+          {legalLinks.length > 0 && (
+            <nav className={styles.legal} aria-label="Legal">
+              {legalLinks.map((item, index) => <Link key={`${item.text}-${index}`} href={linkUrl(item.url)}>{item.text}</Link>)}
+            </nav>
+          )}
         </div>
       </div>
     </footer>
   );
 }
+
