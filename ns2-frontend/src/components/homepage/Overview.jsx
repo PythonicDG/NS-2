@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useMemo } from "react";
-import { motion } from "framer-motion";
 import { normalizeImageUrl } from "@/lib/api";
 
 export default function Overview({ data }) {
@@ -21,14 +20,14 @@ export default function Overview({ data }) {
   if (!data) return null;
 
   return (
-    <section className="relative w-full bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20 sm:py-32 overflow-hidden">
+    <section className="relative w-full bg-gradient-to-br from-[#fffaf7] via-[#fffdfb] to-[#f8fafc] py-12 sm:py-14 lg:py-10">
       {/* Consistent Decorative Pattern - Soft Spheres */}
       <div className="absolute -left-10 top-20 w-40 h-40 bg-blue-100 rounded-full opacity-30 blur-2xl" aria-hidden="true"></div>
       <div className="absolute right-10 top-40 w-32 h-32 bg-orange-100 rounded-full opacity-20 blur-2xl" aria-hidden="true"></div>
       <div className="absolute left-1/2 bottom-20 w-60 h-60 bg-blue-50 rounded-full opacity-40 blur-3xl -translate-x-1/2" aria-hidden="true"></div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-        <div className="relative w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[550px]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-center relative z-10">
+        <div className="relative w-full h-[300px] sm:h-[380px] lg:h-[400px] xl:h-[420px]">
           {/* Structural accents */}
           <div className="absolute -left-3 -top-3 w-12 h-12 border-t-4 border-l-4 border-blue-200 opacity-60 rounded-tl-lg"></div>
           <div className="absolute -right-3 -bottom-3 w-12 h-12 border-b-4 border-r-4 border-blue-200 opacity-60 rounded-br-lg"></div>
@@ -99,7 +98,7 @@ export default function Overview({ data }) {
 
           {data.super_heading && (
             <h2
-              className="font-semibold text-sm sm:text-base relative inline-block mb-3 sm:mb-4"
+              className="font-semibold text-sm sm:text-base relative inline-block mb-2"
               style={{ color: "#C2481F" }}
             >
               <span className="relative z-10">{data.super_heading}</span>
@@ -107,17 +106,17 @@ export default function Overview({ data }) {
             </h2>
           )}
 
-          <h3 className="text-2xl text-black sm:text-3xl lg:text-5xl font-bold leading-tight mb-6 sm:mb-8">
+          <h3 className="text-2xl text-black sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-bold leading-tight mb-4">
             {data.heading}
           </h3>
 
           {data.overview_text && (
-            <p className="text-gray-600 text-sm sm:text-base md:text-lg font-medium mx-auto lg:mx-0 mb-8 sm:mb-10 max-w-2xl">
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-medium mx-auto lg:mx-0 mb-5 max-w-2xl">
               {data.overview_text}
             </p>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10 sm:mb-12 justify-items-center lg:justify-items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3 mb-5 sm:mb-6 justify-items-center lg:justify-items-start">
             {data.content_items?.map((item, idx) => (
               <div
                 key={idx}
@@ -134,11 +133,11 @@ export default function Overview({ data }) {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 justify-center lg:justify-start">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-center gap-3 sm:gap-4 justify-center lg:justify-start">
             {data.primary_button_text && (
               <Link
                 href={data.primary_button_url || "/contact"}
-                className="inline-flex items-center gap-3 text-white px-8 py-3.5 sm:py-4 rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
+                className="inline-flex items-center gap-3 text-white px-6 py-3 rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
                 style={{ backgroundColor: "#C2481F" }}
                 prefetch={true}
               >
@@ -155,7 +154,7 @@ export default function Overview({ data }) {
             {data.secondary_button_text && (
               <Link
                 href={data.secondary_button_url || "/courses"}
-                className="inline-flex items-center gap-3 border-2 border-gray-200 text-gray-700 px-8 py-3.5 sm:py-4 rounded-xl text-base font-semibold bg-white hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
+                className="inline-flex items-center gap-3 border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl text-base font-semibold bg-white hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto justify-center relative overflow-hidden group"
                 prefetch={true}
               >
                 <span className="relative z-10">
@@ -170,7 +169,7 @@ export default function Overview({ data }) {
           </div>
 
           {/* Consistent dots accent */}
-          <div className="absolute -bottom-10 left-1/4 translate-y-full flex space-x-1 opacity-40">
+          <div className="absolute -bottom-5 left-1/4 flex space-x-1 opacity-40" aria-hidden="true">
             <div
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: "#C2481F" }}
