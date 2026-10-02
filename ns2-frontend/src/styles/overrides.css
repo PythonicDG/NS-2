@@ -39,17 +39,17 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    min-height: calc(100svh - 81px);
+    min-height: 0;
   }
 
   .home-hero__visual > img {
-    opacity: 0.3;
-    filter: blur(3px);
+    opacity: 0.55;
+    filter: blur(2px);
     transform: scale(1.03);
   }
 
   .home-hero__visual > .bg-gradient-to-r {
-    background-image: linear-gradient(180deg, rgb(0 0 0 / 65%), rgb(0 0 0 / 85%));
+    background-image: linear-gradient(180deg, rgb(0 0 0 / 55%), rgb(0 0 0 / 80%));
   }
 
   .home-hero .announcement-marquee {
@@ -57,7 +57,8 @@
   }
 
   .home-hero__content {
-    padding: 40px 20px 44px;
+    flex: none;
+    padding: 36px 20px 32px;
   }
 
   .home-hero__content > div > p:first-child:not(:last-child) {
