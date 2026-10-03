@@ -1,132 +1,273 @@
-"use client";
+﻿"use client";
 
-import { motion } from "framer-motion";
+import { useId, useRef, useState, useEffect } from "react";
 import { normalizeImageUrl } from "@/lib/api";
-import { FaLinkedin, FaFacebook, FaGlobe } from "react-icons/fa";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { FaLinkedin, FaGlobe } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import styles from "./OurTeam.module.css";
 
-// Helper to get initials from full name
-function getInitials(name) {
-  return name
-    ?.split(" ")
+function MentorPortrait({ image, name }) {
+  const [failedUrl, setFailedUrl] = useState(null);
+  const url = normalizeImageUrl(image);
+  const initials = name
+    .trim()
+    .split(/\s+/)
     .slice(0, 2)
     .map((word) => word[0])
     .join("")
     .toUpperCase();
+  return (
+    <div className={styles.portrait}>
+      {url && failedUrl !== url ? (
+        // Uploaded portraits use the existing API URL normalization.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={url}
+          alt={name}
+          loading="lazy"
+          draggable={false}
+          onError={() => setFailedUrl(url)}
+        />
+      ) : (
+        <div
+          className={styles.placeholder}
+          role="img"
+          aria-label={`${name} — photo unavailable`}
+        >
+          <span>{initials}</span>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function OurTeamClient({ data }) {
-  if (!data?.content_items?.length) return null;
+  const trackRef = useRef(null);
+  const drag = useRef(null);
+  const suppressClick = useRef(false);
+  const trackId = useId();
+  const headingId = useId();
+  const [navigation, setNavigation] = useState({
+    previous: false,
+    next: false,
+  });
+  const items = data?.content_items || [];
 
-  const items = data.content_items;
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const update = () =>
+      setNavigation({
+        previous: track.scrollLeft > 2,
+        next: track.scrollLeft < track.scrollWidth - track.clientWidth - 2,
+      });
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(track);
+    track.addEventListener("scroll", update, { passive: true });
+    return () => {
+      observer.disconnect();
+      track.removeEventListener("scroll", update);
+    };
+  }, [items.length]);
+
+  if (!items.length) return null;
+
+  const scrollTo = (left) =>
+    trackRef.current.scrollTo({
+      left,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  const stepSize = () =>
+    trackRef.current.children[0].getBoundingClientRect().width +
+    parseFloat(getComputedStyle(trackRef.current).columnGap);
+  const move = (direction) =>
+    scrollTo(trackRef.current.scrollLeft + direction * stepSize());
+  const endDrag = (event) => {
+    if (!drag.current) return;
+    const moved = drag.current.moved;
+    drag.current = null;
+    trackRef.current.classList.remove(styles.dragging);
+    if (trackRef.current.hasPointerCapture(event.pointerId))
+      trackRef.current.releasePointerCapture(event.pointerId);
+    if (moved)
+      scrollTo(
+        Math.round(trackRef.current.scrollLeft / stepSize()) * stepSize()
+      );
+  };
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Heading + Subheading */}
-        <div className="text-center mb-12">
-          {data.heading && (
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
-              {data.heading}{" "}
-              {data.subheading && (
-                <span className="text-blue-600">{data.subheading}</span>
-              )}
-            </h2>
+    <section className={styles.section} aria-labelledby={headingId}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          {data.super_heading && (
+            <p className={styles.eyebrow}>{data.super_heading}</p>
+          )}
+          <h2 id={headingId} className={styles.heading}>
+            {data.heading || "Our mentors"}
+          </h2>
+          {data.subheading && (
+            <p className={styles.subheading}>{data.subheading}</p>
           )}
           {data.overview_text && (
-            <p className="mt-4 text-sm sm:text-base text-[#6C757D] max-w-2xl mx-auto">
-              {data.overview_text}
-            </p>
+            <p className={styles.intro}>{data.overview_text}</p>
           )}
-        </div>
-
-        {/* Team Grid */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
+        </header>
+        <div
+          className={styles.track}
+          ref={trackRef}
+          id={trackId}
+          role="region"
+          aria-label="Mentor profiles"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+              event.preventDefault();
+              move(event.key === "ArrowRight" ? 1 : -1);
+            }
+            if (event.key === "Home" || event.key === "End") {
+              event.preventDefault();
+              scrollTo(
+                event.key === "Home" ? 0 : event.currentTarget.scrollWidth
+              );
+            }
+          }}
+          onPointerDown={(event) => {
+            suppressClick.current = false;
+            // Native touch scrolling preserves both swipe and vertical page gestures.
+            if (
+              event.pointerType !== "mouse" ||
+              event.button !== 0 ||
+              event.target.closest("a, button")
+            )
+              return;
+            drag.current = {
+              x: event.clientX,
+              left: event.currentTarget.scrollLeft,
+              moved: false,
+            };
+          }}
+          onPointerMove={(event) => {
+            if (!drag.current) return;
+            const distance = event.clientX - drag.current.x;
+            if (Math.abs(distance) > 5) {
+              drag.current.moved = true;
+              suppressClick.current = true;
+              event.currentTarget.setPointerCapture(event.pointerId);
+              event.currentTarget.classList.add(styles.dragging);
+            }
+            if (drag.current.moved)
+              event.currentTarget.scrollLeft = drag.current.left - distance;
+          }}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onPointerLeave={(event) => {
+            if (drag.current && !drag.current.moved) endDrag(event);
+          }}
+          onClickCapture={(event) => {
+            if (suppressClick.current) {
+              event.preventDefault();
+              event.stopPropagation();
+              suppressClick.current = false;
+            }
+          }}
         >
           {items.map((item, index) => {
-            const imageUrl = normalizeImageUrl(item.image);
-
+            const name =
+              item.label || item.person_name || item.title || "Mentor";
+            // The About API has no tags field, so existing specialization supplies expertise tags.
+            const tags = (item.tags || item.title || item.person_role || "")
+              .split(/[,|&]/)
+              .map((tag) => tag.trim())
+              .filter(Boolean);
             return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="w-full sm:w-72 lg:w-80 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 group flex flex-col items-center text-center p-6 pb-8 border border-gray-100"
-                whileHover={{ y: -5 }}
-              >
-                {/* Profile Image or Initials Fallback */}
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt={item.label}
-                    className="w-24 h-24 object-cover rounded-full shadow-md border-4 border-white ring-2 ring-gray-100"
-                  />
-                ) : (
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-xl font-semibold text-white shadow-md">
-                    {getInitials(item.label)}
+              <article className={styles.profile} key={item.id ?? index}>
+                <MentorPortrait image={item.image} name={name} />
+                <div className={styles.details}>
+                  <span className={styles.number}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className={styles.name}>{name}</h3>
+                  <p className={styles.specialization}>
+                    {item.title || item.person_role}
+                  </p>
+                  <div className={styles.description}>
+                    {item.description && <p>{item.description}</p>}
                   </div>
-                )}
-
-                {/* Name */}
-                <h3 className="mt-5 text-xl font-semibold text-gray-900">
-                  {item.label}
-                </h3>
-
-                {/* Title */}
-                {item.title && (
-                  <p className="mt-1 text-sm font-medium text-[#C2481F]">
-                    {item.title}
-                  </p>
-                )}
-
-                {/* Description */}
-                {item.description && (
-                  <p className="mt-3 text-sm text-[#6C757D] leading-relaxed flex-grow">
-                    {item.description}
-                  </p>
-                )}
-
-                {/* Social Links */}
-                <div className="mt-5 flex gap-3">
-                  {item.linkedin_url && (
-                    <a
-                      href={item.linkedin_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5] transition-all duration-300"
-                    >
-                      <FaLinkedin className="text-lg" />
-                    </a>
-                  )}
-                  {item.twitter_url && (
-                    <a
-                      href={`mailto:${item.twitter_url}`}
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#EA4335] hover:text-white hover:border-[#EA4335] transition-all duration-300"
-                      title="Send Email"
-                    >
-                      <MdEmail className="text-xl" />
-                    </a>
-                  )}
-                  {item.facebook_url && (
-                    <a
-                      href={item.facebook_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-gray-500 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300"
-                    >
-                      <FaGlobe className="text-lg" />
-                    </a>
-                  )}
+                  <div className={styles.tags} aria-label="Expertise">
+                    {tags.map((tag, i) => (
+                      <span key={i}>{tag}</span>
+                    ))}
+                  </div>
+                  <div className={styles.socials}>
+                    {item.linkedin_url && (
+                      <a
+                        href={item.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${name} on LinkedIn`}
+                      >
+                        <FaLinkedin />
+                      </a>
+                    )}
+                    {item.twitter_url && (
+                      <a
+                        href={`mailto:${item.twitter_url}`}
+                        aria-label={`Email ${name}`}
+                      >
+                        <MdEmail />
+                      </a>
+                    )}
+                    {item.facebook_url && (
+                      <a
+                        href={item.facebook_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${name} website`}
+                      >
+                        <FaGlobe />
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </motion.div>
+              </article>
             );
           })}
-        </motion.div>
+        </div>
+        <div
+          className={styles.navigation}
+          hidden={!navigation.previous && !navigation.next}
+        >
+          <span className={styles.hint}>
+            Meet the team <span aria-hidden="true">/</span>{" "}
+            <span className={styles.swipeHint}>Swipe to explore</span>
+            <span className={styles.dragHint}>Drag to explore</span>
+          </span>
+          <div className={styles.arrows}>
+            <button
+              type="button"
+              aria-label="Previous mentor"
+              aria-controls={trackId}
+              disabled={!navigation.previous}
+              onClick={() => move(-1)}
+            >
+              <ArrowLeft size={17} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next mentor"
+              aria-controls={trackId}
+              disabled={!navigation.next}
+              onClick={() => move(1)}
+            >
+              <ArrowRight size={17} />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

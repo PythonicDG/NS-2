@@ -1,0 +1,370 @@
+.section {
+  --navy: #0b2c4b;
+  --orange: #c2481f;
+  --line: #c2481f66;
+  --row-gap: 32px;
+  background: #f5f7f8;
+  color: var(--navy);
+  border-block: 1px solid #0b2c4b0d;
+}
+
+.container {
+  max-width: 1360px;
+  margin-inline: auto;
+  padding: 64px 64px 60px;
+}
+
+.header {
+  max-width: 790px;
+  padding-left: 20px;
+  border-left: 2px solid var(--orange);
+  margin-bottom: 38px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #a63d1a;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(27px, 2.5vw, 34px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.intro {
+  max-width: 700px;
+  margin: 14px 0 0;
+  color: #5c6b77;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.journey {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  row-gap: var(--row-gap);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 6px;
+}
+
+.step {
+  position: relative;
+  min-width: 0;
+  padding: 0 32px 12px 0;
+  outline: none;
+}
+
+/* Each segment belongs to its step, so hovering also energises the route. */
+.step::before {
+  content: "";
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transition: background 220ms ease;
+}
+
+.step:last-child::before,
+.desktopRowEnd::before {
+  display: none;
+}
+
+.stepMeta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 62px;
+}
+
+.number {
+  color: #8493a0;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+  transition: color 220ms ease;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--navy);
+  transition: color 220ms ease;
+}
+
+.node {
+  position: absolute;
+  z-index: 1;
+  top: 75px;
+  left: -5px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--orange);
+  background: #f5f7f8;
+  border-radius: 50%;
+  transition:
+    background 220ms ease,
+    outline-offset 220ms ease;
+  outline: 1px solid transparent;
+  outline-offset: 0;
+}
+
+.direction {
+  position: absolute;
+  top: 77px;
+  right: 18px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--orange);
+  border-right: 1px solid var(--orange);
+  transform: rotate(45deg);
+}
+
+.step:last-child .direction,
+.desktopRowEnd .direction {
+  display: none;
+}
+
+.stepContent {
+  position: relative;
+  margin-top: 37px;
+}
+
+/* Small circuit termination marks stay anchored to the content. */
+.stepContent::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 8px;
+  margin-top: 18px;
+  border-left: 1px solid #0b2c4b26;
+  border-bottom: 1px solid #0b2c4b26;
+}
+
+.stepTitle {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  transition: color 220ms ease;
+}
+
+.description {
+  margin: 0;
+  color: #5c6b77;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.step:is(:hover, :focus-visible) .number,
+.step:is(:hover, :focus-visible) .icon,
+.step:is(:hover, :focus-visible) .stepTitle {
+  color: var(--orange);
+}
+
+.step:is(:hover, :focus-visible)::before,
+.step:is(:hover, :focus-visible)::after {
+  background: var(--orange);
+}
+
+.step:is(:hover, :focus-visible) .node {
+  background: var(--orange);
+  outline-color: #c2481f66;
+  outline-offset: 4px;
+}
+
+.step:focus-visible .stepContent {
+  outline: 1px solid var(--orange);
+  outline-offset: 5px;
+}
+
+.imageStrip {
+  display: flex;
+  gap: 3px;
+  height: 148px;
+  margin-top: 26px;
+  overflow: hidden;
+  border-left: 2px solid var(--orange);
+}
+
+.image {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .step:nth-child(even) .icon {
+    transform: translateY(8px);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+  .container {
+    padding: 48px 32px;
+  }
+
+  .journey {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step {
+    grid-row: var(--tablet-row);
+    grid-column: var(--tablet-column);
+  }
+
+  .stepMeta,
+  .stepContent {
+    padding-left: 20px;
+  }
+
+  .step::before,
+  .desktopRowEnd::before {
+    display: block;
+  }
+
+  .reverse::before {
+    left: -100%;
+  }
+
+  .rowEnd::before,
+  .step:last-child::before {
+    display: none;
+  }
+
+  .rowEnd::after {
+    content: "";
+    position: absolute;
+    top: 80px;
+    bottom: calc(-1 * var(--row-gap) - 80px);
+    left: 0;
+    width: 1px;
+    background: var(--line);
+    transition: background 220ms ease;
+  }
+
+  .rowEnd .direction {
+    display: block;
+    top: auto;
+    bottom: -14px;
+    left: -3px;
+    right: auto;
+    transform: rotate(135deg);
+  }
+
+  .reverse:not(.rowEnd) .direction {
+    left: -24px;
+    right: auto;
+    transform: rotate(225deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 40px 20px;
+  }
+
+  .header {
+    padding-left: 14px;
+    margin-bottom: 28px;
+  }
+
+  .heading {
+    font-size: clamp(24px, 6.5vw, 29px);
+  }
+
+  .intro {
+    font-size: 13px;
+  }
+
+  .journey {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .step {
+    padding: 0 0 25px 24px;
+  }
+
+  .step::before,
+  .desktopRowEnd::before {
+    display: block;
+    top: 17px;
+    bottom: -17px;
+    width: 1px;
+    height: auto;
+  }
+
+  .step:last-child {
+    padding-bottom: 0;
+  }
+
+  .step:last-child::before {
+    display: none;
+  }
+
+  .node {
+    top: 12px;
+  }
+
+  .stepMeta {
+    min-height: 34px;
+    gap: 14px;
+  }
+
+  .number {
+    font-size: 30px;
+  }
+
+  .icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .stepContent {
+    margin-top: 6px;
+  }
+
+  .stepTitle {
+    font-size: 17px;
+    margin-bottom: 5px;
+  }
+
+  .stepContent::after,
+  .direction {
+    display: none;
+  }
+
+  .imageStrip {
+    height: 110px;
+    margin-top: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .step::before,
+  .step::after,
+  .step * {
+    transition: none;
+  }
+}

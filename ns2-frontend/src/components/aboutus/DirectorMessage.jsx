@@ -67,14 +67,7 @@ export default function DirectorMessage({ data }) {
           )}
 
           <div className={styles.letter}>
-            {quote && (
-              <>
-                <span className={styles.quoteMark} aria-hidden="true">
-                  “
-                </span>
-                <blockquote className={styles.quote}>{quote}</blockquote>
-              </>
-            )}
+            {quote && <blockquote className={styles.quote}>{quote}</blockquote>}
             {supportingParagraphs.map((text) => (
               <p key={text} className={styles.supporting}>
                 {text}

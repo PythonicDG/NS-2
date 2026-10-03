@@ -6,43 +6,16 @@
   color: #0b2c4b;
 }
 
-.section::before {
-  content: "“";
-  position: absolute;
-  top: 20px;
-  right: 5%;
-  z-index: -1;
-  color: #0b2c4b;
-  opacity: 0.035;
-  font:
-    380px/1 Georgia,
-    serif;
-  pointer-events: none;
-}
-
-.section::after {
-  content: "";
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  z-index: -1;
-  width: 112px;
-  height: 96px;
-  background-image: radial-gradient(#0b2c4b18 1px, transparent 1px);
-  background-size: 12px 12px;
-  pointer-events: none;
-}
-
 .container {
   position: relative;
   max-width: 1360px;
   margin-inline: auto;
-  padding: 88px 64px;
+  padding: 40px 64px;
 }
 
 .sideLabel {
   position: absolute;
-  top: 92px;
+  top: 44px;
   left: 23px;
   writing-mode: vertical-rl;
   color: #78838b;
@@ -53,9 +26,10 @@
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+  grid-template-rows: auto 1fr;
   grid-template-areas: "portrait header" "portrait letter";
   column-gap: clamp(36px, 5vw, 72px);
-  row-gap: 24px;
+  row-gap: 12px;
   align-items: start;
 }
 
@@ -69,7 +43,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 0 17px;
+  margin: 0 0 8px;
   color: #a63d1a;
   font-size: 10px;
   font-weight: 600;
@@ -100,12 +74,15 @@
 .portrait {
   grid-area: portrait;
   align-self: center;
+  width: 100%;
+  max-width: 420px;
   min-width: 0;
   margin: 0;
 }
 
 .imageFrame {
-  aspect-ratio: 3 / 4;
+  width: 100%;
+  height: 420px;
   overflow: hidden;
   background: #e6e8e5;
 }
@@ -143,18 +120,8 @@
   overflow-wrap: anywhere;
 }
 
-.quoteMark {
-  display: block;
-  height: 46px;
-  color: #c2481f80;
-  font:
-    84px/1 Georgia,
-    serif;
-  user-select: none;
-}
-
 .quote {
-  margin: 12px 0 22px;
+  margin: 0 0 22px;
   color: #193950;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(22px, 2vw, 27px);
@@ -226,11 +193,12 @@
 
 @media (max-width: 1023px) {
   .container {
-    padding: 64px 32px;
+    padding: 32px 32px;
   }
 
   .layout {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
     grid-template-areas: "header" "portrait" "letter";
     gap: 28px;
     max-width: 680px;
@@ -239,18 +207,19 @@
 
   .withoutImage {
     grid-template-areas: "header" "letter";
+    row-gap: 12px;
   }
 
-  .sideLabel,
-  .section::before,
-  .section::after {
+  .sideLabel {
     display: none;
   }
 
   .portrait {
-    width: 100%;
-    max-width: 420px;
     justify-self: center;
+  }
+
+  .imageFrame {
+    height: 380px;
   }
 
   .heading {
@@ -264,7 +233,7 @@
 
 @media (max-width: 600px) {
   .container {
-    padding: 48px 20px;
+    padding: 24px 20px;
   }
 
   .layout {
@@ -275,7 +244,7 @@
     gap: 9px;
     font-size: 9px;
     letter-spacing: 0.12em;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
   }
 
   .heading {
@@ -284,12 +253,11 @@
   }
 
   .portrait {
-    max-width: none;
+    max-width: 360px;
   }
 
   .imageFrame {
-    height: clamp(320px, 120vw, 600px);
-    aspect-ratio: auto;
+    height: 320px;
   }
 
   .caption {
@@ -300,13 +268,7 @@
     display: none;
   }
 
-  .quoteMark {
-    height: 34px;
-    font-size: 64px;
-  }
-
   .quote {
-    margin-top: 10px;
     font-size: 20px;
     line-height: 1.75;
   }

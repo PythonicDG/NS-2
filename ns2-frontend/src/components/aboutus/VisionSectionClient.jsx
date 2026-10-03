@@ -1,126 +1,144 @@
-// components/aboutus/VisionSectionClient.jsx
-
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useId, useRef, useState } from "react";
+import { Eye, Target, ShieldCheck } from "lucide-react";
 import { normalizeImageUrl } from "@/lib/api";
-import { Laptop, Lightbulb, BarChart3 } from "lucide-react";
+import styles from "./VisionSection.module.css";
+
+const icons = [Eye, Target, ShieldCheck];
 
 export default function VisionSectionClient({ data }) {
-  if (!data || !Array.isArray(data.content_items)) return null;
+  const sectionId = useId();
+  const tabRefs = useRef([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const items = Array.isArray(data?.content_items) ? data.content_items : [];
+  const activeIndex = selectedIndex < items.length ? selectedIndex : 0;
 
-  const [activeTab, setActiveTab] = useState(data.content_items[0]?.label);
-  const activeContent = data.content_items.find(
-    (item) => item.label === activeTab
-  );
+  if (!items.length) return null;
+
+  function selectTab(index, focus = false) {
+    setSelectedIndex(index);
+    if (focus) tabRefs.current[index]?.focus({ preventScroll: true });
+    tabRefs.current[index]?.scrollIntoView({
+      behavior: "instant",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }
+
+  function handleKeyDown(event, index) {
+    let nextIndex;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % items.length;
+    if (event.key === "ArrowLeft")
+      nextIndex = (index - 1 + items.length) % items.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = items.length - 1;
+    if (nextIndex !== undefined) {
+      event.preventDefault();
+      selectTab(nextIndex, true);
+    }
+  }
 
   return (
-    <section className="relative w-full py-11 overflow-hidden bg-[linear-gradient(135deg,#E2E8F0,#F8FAFC)]">
-      {/* Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Decorative shapes and icons */}
-        <div className="absolute top-1/4 right-1/3 w-16 h-16 bg-green-200 rounded-full opacity-20"></div>
-        <div className="absolute top-1/4 right-40 text-blue-500 opacity-30 z-0">
-          <Lightbulb size={48} strokeWidth={1.5} />
-        </div>
-        <div className="absolute bottom-1/3 left-16 text-blue-400 opacity-30 z-0">
-          <Laptop size={52} strokeWidth={1.5} />
-        </div>
-        <div className="absolute bottom-28 right-20 text-blue-500 opacity-30 z-0">
-          <BarChart3 size={50} strokeWidth={1.5} />
-        </div>
-      </div>
+    <section
+      className={styles.section}
+      aria-labelledby={`${sectionId}-heading`}
+    >
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <p className={styles.eyebrow}>OUR PURPOSE</p>
+          <h2 id={`${sectionId}-heading`} className={styles.heading}>
+            Vision, Mission &amp; Values
+          </h2>
+          {data.heading && <p className={styles.subtitle}>{data.heading}</p>}
+        </header>
 
-      {/* Foreground Content */}
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        {/* Section Title */}
-        {data.section_type && (
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-bold text-center text-gray-900"
-          >
-            {data.section_type.replace(/_/g, " ")}
-          </motion.h2>
-        )}
-
-        {/* Heading */}
-        {data.heading && (
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-center text-gray-600 mt-4 max-w-3xl mx-auto"
-          >
-            {data.heading}
-          </motion.p>
-        )}
-
-        {/* Tabs */}
-        <div className="flex justify-center mt-8 space-x-4">
-          {data.content_items.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.label)}
-              className={`px-4 py-2 rounded-lg font-medium shadow transition ${
-                activeTab === item.label
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Active Tab Content */}
-        {activeContent && (
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-10"
-            key={activeContent.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Left Content */}
-            <div className="flex-1 lg:ml-40">
-              {activeContent.label && (
-                <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: "#C2481F" }}>
-                  {activeContent.label}
-                </h3>
-              )}
-              {activeContent.description && (
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                  {activeContent.description}
-                </p>
-              )}
-            </div>
-
-            {/* Right Image */}
-            {activeContent.image && (
-              <motion.div
-                className="flex justify-center items-center p-6 h-[400px]"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
+        <div className={styles.tabScroller}>
+          <div className={styles.tabs} role="tablist" aria-label="Our purpose">
+            {items.map((item, index) => (
+              <button
+                key={item.id ?? index}
+                ref={(node) => {
+                  tabRefs.current[index] = node;
+                }}
+                type="button"
+                role="tab"
+                id={`${sectionId}-tab-${index}`}
+                aria-controls={`${sectionId}-panel-${index}`}
+                aria-selected={activeIndex === index}
+                tabIndex={activeIndex === index ? 0 : -1}
+                className={styles.tab}
+                onClick={() => selectTab(index)}
+                onKeyDown={(event) => handleKeyDown(event, index)}
               >
-                <motion.img
-                  src={normalizeImageUrl(activeContent.image)}
-                  alt={activeContent.label || "Vision"}
-                  className="w-full h-full object-cover rounded-[10px]"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </motion.div>
-            )}
-          </motion.div>
-        )}
+                <span className={styles.tabNumber} aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {item.label}
+                <span className={styles.tabDot} aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Stacked grid cells reserve the tallest panel's natural height.
+            Images stay mounted so loading and uploaded sizes cannot shift tabs. */}
+        <div className={styles.panels}>
+          {items.map((item, index) => {
+            const isActive = index === activeIndex;
+            const Icon = icons[index % icons.length];
+            return (
+              <div
+                key={item.id ?? index}
+                id={`${sectionId}-panel-${index}`}
+                role="tabpanel"
+                aria-labelledby={`${sectionId}-tab-${index}`}
+                aria-hidden={!isActive}
+                inert={!isActive}
+                tabIndex={isActive ? 0 : -1}
+                className={styles.panel}
+                data-active={isActive}
+              >
+                <div className={styles.content}>
+                  <span className={styles.backgroundNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.copy}>
+                    <Icon
+                      className={styles.icon}
+                      size={26}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <h3 className={styles.title}>{item.label}</h3>
+                    {item.description && (
+                      <p className={styles.description}>{item.description}</p>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.visual}>
+                  <div className={styles.imageFrame}>
+                    {item.image && (
+                      <img
+                        src={normalizeImageUrl(item.image)}
+                        alt={item.label || "Our purpose"}
+                        className={styles.image}
+                        width="880"
+                        height="560"
+                      />
+                    )}
+                  </div>
+                  <div className={styles.imageCaption} aria-hidden="true">
+                    <span>
+                      {String(index + 1).padStart(2, "0")} / {item.label}
+                    </span>
+                    <span className={styles.captionLine} />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

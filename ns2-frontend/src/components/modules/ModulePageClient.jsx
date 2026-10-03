@@ -69,6 +69,12 @@ export default function ModulePageClient({ moduleData }) {
               <Component 
                 data={section} 
                 moduleTitle={title} 
+                {...(section.section_type === "PAGE_BANNER" ? {
+                  moduleSlug: moduleData.slug,
+                  courseHighlights: sections
+                    .filter((item) => item.is_active && item.section_type === "KEY_HIGHLIGHTS")
+                    .flatMap((item) => item.content_items || []),
+                } : {})}
                 moduleTagline={tagline} 
                 brochure={brochure}
                 syllabus={syllabus}

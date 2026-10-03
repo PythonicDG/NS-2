@@ -1,143 +1,105 @@
-"use client";
+﻿"use client";
 
-import { motion } from "framer-motion";
+import { BookOpen, CircuitBoard, Gauge, Wrench } from "lucide-react";
 import { normalizeImageUrl } from "@/lib/api";
+import styles from "./OurStory.module.css";
 
-/**
- * OurStory Component
- *
- * A vertical timeline showcasing the institute's milestones and history.
- * Maps to the "OUR_STORY" section_type from the About Us API.
- *
- * Field mapping:
- * - heading → Section title (e.g., "Our Journey")
- * - subheading → Section subtitle
- * - content_items[].label → Year or milestone label (e.g., "2018")
- * - content_items[].title → Milestone title
- * - content_items[].description → Milestone description
- * - content_items[].image → Optional milestone image
- *
- * @param {Object} props
- * @param {Object} props.data - The OUR_STORY section data
- * @returns {JSX.Element}
- */
+const stepIcons = [BookOpen, Wrench, CircuitBoard, Gauge];
+
+/** The OUR_STORY journey retains the API's active items and their ordering. */
 export default function OurStory({ data }) {
   if (!data) return null;
 
-  const milestones =
-    data.content_items?.filter((item) => item.is_active) || [];
+  const milestones = data.content_items?.filter((item) => item.is_active) || [];
+  const images = milestones.flatMap((item, index) => {
+    const src = normalizeImageUrl(item.image);
+    return src
+      ? [
+          {
+            src,
+            alt: item.title || item.label || "Milestone",
+            key: item.id || index,
+          },
+        ]
+      : [];
+  });
 
   return (
-    <section className="py-16 md:py-24 bg-white overflow-hidden" id="our-story">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+    <section
+      className={styles.section}
+      id="our-story"
+      aria-label={data.heading || "Our approach"}
+    >
+      <div className={styles.container}>
+        <header className={styles.header}>
           {data.super_heading && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-sm font-semibold text-[#C2481F] tracking-widest uppercase mb-2"
-            >
-              {data.super_heading}
-            </motion.p>
+            <p className={styles.eyebrow}>{data.super_heading}</p>
           )}
-          {data.heading && (
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900"
-            >
-              {data.heading}
-            </motion.h2>
-          )}
-          {data.subheading && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
-            >
-              {data.subheading}
-            </motion.p>
-          )}
-        </div>
+          {data.heading && <h2 className={styles.heading}>{data.heading}</h2>}
+          {data.subheading && <p className={styles.intro}>{data.subheading}</p>}
+        </header>
 
-        {/* Timeline */}
         {milestones.length > 0 && (
-          <div className="relative">
-            {/* Vertical line - center on desktop, left on mobile */}
-            <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C2481F] via-[#0B3A6E] to-[#C2481F]" />
+          <ol
+            className={styles.journey}
+            style={{ "--columns": Math.min(milestones.length, 4) }}
+          >
+            {milestones.map((item, index) => {
+              const Icon = stepIcons[index % stepIcons.length];
+              const row = Math.floor(index / 2);
+              const reverse = row % 2 === 1;
+              const rowEnd = index % 2 === 1 && index < milestones.length - 1;
 
-            <div className="space-y-12 md:space-y-16">
-              {milestones.map((item, idx) => {
-                // Alternating layout for timeline items on desktop
-                const isLeft = idx % 2 === 0;
-                const itemImage = normalizeImageUrl(item.image);
+              return (
+                <li
+                  key={item.id || index}
+                  className={`${styles.step} ${reverse ? styles.reverse : ""} ${rowEnd ? styles.rowEnd : ""} ${index % 4 === 3 ? styles.desktopRowEnd : ""}`}
+                  style={{
+                    "--tablet-row": row + 1,
+                    "--tablet-column": reverse
+                      ? 2 - (index % 2)
+                      : (index % 2) + 1,
+                  }}
+                  tabIndex={0}
+                >
+                  <div className={styles.stepMeta}>
+                    <span className={styles.number}>
+                      {item.label || String(index + 1).padStart(2, "0")}
+                    </span>
+                    <Icon
+                      className={styles.icon}
+                      size={22}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <span className={styles.node} aria-hidden="true" />
+                  <span className={styles.direction} aria-hidden="true" />
+                  <div className={styles.stepContent}>
+                    {item.title && (
+                      <h3 className={styles.stepTitle}>{item.title}</h3>
+                    )}
+                    {item.description && (
+                      <p className={styles.description}>{item.description}</p>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        )}
 
-                return (
-                  <motion.div
-                    key={item.id || idx}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className={`relative flex items-start md:items-center gap-6 md:gap-0 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"
-                      }`}
-                  >
-                    {/* Timeline dot (centered on desktop, left on mobile) */}
-                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#C2481F] border-4 border-white shadow-md z-10" />
-
-                    {/* Content card container */}
-                    <div
-                      className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${isLeft ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
-                        }`}
-                    >
-                      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
-                        {/* Year/Label badge */}
-                        {item.label && (
-                          <span className="inline-block bg-[#C2481F]/10 text-[#C2481F] text-sm font-bold px-4 py-1 rounded-full mb-3">
-                            {item.label}
-                          </span>
-                        )}
-
-                        {/* Milestone image */}
-                        {itemImage && (
-                          <div className="mb-4 rounded-xl overflow-hidden">
-                            <img
-                              src={itemImage}
-                              alt={item.title || item.label || "Milestone"}
-                              className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
-                            />
-                          </div>
-                        )}
-
-                        {/* Title */}
-                        {item.title && (
-                          <h3 className="text-lg font-bold text-gray-900 mb-2">
-                            {item.title}
-                          </h3>
-                        )}
-
-                        {/* Description */}
-                        {item.description && (
-                          <p className="text-gray-600 text-sm leading-relaxed">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Spacer for opposite side */}
-                    <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-                  </motion.div>
-                );
-              })}
-            </div>
+        {images.length > 0 && (
+          <div className={styles.imageStrip}>
+            {images.map((image) => (
+              <img
+                key={image.key}
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+                className={styles.image}
+              />
+            ))}
           </div>
         )}
       </div>

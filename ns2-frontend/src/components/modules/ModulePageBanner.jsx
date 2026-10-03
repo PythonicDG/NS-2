@@ -6,20 +6,22 @@ import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import styles from "./ModulePageBanner.module.css";
 
-export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus }) {
+export default function ModulePageBanner({ data, moduleTitle, moduleSlug, courseHighlights = [], brochure, syllabus }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  if (!data) return null;
-
-  const bgImage = normalizeImageUrl(data.background_image);
+  const isAutomation = /plc.*scada/i.test(`${moduleSlug || ""} ${moduleTitle || ""}`);
+  const bgImage = normalizeImageUrl(data?.background_image);
   const downloadUrl = normalizeImageUrl(brochure || syllabus);
 
-  const heroImages = (data.content_items || [])
+  const heroImages = (data?.content_items || [])
     .filter((item) => item.icon)
     .map((item) => normalizeImageUrl(item.icon));
 
-  const finalImages = heroImages.length > 0 ? heroImages : (bgImage ? [bgImage] : []);
+  const finalImages = isAutomation && bgImage
+    ? [bgImage]
+    : heroImages.length > 0 ? heroImages : (bgImage ? [bgImage] : []);
 
   useEffect(() => {
     if (finalImages.length <= 1) return;
@@ -29,10 +31,31 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
     return () => clearInterval(interval);
   }, [finalImages.length]);
 
+  if (!data) return null;
+
+  const metadata = [...new Set(courseHighlights
+    .filter((item) => item.is_active !== false)
+    .map((item) => item.title?.trim())
+    .filter((title) => title && title.length <= 32))].slice(0, 3);
+  const fallbackHighlights = ["Practical training", "Multi-brand learning", "Hands-on labs"];
+  for (const highlight of fallbackHighlights) {
+    if (metadata.length >= 3) break;
+    if (!metadata.includes(highlight)) metadata.push(highlight);
+  }
+
+  function exploreProgram(event) {
+    const nextSection = event.currentTarget.closest(".module-animate")?.nextElementSibling;
+    if (!nextSection) return;
+    nextSection.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      block: "start",
+    });
+  }
+
   return (
     <section
       id="module-page-banner"
-      className="relative w-full min-h-[600px] md:min-h-[800px] flex items-center overflow-hidden"
+      className={`relative w-full min-h-[600px] md:min-h-[800px] flex items-center overflow-hidden ${isAutomation ? styles.hero : ""}`}
     >
       {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
@@ -46,29 +69,48 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
               transition={{ duration: 2, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              <Image
+              {isAutomation ? (
+                <div
+                  className={styles.background}
+                  style={{ backgroundImage: `url(${JSON.stringify(finalImages[currentImageIndex % finalImages.length])})` }}
+                />
+              ) : <Image
                 src={finalImages[currentImageIndex]}
                 alt={data.heading || moduleTitle || "Module Hero"}
                 fill
                 priority
                 className="object-cover"
-              />
+              />}
             </motion.div>
           </AnimatePresence>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92]" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+        <div className={isAutomation ? styles.overlay : "absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"} />
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-[#C2481F]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
+      {isAutomation ? (
+        <>
+          <div className={styles.program} aria-hidden="true">PROGRAM <span>/</span> 01</div>
+          <div className={styles.technical} aria-hidden="true">
+            <svg viewBox="0 0 480 360" fill="none">
+              <path d="M80 300V240L160 160H300L360 100V40M180 340V280L240 220H380L440 160M280 60V100L220 160M300 160V220" />
+              <circle cx="80" cy="300" r="5" /><circle cx="360" cy="40" r="5" />
+              <circle cx="180" cy="340" r="5" /><circle cx="440" cy="160" r="5" />
+              <rect x="270" y="48" width="20" height="12" />
+            </svg>
+          </div>
+        </>
+      ) : <>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-[#C2481F]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
+      </>}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-16 py-12 md:py-16 -translate-y-8 md:-translate-y-20">
+      <div className={isAutomation ? `relative z-10 container mx-auto px-6 lg:px-16 ${styles.content}` : "relative z-10 container mx-auto px-6 lg:px-16 py-12 md:py-16 -translate-y-8 md:-translate-y-20"}>
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-white/70 mb-6">
+        <nav className={`flex items-center gap-2 text-sm text-white/70 mb-6 ${isAutomation ? styles.breadcrumb : ""}`}>
           <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
             <Home className="w-4 h-4" />
             <span>Home</span>
@@ -83,8 +125,12 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
           </span>
         </nav>
 
+        {isAutomation && (
+          <div className={styles.category}>{data.super_heading || "Industrial automation"}</div>
+        )}
+
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight max-w-3xl">
+        <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight max-w-3xl ${isAutomation ? styles.title : ""}`}>
           {data.heading || moduleTitle}
           {data.highlighted_heading && (
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-[#C2481F] mt-1">
@@ -94,9 +140,15 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
         </h1>
 
         {data.subheading && (
-          <p className="mt-4 text-lg text-white/80 max-w-2xl leading-relaxed">
+          <p className={`mt-4 text-lg text-white/80 max-w-2xl leading-relaxed ${isAutomation ? styles.description : ""}`}>
             {data.subheading}
           </p>
+        )}
+
+        {isAutomation && (
+          <ul className={styles.metadata} aria-label="Course highlights">
+            {metadata.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
         )}
 
         {/* CTA Buttons */}
@@ -124,6 +176,12 @@ export default function ModulePageBanner({ data, moduleTitle, brochure, syllabus
           </div>
         )}
       </div>
+      {isAutomation && (
+        <div className={styles.footer}>
+          <div className={styles.technologies} aria-label="Technologies covered">PLC <span>•</span> HMI <span>•</span> SCADA <span>•</span> VFD <span>•</span> DRIVES</div>
+          <button type="button" className={styles.explore} onClick={exploreProgram}>Explore Program <span aria-hidden="true">↓</span></button>
+        </div>
+      )}
     </section>
   );
 }

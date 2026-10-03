@@ -1,141 +1,113 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useId } from "react";
+import {
+  Cpu,
+  Monitor,
+  Gauge,
+  Network,
+  CircuitBoard,
+  Wrench,
+  ArrowUpRight,
+} from "lucide-react";
 import { normalizeImageUrl } from "@/lib/api";
+import styles from "./ExpertiseSection.module.css";
 
-/**
- * ExpertiseSection Component
- *
- * Displays the institute's expertise / differentiators in an animated card grid.
- * Maps to the "EXPERTISE" section_type from the About Us API.
- *
- * @param {Object} props
- * @param {Object} props.data - The EXPERTISE section data from the About Us API
- * @returns {JSX.Element}
- */
+const technicalIcons = [
+  { match: /plc|programm|logic|control/i, icon: Cpu },
+  { match: /hmi|scada|visual|monitor/i, icon: Monitor },
+  { match: /drive|motion|motor|servo/i, icon: Gauge },
+  { match: /network|communication|iot/i, icon: Network },
+  { match: /electrical|panel|eplan|circuit|design/i, icon: CircuitBoard },
+];
+const fallbackIcons = [Cpu, Monitor, Gauge, Network, CircuitBoard, Wrench];
+
 export default function ExpertiseSection({ data }) {
+  const sectionId = useId();
   if (!data) return null;
 
-  const items = data.content_items?.filter((item) => item.is_active) || [];
+  const items = Array.isArray(data.content_items)
+    ? data.content_items.filter((item) => item.is_active)
+    : [];
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="text-center mb-14">
+    <section
+      className={styles.section}
+      aria-labelledby={data.heading ? `${sectionId}-heading` : undefined}
+      aria-label={data.heading ? undefined : "Our expertise"}
+    >
+      <div className={styles.container}>
+        <header className={styles.header}>
           {data.super_heading && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-sm font-semibold text-[#C2481F] tracking-widest uppercase mb-2"
-            >
-              {data.super_heading}
-            </motion.p>
+            <p className={styles.eyebrow}>{data.super_heading}</p>
           )}
           {data.heading && (
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900"
-            >
+            <h2 id={`${sectionId}-heading`} className={styles.heading}>
               {data.heading}
-            </motion.h2>
+            </h2>
           )}
           {data.subheading && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
-            >
-              {data.subheading}
-            </motion.p>
+            <p className={styles.subtitle}>{data.subheading}</p>
           )}
-        </div>
+        </header>
 
-        {/* Cards Grid */}
         {items.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {items.map((item, idx) => {
+          <ol className={styles.matrix}>
+            {items.map((item, index) => {
               const imageUrl = normalizeImageUrl(item.image);
+              const Icon =
+                technicalIcons.find(({ match }) =>
+                  match.test(item.label || item.title || "")
+                )?.icon || fallbackIcons[index % fallbackIcons.length];
               return (
-                <motion.div
-                  key={item.id || idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group bg-white rounded-2xl shadow-md hover:shadow-xl border border-gray-100 p-8 transition-all duration-300 hover:-translate-y-2"
-                >
-                  {/* Icon/Image */}
-                  {imageUrl && (
-                    <div className="w-14 h-14 mb-5 rounded-xl bg-blue-50 flex items-center justify-center overflow-hidden group-hover:bg-blue-100 transition-colors">
+                <li key={item.id ?? index} className={styles.item}>
+                  <span className={styles.number} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.icon} aria-hidden="true">
+                    {imageUrl ? (
                       <img
                         src={imageUrl}
-                        alt={item.label || "Expertise"}
-                        className="w-8 h-8 object-contain"
+                        alt=""
+                        width="28"
+                        height="28"
+                        className={styles.uploadedIcon}
                       />
-                    </div>
-                  )}
-
-                  {/* Label / Title */}
-                  {item.label && (
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 font-poppins">
-                      {item.label}
-                    </h3>
-                  )}
-
-                  {/* Description */}
-                  {(item.description || item.title) && (
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {item.description || item.title}
-                    </p>
-                  )}
-
-                  {/* CTA link */}
+                    ) : (
+                      <Icon size={26} strokeWidth={1.5} />
+                    )}
+                  </div>
+                  <div className={styles.copy}>
+                    {item.label && (
+                      <h3 className={styles.title}>{item.label}</h3>
+                    )}
+                    {(item.description || item.title) && (
+                      <p className={styles.description}>
+                        {item.description || item.title}
+                      </p>
+                    )}
+                  </div>
                   {item.primary_button_text && (
                     <a
                       href={item.primary_button_url || "#"}
-                      className="inline-flex items-center gap-1 text-[#C2481F] text-sm font-semibold mt-5 group-hover:gap-2 transition-all"
+                      className={styles.link}
                     >
                       {item.primary_button_text}
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                      <ArrowUpRight
+                        size={16}
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      />
                     </a>
                   )}
-                </motion.div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         )}
 
-        {/* Overview text */}
         {data.overview_text && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center text-gray-500 text-sm mt-10 max-w-2xl mx-auto"
-          >
-            {data.overview_text}
-          </motion.p>
+          <p className={styles.overview}>{data.overview_text}</p>
         )}
       </div>
     </section>
