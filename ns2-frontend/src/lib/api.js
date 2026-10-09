@@ -92,7 +92,7 @@ export async function fetchHomepageSections() {
     const response = await fetch(
       `${API_BASE_URL}/api/homepage/fetch-homepage`,
       {
-        next: { revalidate: 60 },
+        cache: "no-store",
       }
     );
 

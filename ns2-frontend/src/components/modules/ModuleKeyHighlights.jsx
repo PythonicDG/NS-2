@@ -1,96 +1,174 @@
-"use client";
+﻿"use client";
 
+import { useEffect, useRef, useState } from "react";
 import { normalizeImageUrl } from "@/lib/api";
-import { Star } from "lucide-react";
+import styles from "./ModuleKeyHighlights.module.css";
+
+function HighlightTitle({ title }) {
+  const words = title.match(/^(\S+(?:\s+\S+)?)([\s\S]*)$/);
+  return words ? (
+    <>
+      <strong>{words[1]}</strong>
+      {words[2]}
+    </>
+  ) : (
+    title
+  );
+}
 
 export default function ModuleKeyHighlights({ data }) {
+  const pathwayRef = useRef(null);
+  const [scrollState, setScrollState] = useState({
+    previous: false,
+    next: false,
+  });
+  const items = (data?.content_items || []).filter((item) => item.is_active);
+
+  useEffect(() => {
+    const pathway = pathwayRef.current;
+    if (!pathway) return;
+    const update = () =>
+      setScrollState({
+        previous: pathway.scrollLeft > 2,
+        next:
+          pathway.scrollLeft + pathway.clientWidth < pathway.scrollWidth - 2,
+      });
+    const observer = new ResizeObserver(update);
+    observer.observe(pathway);
+    pathway.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => {
+      observer.disconnect();
+      pathway.removeEventListener("scroll", update);
+    };
+  }, [data, items.length]);
+
+  function movePathway(direction) {
+    const pathway = pathwayRef.current;
+    if (!pathway) return;
+    const itemWidth =
+      pathway.firstElementChild?.getBoundingClientRect().width ||
+      pathway.clientWidth;
+    pathway.scrollBy({
+      left: direction * itemWidth,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  }
+
   if (!data) return null;
 
-  const items = (data.content_items || []).filter((item) => item.is_active);
-
   return (
-    <section id="module-key-highlights" className="py-16 sm:py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute -left-20 top-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-[#C2481F]/5 to-transparent rounded-full blur-3xl" />
-      <div className="absolute -right-20 bottom-1/4 w-[24rem] h-[24rem] bg-gradient-to-br from-blue-500/5 to-transparent rounded-full blur-3xl" />
-
-      <div className="container mx-auto px-6 lg:px-16 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-14">
-          {data.super_heading && (
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-[#C2481F] bg-[#C2481F]/10 rounded-full mb-5">
-              <Star className="w-4 h-4" />
-              {data.super_heading}
-            </span>
-          )}
-          {data.heading && (
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
-              {data.heading}
-              {data.highlighted_heading && (
-                <span className="text-[#C2481F]"> {data.highlighted_heading}</span>
-              )}
-            </h2>
-          )}
+    <section id="module-key-highlights" className={styles.section}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <div>
+            {data.super_heading && (
+              <p className={styles.eyebrow}>{data.super_heading}</p>
+            )}
+            {data.heading && (
+              <h2 className={styles.heading}>
+                {data.heading}
+                {data.highlighted_heading && (
+                  <span> {data.highlighted_heading}</span>
+                )}
+              </h2>
+            )}
+          </div>
           {data.subheading && (
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              {data.subheading}
-            </p>
+            <p className={styles.subtitle}>{data.subheading}</p>
           )}
-        </div>
+        </header>
 
-        {/* Highlights Grid */}
         {items.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {items.map((item, idx) => {
-              const iconUrl = normalizeImageUrl(item.icon);
-              return (
-                <div
-                  key={item.id || idx}
-                  className={`group bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#C2481F]/20 hover:-translate-y-1 transition-all duration-400 module-stagger-${(idx % 6) + 1}`}
-                >
-                  {/* Icon */}
-                  {iconUrl ? (
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#C2481F]/10 to-orange-50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <img
-                        src={iconUrl}
-                        alt={item.title || ""}
-                        className="w-7 h-7 object-contain"
-                      />
+          <div className={styles.ribbon}>
+            <div className={styles.measurement} aria-hidden="true">
+              <span>CAPABILITY PATH</span>
+              <svg viewBox="0 0 600 12" preserveAspectRatio="none" fill="none">
+                <path d="M1 6H599M1 0V12M60 3V9M120 3V9M180 3V9M240 3V9M300 0V12M360 3V9M420 3V9M480 3V9M540 3V9M599 0V12" />
+              </svg>
+              <span>{String(items.length).padStart(2, "0")} POINTS</span>
+            </div>
+            <ol
+              id="module-highlights-pathway"
+              ref={pathwayRef}
+              className={styles.pathway}
+              aria-label="Program capability pathway"
+              tabIndex={0}
+            >
+              {items.map((item, idx) => {
+                const iconUrl = normalizeImageUrl(item.icon);
+                const number = String(idx + 1).padStart(2, "0");
+                const showLabel =
+                  item.label &&
+                  item.label.trim() !== number &&
+                  item.label.trim() !== String(idx + 1);
+                return (
+                  <li key={item.id || idx} className={styles.item}>
+                    <div className={styles.index}>
+                      <span className={styles.number}>{number}</span>
+                      {showLabel && (
+                        <span className={styles.itemLabel}>{item.label}</span>
+                      )}
+                      {iconUrl && (
+                        <img
+                          src={iconUrl}
+                          alt={item.title || ""}
+                          className={styles.image}
+                        />
+                      )}
                     </div>
-                  ) : (
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#C2481F] to-orange-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white font-bold text-lg">{item.label || idx + 1}</span>
+                    <div className={styles.connection} aria-hidden="true">
+                      <span />
                     </div>
-                  )}
-
-                  {/* Title */}
-                  {item.title && (
-                    <h3 className="font-semibold text-gray-900 text-base mb-2 group-hover:text-[#C2481F] transition-colors">
-                      {item.title}
-                    </h3>
-                  )}
-
-                  {/* Description */}
-                  {item.description && (
-                    <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
-                  )}
-
-                  {/* Tags */}
-                  {item.tags && (
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {item.tags.split(",").map((tag, i) => (
-                        <span
-                          key={i}
-                          className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md"
-                        >
-                          {tag.trim()}
-                        </span>
-                      ))}
+                    <div className={styles.itemContent}>
+                      {item.title && (
+                        <h3>
+                          <HighlightTitle title={item.title} />
+                        </h3>
+                      )}
+                      {item.description && <p>{item.description}</p>}
+                      {item.tags && (
+                        <ul className={styles.tags} aria-label="Topics">
+                          {item.tags.split(",").map((tag, i) => (
+                            <li key={i}>{tag.trim()}</li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
-                  )}
+                  </li>
+                );
+              })}
+            </ol>
+            <div className={styles.ribbonFooter}>
+              <span className={styles.range} aria-hidden="true">
+                01 <span>→</span> {String(items.length).padStart(2, "0")}
+              </span>
+              {(scrollState.previous || scrollState.next) && (
+                <div className={styles.navigation}>
+                  <span>EXPLORE HIGHLIGHTS</span>
+                  <button
+                    type="button"
+                    onClick={() => movePathway(-1)}
+                    disabled={!scrollState.previous}
+                    aria-label="Previous highlight"
+                    aria-controls="module-highlights-pathway"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => movePathway(1)}
+                    disabled={!scrollState.next}
+                    aria-label="Next highlight"
+                    aria-controls="module-highlights-pathway"
+                  >
+                    →
+                  </button>
                 </div>
-              );
-            })}
+              )}
+            </div>
           </div>
         )}
       </div>

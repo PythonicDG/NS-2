@@ -14,9 +14,9 @@ export default function ModuleEligibilityCriteria({ data }) {
       <div className="absolute bottom-0 right-0 w-[24rem] h-[24rem] bg-blue-500/5 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3" />
 
       <div className="container mx-auto px-6 lg:px-16 relative z-10">
-        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
+        <div className={`grid items-stretch gap-12 lg:gap-16 ${primaryImage ? "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" : "grid-cols-1"}`}>
           {/* Text Content */}
-          <div className="w-full lg:w-7/12">
+          <div className="min-w-0">
             {/* Section Header */}
             {data.super_heading && (
               <span className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-[#C2481F] bg-[#C2481F]/10 rounded-full mb-5">
@@ -65,15 +65,14 @@ export default function ModuleEligibilityCriteria({ data }) {
 
           {/* Image Side */}
           {primaryImage && (
-            <div className="w-full lg:w-5/12 flex-shrink-0">
-              <div className="relative group sticky top-32">
-                <div className="absolute -inset-3 bg-gradient-to-r from-emerald-500/10 to-[#C2481F]/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img
-                  src={primaryImage}
-                  alt={data.heading || "Eligibility"}
-                  className="relative rounded-2xl shadow-lg w-full h-auto object-cover"
-                />
-              </div>
+            <div className="relative group min-w-0 aspect-[4/3] lg:aspect-auto">
+              {/* The text sets the desktop row height, independent of upload dimensions. */}
+              <div className="absolute -inset-3 bg-gradient-to-r from-emerald-500/10 to-[#C2481F]/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <img
+                src={primaryImage}
+                alt={data.heading || "Eligibility"}
+                className="absolute inset-0 rounded-2xl shadow-lg w-full h-full object-cover object-center"
+              />
             </div>
           )}
         </div>

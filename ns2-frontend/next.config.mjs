@@ -1,3 +1,12 @@
+// Local installations also run `next build` / `next start`. Allow Django's
+// loopback image origin when it is the configured backend, in either mode.
+const backendUrl = new URL(
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://mia-backend.mooo.com"
+);
+const isLocalBackend = ["localhost", "127.0.0.1", "[::1]"].includes(
+  backendUrl.hostname
+);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
@@ -6,11 +15,8 @@ const nextConfig = {
     // Image optimization enabled for LCP improvement
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 3600,
-    // The Django media server runs on localhost during local development.
-    // Next.js 16 blocks loopback/private IP image origins by default even
-    // when they are included in remotePatterns, so explicitly allow it only
-    // for the development server.
-    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
+    // Next.js 16 blocks private IP images even with matching remotePatterns.
+    dangerouslyAllowLocalIP: isLocalBackend,
     deviceSizes: [640, 768, 1024, 1280, 1920],
     imageSizes: [64, 128, 256, 384],
     remotePatterns: [
@@ -38,40 +44,16 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
-      {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8000",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8000",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8001",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8001",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        pathname: "/**",
-      },
+      ...(isLocalBackend
+        ? [...new Set([backendUrl.hostname, "localhost", "127.0.0.1"])].map(
+            (hostname) => ({
+              protocol: backendUrl.protocol.slice(0, -1),
+              hostname,
+              port: backendUrl.port,
+              pathname: "/media/**",
+            })
+          )
+        : []),
     ],
 
   },

@@ -37,7 +37,7 @@ This is the frontend application for MIA (Modern Institute of Automation), built
 3. Configure environment variables:
    Create a `.env` file in the root directory and add:
    ```env
-   NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+   NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8001
    ```
 
 ### Development
@@ -48,6 +48,17 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Keep Django running on `127.0.0.1:8001` while using the frontend. From the
+workspace root, `start_all.bat` starts Django and the frontend on port 3001.
+Uploading an image in the admin stores it in Django's `media` directory; Django
+must remain reachable to serve both the API and the uploaded files.
+
+The image configuration permits `/media/**` from the configured loopback backend
+for local development and local production builds. For deployment, set
+`NEXT_PUBLIC_API_BASE_URL` to the public backend URL before building; local IP
+image access is then disabled. Restart `next dev` after configuration changes,
+or run `npm run build` and restart `npm run start` for a production server.
 
 ## Project Structure
 
