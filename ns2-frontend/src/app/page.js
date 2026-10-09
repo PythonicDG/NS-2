@@ -7,6 +7,7 @@ export const metadata = {
 import dynamic from "next/dynamic";
 import Hero from "@/components/homepage/HeroSection";
 import Overview from "@/components/homepage/Overview";
+import PartnersStrip from "@/components/homepage/PartnersStrip";
 import { fetchHomepageSections } from "@/lib/api";
 
 // Lazy-load all below-the-fold sections to reduce initial bundle size and TBT
@@ -29,6 +30,7 @@ export default async function HomePage() {
   );
   const heroData = byType.get("Hero Banner");
   const overview = byType.get("Overview");
+  const partners = byType.get("Trust / Partners Strip");
   const whyChooseUs = byType.get("Why Choose Us");
   const testimonial = byType.get("Testimonials Slider");
   const faq = byType.get("Frequently Asked Questions");
@@ -40,6 +42,7 @@ export default async function HomePage() {
   return (
     <div className="home-page overflow-x-clip">
       <Hero data={heroData} />
+      <PartnersStrip data={partners} />
       <Overview data={overview} />
       <WhyChooseUs data={whyChooseUs} />
       {ourServices && <ServicesSection data={ourServices} />}
