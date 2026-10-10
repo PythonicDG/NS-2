@@ -1,0 +1,28 @@
+{
+  "hero": {
+    "eyebrow": "INDUSTRY × EXPERTISE × OPPORTUNITY",
+    "heading": "Build capability. Engineer progress.",
+    "subheading": "From the people on your shop floor to the systems that power it. One alliance for industrial training, automation engineering and workforce solutions.",
+    "partner_tags": ["Industrial engineering", "Practical learning", "Workforce development"],
+    "image": null
+  },
+  "partners": [
+    {"code": "AES", "name": "Industrial Automation Solutions", "tagline": "Engineering the solution", "credentials": "Automation engineering & technical troubleshooting", "logo": null},
+    {"code": "MIA", "name": "Modern Institute of Automation", "tagline": "Building the capability", "credentials": "Hands-on industrial automation training", "logo": null},
+    {"code": "ADS", "name": "Automation Dreams and Solutions", "tagline": "Connecting the opportunity", "credentials": "Training & industry workforce connections", "logo": null}
+  ],
+  "services": [
+    {"slug": "corporate-training", "title": "Corporate Professional Training", "short_title": "Upskill your workforce", "audience": "FOR CORPORATES", "description": "Close the gap between knowing a system and confidently running it. Build a company-specific training programme around your equipment, team and operational priorities.", "outcome": "A practical learning plan built around your shop floor.", "specs": ["Custom programmes", "Hands-on labs", "Team upskilling"], "deliverables": ["Training needs assessment and tailored curriculum", "Practical sessions on relevant industrial systems", "Skill assessment and actionable learning feedback", "Programme schedule aligned with your operations"]},
+    {"slug": "automation-services", "title": "Automation Services", "short_title": "Engineer your next solution", "audience": "FOR INDUSTRIES", "description": "Bring engineering expertise to the controls that keep production moving. Discuss a new automation requirement, system improvement or a troubleshooting challenge with our technical team.", "outcome": "From the control logic to the operator interface.", "specs": ["PLC", "SCADA", "HMI", "VFD", "Servo"], "deliverables": ["PLC programming and control logic support", "SCADA and HMI development", "VFD and servo application support", "Engineering, commissioning and troubleshooting scope"]},
+    {"slug": "industry-ready-employees", "title": "Industry-Ready Employees", "short_title": "Strengthen your technical team", "audience": "FOR EMPLOYERS", "description": "Find technical people with practical automation exposure. Share your role requirements and connect with pre-vetted candidates whose capabilities fit your industrial environment.", "outcome": "Relevant technical talent for real industrial roles.", "specs": ["Pre-vetted talent", "Technical screening", "Role matching"], "deliverables": ["Role and technical requirement mapping", "Candidate screening against agreed criteria", "Relevant candidate shortlisting", "Interview coordination and hiring support"]},
+    {"slug": "training-placement", "title": "Training & Placement", "short_title": "Turn skills into opportunity", "audience": "FOR STUDENTS & PROFESSIONALS", "description": "Build practical skills and prepare for your next industry role. Our training and placement network supports freshers and experienced professionals looking to move forward in automation.", "outcome": "A clearer path from practical learning to industry interviews.", "specs": ["Freshers", "Lateral careers", "Placement network"], "deliverables": ["Hands-on automation learning pathways", "Technical interview and career preparation", "Connections to relevant industry opportunities", "Support for freshers and lateral candidates"]}
+  ],
+  "pillars": [
+    {"title": "One connected alliance", "description": "Engineering, learning and workforce support working together.", "icon": "factory", "metric": "03", "metric_label": "Collaborating brands", "commitment": "A coordinated scope for your business requirement."},
+    {"title": "Practical by design", "description": "Learning rooted in equipment, controls and real applications.", "icon": "wrench", "metric": "05", "metric_label": "Core control technologies", "commitment": "Hands-on deliverables agreed before your programme."},
+    {"title": "People who fit", "description": "Technical screening guided by your role and operating environment.", "icon": "users", "metric": "02", "metric_label": "Career pathways: fresher & lateral", "commitment": "Candidate suitability reviewed against your brief."},
+    {"title": "Your goals, our scope", "description": "A focused engagement built around the result you need.", "icon": "target", "metric": "04", "metric_label": "Integrated service pathways", "commitment": "Clear deliverables and milestones for each engagement."},
+    {"title": "A direct conversation", "description": "Speak with a named contact who understands your requirement.", "icon": "shield", "metric": "01", "metric_label": "Dedicated partnership contact", "commitment": "A clear point of contact from the first conversation."}
+  ],
+  "contact": {"contact_name": "Ashutosh Sonawane", "contact_role": "Corporate & Industry Partnerships", "primary_phone": "9370432254", "secondary_phone": "9370218408", "whatsapp_phone": "919370432254", "location": "Pimpri-Chinchwad, Maharashtra", "inquiry_heading": "Let’s solve your next industrial challenge."}
+}

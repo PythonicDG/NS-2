@@ -33,7 +33,11 @@ export default async function Navbar() {
     navbarData = null;
   }
 
-  const menuItems = navbarData?.header?.menu || [];
+  const cmsMenuItems = navbarData?.header?.menu || [];
+  const hasServices = cmsMenuItems.some((item) =>
+    item.url?.replace(/\/$/, "") === "/services" || item.submenus?.some((sub) => sub.url?.replace(/\/$/, "") === "/services")
+  );
+  const menuItems = hasServices ? cmsMenuItems : [...cmsMenuItems, { text: "Services", url: "/services", is_button: false }];
   const logoPath = navbarData?.footer?.company?.logo;
   const logoUrl = logoPath 
     ? (logoPath.startsWith("http") ? logoPath : `${API_BASE_URL}${logoPath.startsWith("/") ? "" : "/"}${logoPath}`)
