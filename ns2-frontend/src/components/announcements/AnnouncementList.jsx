@@ -6,7 +6,7 @@ import { fetchAnnouncements, fetchAnnouncementCategories } from "@/lib/api";
 import AnnouncementCard from "./AnnouncementCard";
 import { Search, Filter, RefreshCcw } from "lucide-react";
 
-export default function AnnouncementList() {
+export default function AnnouncementList({ copy = {} }) {
   const [announcements, setAnnouncements] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -61,8 +61,8 @@ export default function AnnouncementList() {
         {/* Filters Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Notice Board</h2>
-            <p className="text-gray-500">Stay updated with our latest news and events</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">{copy.board_heading || "Notice Board"}</h2>
+            <p className="text-gray-500">{copy.board_description || "Stay updated with our latest news and events"}</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center">

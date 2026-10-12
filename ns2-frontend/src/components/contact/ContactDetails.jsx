@@ -16,36 +16,36 @@ import { normalizeImageUrl } from "@/lib/api";
  * @param {Object} props.data - Dynamic content data fetched from the Contact Us API section
  * @returns {JSX.Element}
  */
-export default function ContactDetails({ data }) {
+export default function ContactDetails({ data, copy = {} }) {
   // If we have content items from API, use them. Otherwise, fall back to robust default values
   const defaultItems = [
     {
       label: "Our Campus Address",
-      title: data?.company_address || "Modern Institute of Automation, Pune, Maharashtra",
+      title: copy.contact_info?.address || data?.company_address || "Modern Institute of Automation, Pune, Maharashtra",
       description: "Visit us for a campus tour",
       iconType: MapPin,
     },
     {
       label: "Phone Number",
-      title: data?.phone || "+91 98765 43210",
+      title: copy.contact_info?.phone || data?.phone || "+91 98765 43210",
       description: "Mon-Sat from 9am to 6pm",
       iconType: Phone,
     },
     {
       label: "Email Address",
-      title: data?.email || "info@moderninstituteofautomation.com",
+      title: copy.contact_info?.email || data?.email || "info@moderninstituteofautomation.com",
       description: "Support response within 24 hours",
       iconType: Mail,
     },
     {
       label: "Working Hours",
-      title: "Monday - Saturday: 9:00 AM - 6:00 PM",
+      title: copy.contact_info?.working_hours || "Monday - Saturday: 9:00 AM - 6:00 PM",
       description: "Sunday: Closed",
       iconType: Clock,
     }
   ];
 
-  const displayItems = data?.content_items?.length > 0 
+  const displayItems = !copy.contact_info?.id && data?.content_items?.length > 0
     ? data.content_items.filter(item => item.is_active)
     : null;
 
@@ -58,13 +58,13 @@ export default function ContactDetails({ data }) {
           <div className="lg:col-span-5 space-y-6">
             <div>
               <span className="text-xs font-bold text-[#C2481F] uppercase tracking-wider bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">
-                Contact Information
+                {copy.details_label || "Contact Information"}
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B3A6E] mt-4 mb-2">
-                We'd Love to Hear From You
+                {copy.details_heading || "We'd Love to Hear From You"}
               </h2>
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                Connect with our advisors to choose the right batch, ask about student support, or collaborate on automation initiatives.
+                {copy.details_description || "Connect with our advisors to choose the right batch, ask about student support, or collaborate on automation initiatives."}
               </p>
             </div>
 
@@ -190,10 +190,10 @@ export default function ContactDetails({ data }) {
               
               <div className="mb-6">
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B3A6E] mb-1">
-                  Send a Message
+                  {copy.form_heading || "Send a Message"}
                 </h3>
                 <p className="text-gray-500 text-sm">
-                  Fill out the form below and our response coordinators will connect with you.
+                  {copy.form_description || "Fill out the form below and our response coordinators will connect with you."}
                 </p>
               </div>
 

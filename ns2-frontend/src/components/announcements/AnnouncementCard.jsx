@@ -11,6 +11,7 @@ export default function AnnouncementCard({ announcement }) {
     short_description,
     category_name,
     attachment,
+    image,
   } = announcement;
 
 
@@ -29,6 +30,7 @@ export default function AnnouncementCard({ announcement }) {
       viewport={{ once: true }}
       className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full"
     >
+      {image && <img src={normalizeImageUrl(image)} alt={title} className="w-full h-48 object-cover" loading="lazy" />}
       <div className="p-6 flex-grow">
         {/* Category & Date */}
         <div className="flex items-center justify-between mb-4">
@@ -61,7 +63,7 @@ export default function AnnouncementCard({ announcement }) {
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-bold transition-colors"
           >
             <Download size={16} />
-            Download PDF
+            Download attachment
           </a>
         ) : (
           <div className="w-1" />

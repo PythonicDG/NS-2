@@ -1,13 +1,9 @@
 import Footer from "@/components/footer/Footer";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-import WhatsAppButton from "@/components/common/WhatsAppButton";
 import Navbar from "@/components/navbar/Navbar";
 import { Open_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
 import { fetchNavbarData } from "@/lib/api";
-import { ModalProvider } from "@/context/ModalContext";
-import EnrollModal from "@/components/common/EnrollModal";
-import EnquiryPopupManager from "@/components/common/EnquiryPopupManager";
+import WebsiteChrome from "@/components/common/WebsiteChrome";
 import NavigationScrollReset from "@/components/common/NavigationScrollReset";
 import "./globals.css";
 
@@ -91,17 +87,9 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="font-opensans flex flex-col min-h-screen">
         <NavigationScrollReset />
-        <ModalProvider>
-          <GoogleAnalytics />
-          <div className="sticky top-0 z-[100]">
-            <Navbar />
-          </div>
-          <main className="flex-grow">{children}</main>
-          <WhatsAppButton phone={phone} />
-          <Footer />
-          <EnrollModal />
-          <EnquiryPopupManager />
-        </ModalProvider>
+        <WebsiteChrome navbar={<Navbar />} footer={<Footer />} phone={phone}>
+          {children}
+        </WebsiteChrome>
       </body>
     </html>
   );

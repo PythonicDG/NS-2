@@ -9,7 +9,7 @@ export const revalidate = 0; // Full SSR (no cache)
 import ContactHero from "@/components/contact/ContactHero";
 import ContactDetails from "@/components/contact/ContactDetails";
 import FAQSection from "@/components/homepage/FAQSection";
-import { fetchHomepageSection } from "@/lib/api";
+import { fetchHomepageSection, fetchPageCopy } from "@/lib/api";
 import { MapPin } from "lucide-react";
 
 /**
@@ -22,31 +22,32 @@ import { MapPin } from "lucide-react";
  * @returns {Promise<JSX.Element>}
  */
 export default async function ContactPage() {
-  const [contactData, faqData] = await Promise.all([
+  const [contactData, faqData, copy] = await Promise.all([
     fetchHomepageSection("Contact Us"),
     fetchHomepageSection("Frequently Asked Questions"),
+    fetchPageCopy("contact"),
   ]);
 
   return (
     <main className="min-h-screen bg-white">
       {/* 1. Hero / Banner Section with breadcrumbs */}
-      <ContactHero />
+      <ContactHero copy={copy} />
 
       {/* 2. Contact details cards and the interactive Contact Form */}
-      <ContactDetails data={contactData} />
+      <ContactDetails data={contactData} copy={copy} />
 
       {/* 3. Google Map Section */}
       <section className="py-16 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6 lg:px-16">
           <div className="text-center mb-10">
             <span className="text-xs font-bold text-[#C2481F] uppercase tracking-wider bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">
-              Our Location
+              {copy.map_label || "Our Location"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B3A6E] mt-4 mb-2">
-              Find Us on the Map
+              {copy.map_heading || "Find Us on the Map"}
             </h2>
             <p className="text-gray-500 text-sm max-w-xl mx-auto">
-              We are located in Pune's primary training hub. Use the interactive map below to plan your route.
+              {copy.map_description || "We are located in Pune's primary training hub. Use the interactive map below to plan your route."}
             </p>
           </div>
 

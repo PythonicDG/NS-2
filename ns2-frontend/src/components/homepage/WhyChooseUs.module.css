@@ -111,9 +111,6 @@
 .benefit:nth-child(odd) {
   border-right: 1px solid #dfe3dc;
 }
-.featured {
-  background: #f7f8f5;
-}
 .benefit:hover {
   background: #f3f5f0;
 }
@@ -150,9 +147,6 @@
   overflow-wrap: anywhere;
   text-wrap: balance;
 }
-.featured .benefitTitle {
-  font-size: 23px;
-}
 .benefitDescription {
   margin: 13px 0 0;
   font-size: 14px;
@@ -171,7 +165,6 @@
   transform-origin: left;
   transition: transform 200ms ease;
 }
-.featured .underline,
 .benefit:hover .underline {
   transform: scaleX(1);
 }

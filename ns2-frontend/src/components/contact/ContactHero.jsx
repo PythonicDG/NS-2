@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import { normalizeImageUrl } from "@/lib/api";
 
 /**
  * ContactHero Component
@@ -12,11 +13,12 @@ import { ChevronRight, Home } from "lucide-react";
  * 
  * @returns {JSX.Element}
  */
-export default function ContactHero() {
+export default function ContactHero({ copy = {} }) {
   return (
     <section className="relative w-full h-[350px] md:h-[450px] flex items-center overflow-hidden bg-[#0B3A6E]">
       {/* Background Pattern/Overlay */}
       <div className="absolute inset-0 z-0">
+        {copy.background_image && <img src={normalizeImageUrl(copy.background_image)} alt="" className="absolute inset-0 w-full h-full object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92] opacity-90" />
         <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         
@@ -49,7 +51,7 @@ export default function ContactHero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4"
           >
-            Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Touch</span>
+            {copy.heading || "Get In"} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">{copy.highlighted_heading || "Touch"}</span>
           </motion.h1>
 
           {/* Subtext */}
@@ -59,7 +61,7 @@ export default function ContactHero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-blue-100 text-base md:text-lg opacity-90 max-w-xl leading-relaxed"
           >
-            Have questions about our automation courses, batch timings, or support? Reach out and we'll reply as soon as possible.
+            {copy.subheading || "Have questions about our automation courses, batch timings, or support? Reach out and we'll reply as soon as possible."}
           </motion.p>
         </div>
       </div>

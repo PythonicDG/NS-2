@@ -1,5 +1,14 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
+export async function fetchPageCopy(page) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/page-copy/${page}/`, { cache: "no-store" });
+    return response.ok ? await response.json() : {};
+  } catch {
+    return {};
+  }
+}
+
 /**
  * Normalizes an image URL by handling duplicated domains and prepending the API base URL if needed.
  * 

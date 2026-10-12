@@ -49,7 +49,7 @@ export default function WhyChooseUs({ data }) {
               return (
                 <article
                   key={item.id || `${item.title}-${index}`}
-                  className={`${styles.benefit} ${index === 0 ? styles.featured : ""}`}
+                  className={styles.benefit}
                 >
                   <div className={styles.benefitTop}>
                     <span className={styles.number}>

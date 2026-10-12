@@ -3,13 +3,15 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import { normalizeImageUrl } from "@/lib/api";
 
 
-export default function AnnouncementHero() {
+export default function AnnouncementHero({ copy = {} }) {
   return (
     <section className="relative w-full h-[400px] md:h-[500px] flex items-center overflow-hidden bg-[#0B3A6E]">
       {/* Background Pattern/Overlay */}
       <div className="absolute inset-0 z-0">
+        {copy.background_image && <img src={normalizeImageUrl(copy.background_image)} alt="" className="absolute inset-0 w-full h-full object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0B3A6E] to-[#0E4C92] opacity-90" />
         <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         
@@ -43,7 +45,7 @@ export default function AnnouncementHero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6"
           >
-            Latest <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Announcements</span> & Updates
+            {copy.heading || "Latest"} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">{copy.highlighted_heading || "Announcements"}</span> {copy.heading_suffix || "& Updates"}
           </motion.h1>
 
           {/* Subtext */}
@@ -53,7 +55,7 @@ export default function AnnouncementHero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-blue-100 text-lg md:text-xl opacity-90 max-w-xl leading-relaxed"
           >
-            Stay informed about the latest developments, upcoming batches, events, and important notices from Modern Institute of Automation.
+            {copy.subheading || "Stay informed about the latest developments, upcoming batches, events, and important notices from Modern Institute of Automation."}
           </motion.p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { fetchAnnouncementBySlug, normalizeImageUrl } from "@/lib/api";
+import { fetchAnnouncementBySlug, fetchPageCopy, normalizeImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Calendar, Download, Tag, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
 export default async function AnnouncementDetailPage({ params }) {
   const { slug } = await params;
   const announcement = await fetchAnnouncementBySlug(slug);
+  const copy = await fetchPageCopy("announcements");
 
   if (!announcement) {
     notFound();
@@ -33,7 +34,7 @@ export default async function AnnouncementDetailPage({ params }) {
 
   return (
     <main className="min-h-screen bg-white">
-      <AnnouncementHero />
+      <AnnouncementHero copy={copy} />
       
       <div className="container mx-auto px-6 lg:px-16 py-12 md:py-20">
         <Link 
@@ -78,13 +79,14 @@ export default async function AnnouncementDetailPage({ params }) {
           <hr className="border-gray-100 mb-10" />
 
           {/* Content */}
+          {announcement.image && <img src={normalizeImageUrl(announcement.image)} alt={announcement.title} className="w-full rounded-2xl mb-8" />}
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             <p className="text-xl font-medium text-gray-900 mb-8 italic border-l-4 border-orange-500 pl-6 py-2 bg-orange-50/30">
               {announcement.short_description}
             </p>
             
             {announcement.full_description ? (
-              <div dangerouslySetInnerHTML={{ __html: announcement.full_description.replace(/\n/g, '<br />') }} />
+              <div dangerouslySetInnerHTML={{ __html: announcement.full_description }} />
             ) : (
               <p>No further details available for this announcement.</p>
             )}

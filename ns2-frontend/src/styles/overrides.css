@@ -42,10 +42,12 @@
     min-height: 0;
   }
 
-  .home-hero__visual > img {
+  .home-hero__slide[data-active="true"] {
     opacity: 0.55;
+  }
+
+  .home-hero__slide > img {
     filter: blur(2px);
-    transform: scale(1.03);
   }
 
   .home-hero__visual > .bg-gradient-to-r {

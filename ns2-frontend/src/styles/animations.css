@@ -17,6 +17,40 @@
   animation: logo-zoom-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Keep slides loaded so the crossfade never waits for a new image request. */
+.home-hero__slide {
+  opacity: 0;
+  transition: opacity 900ms ease-in-out;
+}
+
+.home-hero__slide[data-active="true"] {
+  opacity: 0.45;
+}
+
+.home-hero__slide > img {
+  transition: transform 4.2s ease-in-out;
+}
+
+.home-hero__slide[data-zoom="out"] > img,
+.home-hero__slide[data-zoom="in"][data-active="true"] > img {
+  transform: scale(1.08);
+}
+
+.home-hero__slide[data-zoom="out"][data-active="true"] > img {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__slide,
+  .home-hero__slide > img {
+    transition: none;
+  }
+
+  .home-hero__slide[data-zoom] > img {
+    transform: none;
+  }
+}
+
 @keyframes announcement-scroll {
   to {
     transform: translateX(-50%);

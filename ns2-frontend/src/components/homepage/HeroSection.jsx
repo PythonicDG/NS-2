@@ -21,7 +21,7 @@ export default function Hero({ data }) {
     if (images.length <= 1) return undefined;
     const timer = window.setInterval(
       () => setCurrentImageIndex((index) => (index + 1) % images.length),
-      7000
+      4000
     );
     return () => window.clearInterval(timer);
   }, [images.length]);
@@ -38,9 +38,17 @@ export default function Hero({ data }) {
   return (
     <section aria-labelledby="home-hero-title" className="home-hero relative isolate flex min-h-[calc(100svh-73px)] flex-col overflow-hidden bg-[#11100f] text-white sm:min-h-[calc(100svh-81px)] md:min-h-[calc(100svh-89px)] lg:min-h-0">
       <div className="home-hero__visual contents">
-      {images[currentImageIndex] && (
-        <Image src={images[currentImageIndex]} alt="" fill priority sizes="100vw" quality={78} className="-z-20 object-cover object-center opacity-45" />
-      )}
+      {images.map((src, index) => (
+        <div
+          key={`${src}-${index}`}
+          aria-hidden="true"
+          className="home-hero__slide pointer-events-none absolute inset-0 -z-20"
+          data-active={index === currentImageIndex % images.length}
+          data-zoom={images.length > 1 ? (index % 2 === 0 ? "in" : "out") : undefined}
+        >
+          <Image src={src} alt="" fill priority={index === 0} loading={index === 0 ? undefined : "eager"} sizes="100vw" quality={78} className="object-cover object-center" />
+        </div>
+      ))}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/95 via-black/75 to-black/25" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(194,72,31,0.18),transparent_60%)]" />
 
